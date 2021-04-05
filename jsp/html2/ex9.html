@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>레드향 주문하기</h1>
+<form action="a.jsp" method="get" name="order">
+<fieldset>
+ <legend>배송 정보</legend>
+ <label> 이름 <input type="text" name="name" autofocus required></label><br> 
+ <label> 배송 주소 <input type="text" name="addr" value="부산" readonly></label><br>
+ <label> 이메일 <input type="email" name="mail"></label><br>
+ <label> 연락처 <input type="tel" name="phone" placeholder="000-0000-0000"></label><br>
+ <label> 배송 지정 <input type="date" name="cal"></label>
+ (주문일로부터 최소 3일 이후)<br>
+ <label>상품 선택
+ <select name="se" size="4" multiple>
+ 	<option>선물용 3kg</option>
+ 	<option>선물용 5kg</option>
+ 	<option selected>가정용 3kg</option>
+ 	<option>가정용 5kg</option>
+ </select>
+ </label>
+ <br>
+ <label>포장여부
+ <input type="text" name="p" list="pack">
+ <datalist id="pack">
+ 	<option value="package">선물포장</option>
+ 	<option value="nopackage">선물포장안함</option>
+ </datalist>
+ </label>
+ <br>
+ <label> 메모 <textarea name="memo" rows="4" cols="40"></textarea></label><br>
+</fieldset>
+<input type="submit" value="주문하기">
+<input type="reset" value="취소하기">
+</form>
+</body>
+</html>

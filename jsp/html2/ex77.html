@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>레드향 주문하기</h1>
+
+<form action="a.jsp" method="get" name="fr">
+
+<fieldset>
+ <legend>상품 선택</legend><br>
+ <b>주문할 상품을 선택해 주세요.</b>
+ <ul>
+  <li><label for="fgift_3"><input type="checkbox" id="fgift_3" name="prod" value="gift_3">선물용 3kg</label>
+      <input type="text" name="gift_3_num">개</li>
+  <li><label for="fgift_5"><input type="checkbox" id="fgift_5" name="prod" value="gift_5">선물용 5kg</label> 
+      <input type="text" name="gift_5_num">개</li>
+  <li><label for="fhouse_3"><input type="checkbox" id="fhouse_3" name="prod" value="house_3">가정용 3kg</label> 
+      <input type="text" name="house_3_num">개</li>
+  <li><label for="fhouse_5"><input type="checkbox" id="fhouse_5" name="prod" value="house_5">가정용 5kg</label> 
+      <input type="text" name="house_5_num">개</li>
+ </ul>
+ 
+ <b>포장 선택</b>
+ <ul>
+  <li><input type="radio" name="package" value="pack_check">선물 포장</li>
+  <li><input type="radio" name="package" value="pack_no">선물 포장 안 함</li>
+ </ul>
+</fieldset>
+
+<fieldset>
+ <legend>배송 정보</legend>
+ <ul>
+  <li><label for="fname">이름&nbsp;<input type="text" id="fname" name="name"></label></li>
+  <li><label for="faddress">배송 주소&nbsp;<input type="text" id="faddress" name="address"></label></li>
+  <li><label for="fmail">이메일&nbsp;<input type="text" id="fmail" name="mail"></label></li>
+  <li><label for="fphone">연락처&nbsp;<input type="text" id="fphone" name="phone"></label></li>
+ </ul>
+</fieldset>
+
+</form>
+</body>
+</html>

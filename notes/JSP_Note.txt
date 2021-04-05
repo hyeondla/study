@@ -1,0 +1,259 @@
+JSP (Java Server Page)
+
+▶JDK 자바 개발 도구 → JVM 자바 가상 머신
+
+ - Java SE 8 
+   https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
+   → C:\Program Files\Java\jdk1.8.0_281\bin → java, javac 확인됨
+
+ - 환경 변수 설정
+   내 PC > 속성 > 고급 시스템 설정 > 고급 > 환경 변수 > 시스템변수 > Path > 편집 > 새로만들기 
+   > C:\Program Files\Java\jdk1.8.0_281\bin > 확인
+
+ - 실행 환경 등록
+   내 PC > 속성 > 고급 시스템 설정 > 고급 > 환경 변수 > 시스템변수 > 새로 만들기 
+   > 변수 이름 : CLASSPATH > 변수 값 : .;C:\Program Files\Java\jdk1.8.0_281\lib\tools.jar > 확인
+
+ - 설치 확인
+   >cmd
+   java -version → "1.8.0_281"
+   javac -version → "1.8.0_281"
+
+▶웹 서버, 웹애플리케이션 서버
+
+ - 톰캣 설치 (8.0.44.exe)
+   https://tomcat.apache.org/download-80.cgi → 32-bit/64-bit Windows Service Installer
+
+ - 톰캣 실행 → Start / Stop 설정
+   C:\Program Files\Apache Software Foundation\Tomcat 8.0\bin\Tomcat8w → 관리자 권한으로 실행
+
+ - 설치된 서버 주소 → http://localhost:8080/
+
+ - 서버 페이지 위치 → C:\Program Files\Apache Software Foundation\Tomcat 8.0\webapps\ROOT
+
+ - ROOT 폴더 안에 파일 넣기 → http://localhost:8080/파일이름 
+
+ - index.jsp 파일이름 생략 → 서버에 자동 찾아서 보여주도록 설정
+
+ - 다른 사용자가 내 컴퓨터 서버에 접속할 때 → 부여된 IP번호로 서버 접속 → http://192.168.3.11:8080/
+
+ - IP 번호 확인 > cmd > ipconfig 입력 → IPv4 주소 : 192.168.3.11
+
+▶데이터베이스
+
+▶개발도구(이클립스)
+
+ https://www.eclipse.org/downloads/packages/
+ Eclipse IDE for Enterprise Java and Web Developers → Windows x86_64
+ C: 윈도우 설치되어있는 곳에 이클립스 프로그램 압축 풀기 → 설치 완료
+ D: 작업데이터 따로 저장 → workspace_jsp3 폴더 생성
+
+ - 한글 환경설정
+    Window > Preferences > General > Workspace > Text file encoding > Other > UTF-8
+    Window > Preferences > Web > CSS,HTML,JSP Files > Encoding : ISO 10646/Unicode(UTF-8)
+
+ - 글자 크기 설정
+   Window > Preferences > General > Appearance > Colors and Fonts > Basic > Text Font > Edit
+
+ - 웹서버 가져오기
+   File > New > Other > Server > Server > Next > Apache > Tomcat v8.0 Server > Next 
+   > Tomcat installation directory : C:\Program Files\Apache Software Foundation\Tomcat 8.0 폴더 선택 
+   > Next > Finish
+
+ - 프로젝트 만들기
+   File > New > Dynamic Web Project > Project name : Study > Next > Next > web.xml 체크 > Finish
+
+ - 프로젝트와 웹서버 연결
+   Servers 탭 > Tomcat v8.0 Server 우클릭 > Add and Remove > 프로젝트 선택 > Add > Finish
+
+ - html 파일 생성
+   프로젝트 > src > main > webapp 우클릭 > New > HTML File 
+   > File name : test1.html > Next > new HTML File(5) 기본 선택> Finish
+
+ - html 파일 실행
+   test1.html 우클릭 > Run as > Run on Server > Next > Finish
+
+=====================================================
+
+HTML → 웹 페이지 화면 구조 만들기
+CSS → 웹꾸
+Java script → 화면 제어
+jQuery → 최신 형태 기능 모양 제어, 기능 제어 
+JSP → 화면에서 서버로 정보를 받아서 처리, DB 처리, 기능 넣기
+DB → 정보 저장
+
+
+웹표준 https://w3c.or.kr/
+https://www.w3schools.com/
+
+======================================================================
+
+▶태그
+<br> 줄바꿈
+<b> 진하게
+<strong> 더 진하게
+<em> 기울기
+<i> 기울기
+<u> 밑줄
+<del> 중간에 줄긋기
+<sup> 윗첨자
+<sub> 아랫첨자
+<small> 작게
+<hr> 구분선
+
+<h1~h6> 제목 
+<p> 문단
+<blockquote> 문단 들여쓰기
+<div> 블럭 지정
+<span> 영역 지정
+<pre> 작성한대로 보이게
+
+<ol> 순서 목록 1,2,3,4,...
+<ol type="a"> a,b,c,d,...
+<ol type="A"> A,B,C,D,...
+<ol type="i"> ⅰ,ⅱ,ⅲ,ⅳ,...
+<ol type="I"> Ⅰ,Ⅱ,Ⅲ,Ⅳ,...
+
+<ul> 순서 없는 목록 disc ●
+<ul type="circle"> ○
+<ul type="square"> ■
+
+<li> 리스트 → ol/ul안에 사용
+
+<dl> 설명 목록 description list
+<dt> 이름 description title
+<dd> 값 description data
+
+<table> 테이블
+ <table border="1"> 테두리 선
+ <table bgcolor="영문 색이름/#000000/RGB(000,000,000)"> 배경색
+<caption> 표 제목 </caption>
+<thead>
+ <th>칸 제목, 테이블헤드
+</thead>
+<tbody>
+ <tr>행 
+ <td>열
+  <td colspan="n"> 옆으로 n칸 합치기
+  <td rowspan="n"> 밑으로 n칸 합치기
+</tbody>
+<tfoot> → 요약
+</tfoot>
+</table>
+
+<ruby> 글자 위 주석
+ 글자
+ <rt>주석내용</rt>
+</ruby>
+
+&nbsp; 공백
+& + ctrl + spacebar → 기호 
+
+<!-- --> 주석 (단축키 ctrl + shift + c)
+
+<img alt="대체용텍스트" src="이미지파일" width="너비 크기" height="높이 크기">
+src → 현재 html 파일 기준(상대참조) ↔ 절대참조
+크기 → 숫자만,px : 고정값 / % : 브라우저 크기에 따라 가변
+
+<a href="링크주소/웹문서/이미지"> 하이퍼링크 텍스트 </a>
+./ → 현재 폴더, 생략가능
+../ → 상위 폴더
+
+
+<embed src="동영상/음악 파일주소" width="크기" height="크기">
+<object data="동영상/음악/pdf 등 파일주소" width=" " height=" "></object>
+<audio src="음악 파일" autoplay controls></audio>
+<video src="비디오 파일" autoplay controls width=" " height=" " muted>
+
+=================================================================================
+
+입력양식태그 form
+
+<form action="이동할 페이지" method="전송방식(get/post)" name="구분 이름">
+get : 입력된 값이 주소줄에 표시됨, 256~4096 byte 크기 
+post : 입력된 값 주소줄에 표시 X, 보안상 좋음
+
+<fieldset> : 그룹 묶기
+ <legend>그룹 묶기 타이틀</legend>
+ <label for="">텍스트<input type="text" id="" name="구분 이름" value="텍스트 박스 안에 표시할 내용" size="크기" maxlength="길이 제한"> </label>
+ <label for="">텍스트<input type="password" id="" name="구분 이름"></label>
+</fieldset>
+
+<textarea name="구분 이름" rows="행 갯수" cols="열 갯수">텍스트 박스 표시 내용</textarea>
+
+<input type="radio" name="구분 이름" value="값" checked>화면에 표시될 텍스트 
+: name 동일하면 묶여짐, 그 중 하나의 값만 선택
+<input type="checkbox" name="구분 이름" value="값">화면 표시 텍스트
+: name 동일하면 묶여짐, 여러 값 선택 
+<select name="구분 이름" size="1(기본)"> : 목록 상자
+ <option value="값"> 표시할 내용</option>
+ <option value="값" selected> 표시할 내용, 기본 선택</option>
+</select> 
+
+<input type="text" name=" " list="동일">
+ <datalist id="동일">
+  <option value=" "> 내용 </option>
+  <option value=" "> 내용 </option>
+ </datalist>
+
+<input type="button" value="값"> : 버튼
+<input type="submit" value="값"> : 전송 버튼
+<input type="reset" value="값"> : 초기화 버튼
+<input type="image" src=" " width=" " height=" ">
+
+<input type="email" name=" "> 이메일 양식
+<input type="tel" name=" "> 전화번호 양식
+<input type="url" name=" "> url 양식
+<input type="search" name=" "> 검색 박스, x표시
+
+<input type="number" name=" " min=" " max=" " step=" " value=" "> 숫자 범위
+<input type="range" name=" " min=" " max=" " step=" " value=" "> 숫자 범위
+
+<input type="date" name=" " min=" " max=" "> 날짜
+<input type="month" name=" "> 월
+<input type="week" name=" "> 주
+<input type="time" name=" "> 시간
+<input type="datetime-local" name=" "> 날짜+시간
+
+autofocus 
+required 필수 입력
+placeholder="설명글" 텍스트박스 안에 표시됨
+value=" " readonly 수정 불가
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

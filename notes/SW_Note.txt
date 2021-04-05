@@ -1,0 +1,37 @@
+
+https://www.virtualbox.org/wiki/Downloads
+→ VirtualBox 6.1.18 platform packages → Windows hosts 다운 → 설치 → 실행
+→ 환경설정 > 입력 > 가상머신 > 호스트 키 조합 > Shift + Ctrl > 확인
+→ 새로 만들기 > 이름 : Centos_practice > 메모리 크기 : 2048 MB > 하드 디스크 : 새로 만들기(VDI, 동적, 100GB)
+→ 설정 > 시스템 > 프로세서 > 개수 : 초록바 경계까지
+→ 설정 > 시스템 > 저장소 > 저장 장치 > 컨트롤러 : SATA > 호스트 I/O 캐시 사용 체크
+→ 설정 > 시스템 > 저장소 > 저장 장치 > 컨트롤러 : IDE > 비어있음 > 광학드라이브 : 디스크 파일 선택 > CentOS-7-x86_64-Minimal-2009
+
+http://isoredirect.centos.org/centos/7/isos/x86_64/ → 미러사이트 택 1 → CentOS-7-x86_64-DVD-2009.iso 다운
+
+===> 필기장에서 확인 
+https://docs.google.com/document/d/1HfQMK3FDrnvZtqndnWTp38GcPtLSDVC_bLahm3bfDZc/edit?usp=sharing
+
+========================================================
+
+[root@itwill ~]# 
+ root 계정명  
+ itwill 서버명
+ ~ 접속경로
+ # 관리자 계정으로 접속
+ $ 일반 계정으로 접속
+
+su (계정명) : switch user, 계정 전환
+pwd : 절대 경로 표시
+ls : 리스트 출력, 폴더 이름 파란색 표시
+ls -a : 숨김파일 표시, 이름 앞에 '.' 
+ls -l : 상세 속성값 표시
+cd (경로값) : change directory, 경로 이동
+cp (원본파일경로) (목적경로) : 파일 복사
+mv (원본파일경로) (목적경로) : 파일 이동, 파일명 변경
+mkdir (디렉토리명) : 디렉토리 생성
+mkdir -p : 여러 단의 하위 경로를 한번에 생성, 절대경로로 작성
+rm (파일명) : 파일 삭제
+rm -rf (디렉토리명) : 디렉토리 삭제
+touch : 파일 수정 시간 변경, 파일 없으면 빈 파일 생성
+
