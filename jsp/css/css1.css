@@ -1,0 +1,11 @@
+@charset "UTF-8";
+	h2{
+/* 		글자색 */
+		color: #ff0000;
+/* 		배경색 */
+		background-color: black;
+/* 		여백 */
+		padding : 10px;
+/* 		글자크기 */
+		font-size: 30pt;
+	}
