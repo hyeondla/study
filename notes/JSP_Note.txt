@@ -222,23 +222,40 @@ value=" " readonly 수정 불가
 
 </form>
 
+========================================================
 
+css -> <head> <style type="text/css">...</style> </head> head 안에 작성
+    -> <head> <link rel="stylesheet href="css 파일 위치"> </head>
+       외부 css 가져오기
+    -> <body> <p style="..."></p> 스타일 태그 바로 넣기
 
+*{ } 전체
+태그{ }
+.클래스{ }    ------> body <p class="클래스이름">
+#아이디{ }    ------> body <p id="아이디이름">
 
+------------------------------------------------------
 
+배경색 background-color: 색상명 / #ffffff / rgba(255,255,255,투명도0~1);
+display: inline-block; 글자부분만 배경 채움
+테두리 border: 1px solid 색상; 실선
+안 여백 padding: 10px;
+밖 여백 margin: 10px auto; 가운데
 
+글자색 color: 색상명;
+font-family:글꼴이름;
+font-size:글꼴크기;
+font-style:글꼴스타일;
+font-weight:글자굵기;
+text-align: left / center / right / justify; 정렬
+text-decoration: underline / overline / line-through;
+line-height:줄간격 조절;
+letter-spacing:글자간격;
+word-spaciong:단어간격;
+text-shadow:가로 세로 번짐 색상:
+text-transform: capitalize 첫글자 대문자 / uppercase 대문자 / lowercase 소문자 / ;
 
-
-
-
-
-
-
-
-
-
-
-
+list-style-type: none; 
 
 
 
