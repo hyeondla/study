@@ -230,7 +230,8 @@ css -> <head> <style type="text/css">...</style> </head> head 안에 작성
     -> <body> <p style="..."></p> 스타일 태그 바로 넣기
 
 *{ } 전체
-태그{ }
+body *{ } 바디 전체
+태그{ } p{ } table{ } h1{ }
 .클래스{ }    ------> body <p class="클래스이름">
 #아이디{ }    ------> body <p id="아이디이름">
 
@@ -240,7 +241,10 @@ css -> <head> <style type="text/css">...</style> </head> head 안에 작성
 display: inline-block; 글자부분만 배경 채움
 테두리 border: 1px solid 색상; 실선
 안 여백 padding: 10px;
-밖 여백 margin: 10px auto; 가운데
+                 전체
+        padding: 50px 20px;
+                위아래 왼오
+밖 여백 margin: 10px auto; 문단 가운데 정렬
 
 글자색 color: 색상명;
 font-family:글꼴이름;
@@ -257,9 +261,31 @@ text-transform: capitalize 첫글자 대문자 / uppercase 대문자 / lowercase
 
 list-style-type: none; 
 
+=====================================
 
+table{ } 스타일
+td{ }
+th{ }
+td,th{ }
 
+caption-side: 제목위치;
+border: 테두리두께 선종류 색상;
+border-spacing:셀 사이 여백;
+border-collapse: 표와 셀 테두리 합치기;
 
+=========================================
+
+h1, div, p : 전체 영역 100%
+span, img, strong : 콘텐츠 만큼의 영역
+
+body *{
+	border: 1px solid blue;
+}
+
+box-shadow : 위 오른쪽 아래 왼쪽 색상; 그림자
+border-radius : npx / n%; 꼭지점 둥글게  
+border-top/bottom-left/right-rauius: npx;
+border-style: 테두리 스타일;
 
 
 
