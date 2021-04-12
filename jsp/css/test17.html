@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+body{
+	background-image: url("bg1.jpg");
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-attachment: fixed;
+	background-size: 200px;
+}
+/* background-repeat: 배경 이미지 반복 */
+/* 		repeat / repeat-x / repeat-y / no-repeat */
+/* background-position: 배경 이미지 위치 지정 */
+/* 		수평 : left / center / right / 백분율 / 길이 값 */
+/* 		수직 : top / center / bottom */
+/* background-attachment: 배경 이미지 이동/고정 */
+/* 		scroll / fixed */
+
+.desc{
+	background-color: rgb(243, 186, 182);
+/* 	background-image: url("icon.png"); */
+/* 	background-repeat: no-repeat; */
+	border: 5px dotted silver;
+	width: 350px;
+	padding: 20px;
+	margin-right: 20px;
+	float: left;
+}
+/* background-origin: 배경이미지 적용 범위 조절 */
+/* background-clip: 배경색 적용 범위 조절 */
+/* border-box / padding-box / content-box */
+#clip1{
+	background-clip: border-box;
+}
+#clip2{
+	background-clip: padding-box; 
+}
+#clip3{
+	background-clip: content-box;
+}
+</style>
+</head>
+<body>
+
+<div id="container">
+	<div class="desc" id="clip1">
+		<h3>강아지 집</h3>
+		<p>강아지가 편히 쉴 수 있는 포근한 집이 필요합니다. 강아지의 집은 강아지가 다 큰 후에도 계속 쓸 수 있는 집으로 구입하세요.</p>
+		<p>집을 구입하실 때는 박음질이 잘 되어 있는지, 세탁이 간편한 제품인지 꼭 확인하시고 고르시는 것이 좋습니다.</p>
+	</div>
+	<div class="desc" id="clip2">
+		<h3>강아지 집</h3>
+		<p>강아지가 편히 쉴 수 있는 포근한 집이 필요합니다. 강아지의 집은 강아지가 다 큰 후에도 계속 쓸 수 있는 집으로 구입하세요.</p>
+		<p>집을 구입하실 때는 박음질이 잘 되어 있는지, 세탁이 간편한 제품인지 꼭 확인하시고 고르시는 것이 좋습니다.</p>
+	</div>
+	<div class="desc" id="clip3">
+		<h3>강아지 집</h3>
+		<p>강아지가 편히 쉴 수 있는 포근한 집이 필요합니다. 강아지의 집은 강아지가 다 큰 후에도 계속 쓸 수 있는 집으로 구입하세요.</p>
+		<p>집을 구입하실 때는 박음질이 잘 되어 있는지, 세탁이 간편한 제품인지 꼭 확인하시고 고르시는 것이 좋습니다.</p>
+	</div>
+</div>
+
+</body>
+</html>
