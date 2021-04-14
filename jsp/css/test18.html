@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#container{
+	width: 600px;
+	margin: 20px auto;
+}
+p{
+	width: 500px;
+	padding: 10px;
+	border: 1px solid silver;
+}
+/* 상위태그요소 하위태그요소 => 모든 하위 태그에 적용 */
+/* #container p { 
+	color: blue;
+} */
+/* 상위태그요소 > 하위태그요소 => 다음 하위 태그에만 적용*/
+#container > p {
+	color: blue;
+}
+input[type=text]{
+	color: red;
+}
+input:not([type=text]){
+	color: blue;
+}
+</style>
+</head>
+<body>
+
+텍스트 : <input type="text" name="tx"><br>
+비밀번호 : <input type="password" name="ps"><br>
+이메일 : <input type="email" name="email"><br>
+전화번호 : <input type="tel" name="phone"><br>
+
+<div id="container">
+
+	<h2>신입생 여러분을 기다립니다</h2>
+	<p>아나운서(0명) : 학내 소식을 라디오 방송으로 보도</p>
+	<div>
+		<p>오프닝쇼프로듀서(0명) : 라디오 방송 기획, 제작</p>
+		<p>엔지니어(0명) : 라디오 방송 녹음 및 편집</p>
+	</div>
+	<p>아나운서(0명) : 학내 소식을 라디오 방송으로 보도</p>
+	
+
+</div>
+</body>
+</html>
