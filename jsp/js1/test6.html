@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+// - confirm() : 확인->true 리턴 / 취소->false 리턴
+// alert(confirm("선택하세요"));
+
+/*
+var a = confirm("선택하세요");
+if(a == true){
+	alert("확인을 누르셨습니다");
+} else {
+	alert("취소를 누르셨습니다");
+}
+ */
+ 
+// - prompt() : 입력
+var x = prompt("값을 입력하세요");
+
+/* 
+alert(x);
+alert(x*100); //숫자로 인식
+alert(x+100); //문자열로 인식
+
+alert("문자를 정수형으로 변경해서 계산");
+// - parseInt() : 문자->정수 변경
+alert(parseInt(x)+100);
+ */
+
+// - isNaN() : is Not a Number
+//             순수문자->true 리턴 / 숫자문자,숫자->false 리턴
+// alert(isNaN(x));
+
+if(isNaN(x)){
+	alert("문자를 입력하셨습니다: " + x);
+} else {
+	alert("숫자를 입력하셨습니다: " + (parseInt(x)+100));
+}
+ 
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

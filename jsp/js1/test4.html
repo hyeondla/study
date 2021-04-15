@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function fun1(){
+		alert("안녕하세요");
+		return;
+	}
+	function fun2(money) {
+		alert("들고온 돈: " + money + "원");
+		alert("음료 구매 가능");
+		return;
+	}
+	function fun3() {
+		alert("커피 나옴");
+		return "라떼"; //=> 기억장소에 저장
+	}
+	function fun4(money1,money2) {
+		alert("들고온 돈: " + (money1+money2) + "원");
+		alert("음료수 나옴");
+		return "사이다";
+	}
+</script>
+</head>
+<body>
+<input type="button" value="버튼1" onClick="fun1()">
+<input type="button" value="버튼2" onClick="fun2(500)">
+<input type="button" value="버튼3" onClick="alert('받은 커피: ' + fun3())">
+<input type="button" value="버튼4" onClick="alert('받은 음료수: ' + fun4(500,500))">
+</body>
+</html>

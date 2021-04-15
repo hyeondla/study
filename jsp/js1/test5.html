@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+function fun1() {
+	a=10;
+	b=20;
+	alert("더하기: " + (a+b));
+	alert("빼기: " + (a-b));
+	alert("곱하기: " + (a*b));
+	alert("나누기: " + (a/b));
+	return;
+} 
+
+function fun2(a,b) {
+	alert("더하기: " + (a+b));
+	alert("빼기: " + (a-b));
+	alert("곱하기: " + (a*b));
+	alert("나누기: " + (a/b));
+	return;
+}
+
+function fun3(a,b) {
+// 	alert("면적: " + (a*b));
+	return a*b;
+}
+
+function fun4(x) {
+	return (3*x+10);
+}
+
+function fun5(r) {
+	return 3.14*r*r;
+}
+
+</script>
+</head>
+<body>
+
+<input type="button" value="사칙연산1" onClick="fun1()">
+<input type="button" value="사칙연산2" onClick="fun2(10,20)">
+<input type="button" value="사칙연산3" onClick="fun2(100,200)">
+<input type="button" value="사각형 면적" onClick="alert('사각형 면적: ' + fun3(10,20))">
+<input type="button" value="삼각형 면적" onClick="alert('삼각형 면적: ' + fun3(10,20)/2)">
+<input type="button" value="계산" onClick="alert('계산 결과: ' + fun4(5))">
+<input type="button" value="원 면적" onClick="alert('원 면적: ' + fun5(10))">
+
+
+</body>
+</html>

@@ -402,6 +402,98 @@ background-attachment:
 배경 이미지 크기 조절
 background=size:
 
+==============================================
+
+상위태그요소 하위태그요소
+: 모든 하위태그요소 가리킴
+
+상위태그요소 > 하위태그요소
+: 다음 하위태그요소 가리킴
+
+==============================================
+
+태그[속성=값]{...}
+태그:not([속성=값]){...}
+
+input[type=text]{ color:red }
+input:not([type=text]){	color: blue;}
+form input[required] 
+
+form input[type=submit]:hover {...}
+form fieldset:last-of-type{...}
+
+==============================================
+
+<input type="button" value="버튼" onclick="alert('버튼클릭')">
+
+<input type="button" value="버튼2" ondblclick="alert('더블클릭')">
+
+<input type="button" value="버튼3" onmouseover="alert('마우스오버')">
+
+----------------------------------------
+
+<head>
+<script type="text/javascript">
+	alert("실행시 알람");
+</script>
+</head>
+
+<head>
+<script src="(경로)"></script>
+</head>
+
+==============================================
+
+var 변수명=값; 
+
+function 함수명() {
+	...
+	return;
+} 
+
+function 함수명(매개변수){
+	alert("내용: " + 매개변수);
+	return;
+}
+---> <body> <input ... onClick="함수명(매개변수값)"> 
+
+function 함수명(매개변수1, 매개변수2){
+	alert("내용: " + (매개변수1+매개변수2));
+	....
+	return;
+}
+---> <body> <input ... onClick="함수명(매개변수1값,매개변수2값)"> 
+
+function 함수명(){
+	...
+	return "리턴값"; //기억장소에 저장됨
+}
+---> <body> <input ... onClick="alert(함수명())"> //리턴값 출력
+
+-----------------------------------------------------------------
+
+내장 함수
+- alert(메시지값) : 메시지 출력, 확인
+- confirm() : 확인->true 리턴, 취소->false 리턴
+- prompt() : 입력, + 연산시 문자열로 인식
+- parseInt() : 문자->정수형 변경
+- isNaN() : is Not a Number
+            순수문자->true 리턴 / 그 외->false 리턴
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
