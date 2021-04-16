@@ -480,6 +480,51 @@ function 함수명(){
 - isNaN() : is Not a Number
             순수문자->true 리턴 / 그 외->false 리턴
 
+-----------------------------------------------------------
+
+객체
+- 멤버 변수
+- 멤버 함수(메서드)
+
+
+
+- window.open("사이트주소/페이지이름", "창이름/생략가능", "창크기(width=xx,height=xx),창위치(top=xx,left=xx), ..."); 새 창 열기 
+- window.close(); 창 닫기
+
+
+
+- (window.)location.href -> 주소값 저장, 주소 이동, 페이지 이동
+  ㄴ 생략 가능
+- (window.)location.reload(); 새로고침
+- location.hostname 호스트(서버)이름
+- location.port 포트 번호
+- location.protocol 프로토콜
+
+
+
+- history.length 방문기록 개수 저장
+- history.back() 이전 방문 페이지 이동 
+- history.forward() 다음 방문 페이지 이동
+- history.go(n) n단계 다음 페이지 이동
+- history.go(-n) n단계 이전 페이지 이동
+
+
+
+- document.title 제목
+- document.bgColor 배경색
+- document.fgColor 폰트색
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

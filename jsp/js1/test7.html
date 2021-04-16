@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+/* 
+window - location 주소줄
+		 history 방문기록
+		 document - images, link, div, ...
+		 			form - text, password, textarea
+		 				   checkbox, radio
+		 				   select, option, ....
+window객체 (멤버변수, 멤버함수)
+ */
+ function fun1() {
+	//window.open("사이트주소/페이지이름", "창이름/생략가능", "창크기,창위치, ...");
+	window.open("http://www.naver.com","win","width=300,height=200");
+	return;
+}
+function fun2() {
+	window.open("test5.html","","width=700,height=100,top=100,left=100");
+	return;
+}
+function fun3() {
+	window.close();
+}
+function fun4() {
+	window.open("test7_1.html","","width=100,height=50");
+}
+</script>
+</head>
+<body>
+
+<input type="button" value="창 열기" onclick="fun1()">
+<input type="button" value="창 열기2" onclick="fun2()">
+<input type="button" value="창 닫기" onclick="fun3()">
+<input type="button" value="창 열고 닫기" onclick="fun4()">
+
+</body>
+</html>

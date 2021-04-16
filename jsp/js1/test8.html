@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function fun1() {
+	alert("주소: " + location.href);
+// 	alert("호스트(서버)이름: " + location.hostname);
+// 	alert("포트번호: " + location.port);
+// 	alert("프로토콜: " + location.protocol);
+}
+function fun2() {
+	location.href="http://www.naver.com";	
+}
+function fun3() {
+	alert("test9.html로 이동합니다")
+	location.href="test9.html";
+}
+function fun4() {
+	location.reload();
+}
+</script>
+</head>
+<body>
+<input type="button" value="주소 정보" onclick="fun1()">
+<input type="button" value="주소 이동" onclick="fun2()">
+<input type="button" value="페이지 이동" onclick="fun3()">
+<input type="button" value="새로고침" onclick="fun4()">
+
+</body>
+</html>

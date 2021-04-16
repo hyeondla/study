@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function fun1() {
+	alert(history.length);
+}
+function fun2() {
+	history.back();
+}
+function fun3() {
+	history.forward();
+}
+</script>
+</head>
+<body>
+<input type="button" value="방문기록개수" onclick="fun1()">
+<input type="button" value="이전 방문 페이지 이동" onclick="fun2()">
+<input type="button" value="다음 방문 페이지 이동" onclick="fun3()">
+<form action="test9_1.html" method="get">
+아이디 : <input type="text" name="id"><br>
+비밀번호 : <input type="password" name="pw"><br>
+<input type="submit" value="로그인">
+</form>
+</body>
+</html>
