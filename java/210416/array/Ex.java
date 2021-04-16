@@ -40,6 +40,15 @@ public class Ex {
 			System.out.println(i + "번 인덱스 : " + score[i]);
 		}
 		
+		System.out.println("=====================");
+		
+		int[] arr1, arr2; //int[], int[]
+		
+		int arr3, arr4[]; //int, int[]
+		
+		
+		
+		
 	}
 	
 }

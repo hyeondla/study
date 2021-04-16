@@ -39,8 +39,20 @@ public class Test {
 			System.out.println(arr3[i]);
 		}
 		
+		System.out.println("=====================");
 		
+		double[] arr4 = new double[5];
 		
+		arr4[0] = 968513.56543423;
+		arr4[1] = 7657.32432954;
+		arr4[3] = -3482834.3853;
+		arr4[4] = 0.38485;
+		//기본값 0.0
+		
+		for(int i=0; i<arr4.length; i++) {
+			System.out.println(arr4[i]);
+		}
+	
 		
 	}
 	
