@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+// document.forms[0].멤버변수 → action, method
+// document.forms[0].멤버함수() → focus(), blur(), select()
+// document.폼이름.멤버변수
+// document.폼이름.멤버함수() 
+function fun1() {
+	alert(document.forms[0].action);
+	alert(document.forms[0].method);
+// 	alert(document.fr.action);
+// 	alert(document.fr.method);
+	document.forms[0].submit();
+}
+function fun2() {
+	document.fr.action="b.jsp";
+	document.fr.method="post";
+	
+	document.forms[0].submit();
+}
+function fun3() {
+	document.fr.reset();
+}
+function fun4(a) {
+// 	alert(a);
+	if(a == 'basket'){
+		document.fr.action="basket.jsp";
+		alert("장바구니로 이동");
+	}else if(a == 'order'){
+		document.fr.action="order.jsp";
+		alert("주문하기로 이동");
+	}
+	
+	document.fr.submit();
+}
+// method="get" 주소줄에 이름-값으로 데이터 들고감
+// method="post" 주소줄에 데이터 보이지 않음
+</script>
+</head>
+<body>
+<form action="a.jsp" method="get" name="fr">
+<input type="text" name="tx">
+<input type="button" value="폼 속성" onclick="fun1()">
+<input type="button" value="폼 속성 변경" onclick="fun2()">
+<input type="button" value="초기화" onclick="fun3()">
+<input type="reset" value="초기화버튼">
+<input type="button" value="장바구니" onclick="fun4('basket')">
+<input type="button" value="바로구매" onclick="fun4('order')">
+</form>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+// document.이미지[0].멤버변수
+// document.이미지[0].멤버함수()
+// document.이미지이름.멤버변수
+// document.이미지이름.멤버함수()
+function fun1(){
+// 	alert(document.images[0].src);
+// 	alert(document.images[0].width);
+// 	alert(document.images[0].height);
+// 	alert(document.images[0].border);
+	alert(document.img1.src);
+	alert(document.img1.width);
+	alert(document.img1.height);
+	alert(document.img1.border);
+}
+function fun2() {
+	document.images[0].src="../html/2.jpg";
+	document.images[0].width=500;
+	document.images[0].height=350;
+	document.images[0].border=10;
+}
+function fun3() {
+// 	document.images[1].border=20;
+	document.img2.border=20;
+}
+function fun4() {
+	document.img3.src="../html/images/4.jpg";
+}
+function fun5() {
+	document.img3.src="../html/images/3.jpg";
+}
+</script>
+</head>
+<body>
+<img src="../html/1.jpg" width="300" height="200" border="1" name="img1"><br>
+<input type="button" value="이미지속성" onclick="fun1()">
+<input type="button" value="이미지변경" onclick="fun2()"><br>
+<img src="../html/2.jpg" width="500" height="350" name="img2" onclick="fun3()">
+<img src="../html/images/3.jpg" name="img3" onmouseover="fun4()" onmouseout="fun5()">
+</body>
+</html>

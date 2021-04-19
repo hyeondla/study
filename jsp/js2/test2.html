@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+// document.폼이름.텍스트상자이름.멤버변수 → type, name, value
+// document.폼이름.텍스트상자이름.멤버함수() → focus(), blur(), select()
+function fun1() {
+	alert(document.fr.tx.type);
+	alert(document.fr.tx.name);	
+	alert(document.fr.tx.value);
+}
+function fun2() {
+	document.fr.tx.value="입력값 변경됨";
+	document.fr.tx.focus(); //포커스
+	document.fr.tx.blur(); //포커스 해제
+	document.fr.tx.se;ect(); //블럭 설정
+}
+function fun3() {
+// 	alert(document.fr.tx.value);
+// 	alert("문자열의 길이: " + document.fr.tx.value.length);
+	
+	if(document.fr.tx.value == ""){ //document.fr.tx.value.length == 0 //NULL
+		alert("입력하세요");
+		document.fr.tx.focus();
+	} else if(document.fr.pw.value == ""){
+		alert("비밀번호를 입력하세요");
+		document.fr.pw.focus();
+	} else if(document.fr.ta.value.length < 5){
+		alert("5자 이상 입력하세요");
+		document.fr.ta.focus();
+	} else {
+		alert("서버로 전송됩니다");
+		document.fr.submit();
+	}
+	return;
+}
+</script>
+</head>
+<body>
+<form action="a.jsp" method="get" name="fr">
+텍스트상자 : <input type="text" name="tx">
+비밀번호상자 : <input type="password" name="pw"><br>
+여러줄텍스트상자 : <textarea name="ta" cols="10" rows="5"></textarea><br>
+<input type="button" value="텍스트상자정보" onclick="fun1()">
+<input type="button" value="텍스트상자 입력값변경" onclick="fun2()">
+<input type="button" value="텍스트상자제어" onclick="fun3()">
+
+</form>
+</body>
+</html>
