@@ -39,7 +39,7 @@
 
 <br>
 
-> **Class** `.`
+> Class `.`
 
 ```html
 <head>
@@ -58,7 +58,7 @@
 
 <br>
 
-> **ID** `#`
+> ID `#`
 
 ```html
 <head>
@@ -105,7 +105,9 @@ Selector**{background-position: 가로값 세로값}** 위치 지정
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;세로 **top, center, bottom, %**
 
-Selector**{background: background-image 속성값 background-repeat 속성값 background-attachment 속성값 background-position 속성값}** 속성 한 번에 지정, `Space Bar` 구분
+Selector**{background: image속성값 repeat속성값 attachment속성값 position속성값}** 
+
+속성 한 번에 지정, `Space Bar` 구분
 
 <br>
 
@@ -184,4 +186,46 @@ Selector**{width: 값; height: 값}** 폭, 높이 지정
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**absolute** 절대적인 위치, 웹 브라우저 왼쪽 상단 모서리 top 0 left 0
 
 <br>
+
+> 글자
+
+Selector**{color: 값}** 색상 지정
+
+Selector**{font-family: 값1, 값2, 값3, ...}** 글꼴 지정
+
+사용자의 컴퓨터에 글꼴1이 없을 경우 글꼴2, 글꼴3, ... , 기본글꼴 으로 대체 
+
+Selector**{font-style: 값}** 형태 지정
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;값 **normal, italic, oblique**
+
+Selector**{font-weight: 값}** 굵기 지정
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;값 **normal, bold, bolder, lighter, 100~900**
+
+Selector**{font-size: 값}** 크기 지정
+
+Selector**{font: style속성값 weight속성값 size속성값 height속성값 famile속성값}**
+
+속성 한 번에 지정, `Space Bar` 구분
+
+<br>
+
+> 문자 & 문단
+
+Selector**{letter-spacing: 값}** 자간 지정
+
+Selector**{word-spacing: 값}** 단어 간격 지정
+
+Selector**{line-height: 값}** 줄 간격 지정
+
+Selector**{white-space: 값}** 공백, 줄바꿈 지정
+
+옵션 **normal** 여러 개의 공백을 하나로 표시
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**pre** 공백을 그대로 표시
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**nowrap** br태그 없이 줄 바꿈 허용 안함
+
+
 

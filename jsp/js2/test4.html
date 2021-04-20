@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+//document.폼이름.목록상자이름.멤버변수 → name, type, selectedIndex
+//document.폼이름.목록상자이름.options[0].멤버변수 → value, text, selected
+//document.폼이름.목록상자이름.멤버함수() → focus(), blur()
+
+function fun1() {
+	alert(document.fr.se.name);
+	alert(document.fr.se.type); // select-one, multiple
+	alert(document.fr.se.selectedIndex);
+	
+	document.fr.se.focus();
+	document.fr.se.blur();
+	
+	
+}
+function fun2() {
+	alert(document.fr.se.options[0].value);
+	alert(document.fr.se.options[0].text);
+	
+	alert(document.fr.se.options[0].selected);
+	
+}
+function fun3() {
+// 	alert(document.fr.se.selectedIndex);
+// 	alert(document.fr.se.option[0].selected);
+	
+	if(document.fr.se.selectedIndex == 0){ //document.fr.se.options[0].selected == true
+		alert("목록을 선택하세요");
+		document.fr.se.focus();
+		return;
+	}
+	
+	 
+	if(document.fr.se.options[0].selected){
+		alert("목록을 선택하세요");
+		document.fr.se.focus();
+		return;
+	}
+	
+	document.fr.submit();
+}
+
+</script>
+</head>
+<body>
+<form action="a.jsp" method="get" name="fr">
+<select name="se">
+	<option value="">목록 선택하세요</option>
+	<option value="목록1">목록내용1</option>
+	<option value="목록2">목록내용2</option>
+	<option value="목록3">목록내용3</option>
+</select>
+<input type="button" value="목록상자정보" onclick="fun1()">
+<input type="button" value="목록상자option정보" onclick="fun2()">
+<input type="button" value="목록상자제어" onclick="fun3()">
+
+</form>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+//document.폼이름.라디오박스이름[0].멤버변수 → type, name, value, checked
+//document.폼이름.라디오박스이름[0].멤버함수() → focus(), blur(), click()
+
+//checked 선택 → true, 선택X → false
+function fun1() {
+	alert(document.fr.ra[0].type);
+	alert(document.fr.ra[0].name);
+	alert(document.fr.ra[0].value); 
+	alert(document.fr.ra[0].checked);
+	//                  ㄴ 라디오 값 첫번째 
+// 	document.fr.ra[0].focus();
+// 	document.fr.ra[0].blur();
+	document.fr.ra[0].click(); 
+	
+}
+function fun2() {
+// 	alert("남 선택: " + document.fr.ra[0].checked);
+// 	alert("여 선택: " + document.fr.ra[1].checked);
+	
+	if(document.fr.ra[0].checked == false && document.fr.ra[1].checked == false){
+		alert("성별을 선택하세요");
+		return;
+	}
+	
+	if(document.fr.ch[0].checked == false && document.fr.ch[1].checked == false){
+		alert("취미를 선택하세요");
+		return;
+	}
+	
+	
+	alert("서버로 전송됩니다");
+	document.fr.submit();
+	
+}
+
+
+</script>
+</head>
+<body>
+<form action="a.jsp" method="get" name="fr">
+<input type="radio" name="ra" value="남">남자
+<input type="radio" name="ra" value="여">여자<br>
+
+<input type="checkbox" name="ch" value="여행">여행
+<input type="checkbox" name="ch" value="게임">게임<br>
+
+<input type="button" value="라디오상자정보" onclick="fun1()">
+<input type="button" value="라디오상자제어" onclick="fun2()">
+
+</form>
+</body>
+</html>

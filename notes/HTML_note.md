@@ -158,9 +158,9 @@
 
 〈**tr**〉 테이블 한 줄 정의 〈/tr〉
 
-속성 border 테두리 두께 지정
+속성 **border** 테두리 두께 지정
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bgcolor 배경 색상 지정
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**bgcolor** 배경 색상 지정
 
 -------------------------------------------------------------------------------------------
 
