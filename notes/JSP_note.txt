@@ -508,14 +508,40 @@ function 함수명(){
 - history.go(n) n단계 다음 페이지 이동
 - history.go(-n) n단계 이전 페이지 이동
 
-
+----------------------------------------------------------------
 
 - document.title 제목
 - document.bgColor 배경색
 - document.fgColor 폰트색
 
+- document.forms[0].멤버변수 → action, method
+- document.forms[0].멤버함수() → focus(), blur(), select()
+- document.폼이름.멤버변수
+- document.폼이름.멤버함수() 
 
+- document.폼이름.텍스트상자이름.멤버변수 → type, name, value
+- document.폼이름.텍스트상자이름.멤버함수() → focus(), blur(), select()
 
+- document.폼이름.라디오박스이름[0].멤버변수 → type, name, value, checked
+- document.폼이름.라디오박스이름[0].멤버함수() → focus(), blur(), click()
+
+- document.폼이름.목록상자이름.멤버변수 → name, type, selectedIndex
+- document.폼이름.목록상자이름.options[0].멤버변수 → value, text, selected
+- document.폼이름.목록상자이름.멤버함수() → focus(), blur()
+
+- checked 선택 → true, 선택X → false
+
+- method="get" 주소줄에 이름-값으로 데이터 들고감
+- method="post" 주소줄에 데이터 보이지 않음
+
+==============================================================
+
+<%     %> 자바, jsp 명령 공간
+	  자바 변수,연산자,조건문,반복문 사용 가능
+<%=    %> 웹페이지에 명령 출력
+<%@    @> 설정
+<%!    %> 전역변수 설정, 메서드 설정
+<%-- --%> jsp 주석
 
 
 

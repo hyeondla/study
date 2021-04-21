@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function check() {
+	if(document.getElementById("idid").value == ""){ //forms[0].id → getElementById("idid") 
+		alert("아이디를 입력하세요");
+		document.getElementById("idid").focus();
+		return false;
+	}
+	if(document.getElementById("pwpw").value == ""){
+		alert("비밀번호를 입력하세요");
+		document.getElementById("pwpw").focus();
+		return false;
+	}
+	if(document.forms[0].intro.value == ""){
+		alert("자기소개를 입력하세요");
+		document.forms[0].intro.focus();
+		return false;
+	}
+	if(document.forms[0].gender[0].checked == false && document.forms[0].gender[1].checked == false){
+		alert("성별을 선택하세요");
+		document.forms[0].gender[0].focus();
+		return false;
+	}
+	if(document.forms[0].hobby[0].checked == false && document.forms[0].hobby[1].checked == false && document.forms[0].hobby[2].checked ==false){
+		alert("취미를 선택하세요");
+		document.forms[0].hobby[0].focus();
+		return false;
+	}
+	if(document.forms[0].grade.selectedIndex == 0){
+		alert("등급을 선택하세요");
+		document.forms[0].grade.focus();
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<form action="a.jsp" method="get" name="fr" onsubmit="return check()"> <!-- check함수 false 리턴 -->
+아이디 : <input type="text" name="id" id="idid"><br>
+비밀번호 : <input type="password" name="pw" id="pwpw"><br>
+자기소개 : <textarea name="intro" cols="10" rows="5"></textarea><br>
+성별 : <input type="radio" name="gender" value="남">남
+<input type="radio" name="gender" value="여">여<br>
+취미 : <input type="checkbox" name="hobby" value="여행">여행
+<input type="checkbox" name="hobby" value="게임">게임
+<input type="checkbox" name="hobby" value="운동">운동<br>
+회원등급 : <select name="grade">
+	<option value="">등급을 선택하세요</option>
+	<option value="1">1등급</option>
+	<option value="2">2등급</option>	
+	<option value="3">3등급</option>
+</select><br>
+<input type="submit" value="회원가입"> <!-- submit에 false가 리턴되면 전송 X -->
+</form>
+</body>
+</html>
