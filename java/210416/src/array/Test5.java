@@ -15,10 +15,10 @@ public class Test5 {
 		int[] studentTotal = new int[names.length];
 		
 		System.out.println("< 학생 점수표 >");
-		System.out.println("         국어  영어  수학");
+		System.out.println("        국어  영어  수학");
 		  
 		for(int i=0; i<score.length; i++) {
-			System.out.print(names[i] + " ");
+			System.out.print(names[i]);
 			for(int j=0; j<score[i].length; j++) {
 				System.out.printf(" %4d ", score[i][j]);
 				studentTotal[i] += score[i][j];
