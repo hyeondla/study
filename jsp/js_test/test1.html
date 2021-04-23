@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#span1 {
+	display: inline-block; 
+	width: 300px; 
+	color: gray; 
+	text-align: left;
+}
+#span2 {
+	display: inline-block; 
+	width: 300px; 
+	color: green; 
+	text-align: right;
+}
+.box1 {width: 120px;}
+.box2 {width: 50px;}
+.box3 {width: 350px;}
+</style>
+
+<script type="text/javascript">
+function check() {
+	if(document.fr.name.value == ""){
+		alert("이름을 입력하세요");
+		document.fr.name.focus();
+		return false;
+	}
+	if(document.fr.num1.value.length != 6){
+		alert("주민등록번호 앞자리 6자를 입력하세요");
+		document.fr.num1.focus();
+		return false;
+	}
+	if(document.fr.num2.value.length != 7){
+		alert("주민등록번호 뒷자리 7자를 입력하세요");
+		document.fr.num2.focus();
+		return false;
+	}
+	if(document.fr.id.value.length<4 || document.fr.id.value.length>10){
+		alert("아이디를 4~10자 입력하세요");
+		document.fr.id.focus();
+		return false;
+	}
+	if(document.fr.pw.value.length<4 || document.fr.pw.value.length>10){
+		alert("비밀번호를 4~10자 입력하세요");
+		document.fr.pw.focus();
+		return false;
+	}
+	if(document.fr.pw_confirm.value == ""){
+		alert("비밀번호 확인을 해주세요");
+		document.fr.pw_confirm.focus();
+		return false;
+	}
+	if(document.fr.pw.value != document.fr.pw_confirm.value){
+		alert("비밀번호가 일치하지 않습니다");
+		document.fr.pw_confirm.focus();
+		return false;
+	}
+	if(document.fr.tel.value == ""){
+		alert("전화번호를 입력하세요");
+		document.fr.tel.focus();
+		return false;
+	}
+	if(document.fr.grade.selectedIndex==0){
+		alert("회원 분류를 선택해주세요");
+		document.fr.grade.focus();
+		return false;
+	}
+}
+function id_check() {
+	if(document.fr.id.value.length<4 || document.fr.id.value.length>10){
+		alert("아이디를 4~10자 입력하세요");
+		document.fr.id.focus();
+		return;
+	}
+	alert("중복확인완료");
+}
+function search() {
+	window.open("test2.html","주소검색", "width=500px, height=350px");
+}
+</script>
+</head>
+<body>
+<div style="width:700px; height:700px;">
+<form action="a.jsp" method="get" name="fr" onsubmit="return check()">
+<h3 align="center">Registration</h3>
+<div>
+	<span id="span1"><img src="icon.png" width="15px" height="15px">표시는 반드시 입력하셔야 합니다.</span>
+	<span id="span2">회원가입양식</span>
+</div>
+
+<table>
+	<tr>
+		<td align="right"><img src="icon.png" width="15px" height="15px">이름</td>
+		<td><input type="text" name="name" class="box1">
+	</tr>
+	<tr>
+		<td align="right"><img src="icon.png" width="15px" height="15px">주민등록번호</td>
+		<td><input type="number" name="num1" class="box1"> - <input type="number" name="num2" class="box1"></td>
+	</tr>
+	<tr>
+		<td align="right"><img src="icon.png" width="15px" height="15px">회원 ID</td>
+		<td><input type="text" name="id" class="box1"> 
+			<input type="button" value="중복확인" onclick="id_check()"></td>
+	</tr>
+	<tr>
+		<td align="right"><img src="icon.png" width="15px" height="15px">비밀번호</td> 
+		<td><input type="password" name="pw" class="box1"></td>
+	</tr>
+	<tr>
+		<td align="right"><img src="icon.png" width="15px" height="15px">비밀번호 확인</td> 
+		<td><input type="password" name="pw_confirm" class="box1"></td>
+	</tr>
+	<tr>
+		<td align="right">E-mail</td>
+		<td><input type="email" name="email" class="box3"></td>
+	</tr>
+	<tr>
+		<td align="right"><img src="icon.png" width="15px" height="15px">전화번호</td> 
+		<td><input type="tel" name="tel" class="box1"></td>
+	</tr>
+	<tr>
+		<td align="right">핸드폰번호</td>
+		<td><input type="tel" name="phone" class="box1"></td>
+	</tr>
+	<tr>
+		<td align="right">우편번호</td> 
+		<td><input type="number" name="addr1" class="box2">-<input type="number" name="addr2" class="box2">
+			<input type="button" value="검색" onclick="search()"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="text" name="addr3" class="box3"></td>
+	</tr>
+	<tr>
+		<td align="right">상세주소</td>
+		<td><input type="text" name="addr4" class="box3"></td>
+	</tr>
+	<tr>
+		<td align="right"><img src="icon.png" width="15px" height="15px">회원분류</td>
+		<td><select name="grade">
+			<option value="">선택해주십시오</option>
+			<option value="grade_a">A등급</option>
+			<option value="grade_b">B등급</option>
+			<option value="grade_c">C등급</option>
+			</select></td>
+	</tr>
+</table>
+<div align="center">
+<input type="submit" value="가입">
+<input type="reset" value="취소">
+</div>
+
+</form>
+
+</div>
+</body>
+</html>
