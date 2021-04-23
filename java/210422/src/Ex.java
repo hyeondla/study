@@ -17,7 +17,7 @@ public class Ex {
 //		String result = call();
 //		System.out.println("==> " + result);
 		System.out.println("==> " + call());
-		
+			
 	}
 
 	//----------- worker 메소드 정의 --------------
