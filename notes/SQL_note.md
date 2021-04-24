@@ -141,7 +141,7 @@ AND와 OR을 조합해서 사용하는 경우 **AND**가 **우선 연산** → *
 
 정렬기준 여러개(`,`로 구분)인 경우, 정렬 후 결과에서 중복값에 대해 이후 순서의 정렬기준으로 결과를 추가로 정렬
 
-<img src="./img/sql013.PNG" align="left"><br>
+<img src="./img/sql013.PNG"><br>
 
 <br>
 
@@ -174,17 +174,11 @@ FROM 테이블명;
 
 **날짜 - 날짜** : 두 날짜간의 차이나는 일 수를 숫자로 돌려줌
 
-<img src="./img/sql100.PNG" align="left"><br>
+<img src="./img/sql100.PNG"><br>
 
+<img src="./img/sql101.PNG"><br>
 
-
-<img src="./img/sql101.PNG" align="left"><br>
-
-
-
-<img src="./img/sql102.PNG" align="left"><br>
-
-
+<img src="./img/sql102.PNG"><br>
 
 <br>
 
@@ -194,37 +188,27 @@ FROM 테이블명;
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;뺄셈연산을 개월로 환산하여 출력되므로 순서 고려
 
-<img src="./img/sql103.PNG" align="left"><br>
+<img src="./img/sql103.PNG"><br>
 
 **ADD_MONTHS** : 입력 날짜 기준, 개월 단위로 날짜 데이터를 반환 
 
-<img src="./img/sql104.PNG" align="left">
-
-<br>
+<img src="./img/sql104.PNG"><br>
 
 **NEXT_DAY** : 입력 날짜 이후로 오는 특정 요일의 날짜 데이터를 반환
 
-<img src="./img/sql105.PNG" align="left">
-
-<br>
+<img src="./img/sql105.PNG"><br>
 
 **LAST_DAY** : 입력 날짜가 속한 월의 마지막 날 반환
 
-<img src="./img/sql106.PNG" align="left">
-
-<br>
+<img src="./img/sql106.PNG"><br>
 
 **ROUND** : 날짜 반올림, **'MONTH'** / **'YEAR'**
 
-<img src="./img/sql107.PNG" align="left">
-
-<br>
+<img src="./img/sql107.PNG"><br>
 
 **TRUNC** : 날짜 버림, **'MONTH'** / **'YEAR'**
 
-<img src="./img/sql108.PNG" align="left">
-
-<br>
+<img src="./img/sql108.PNG"><br>
 
 <br>
 
