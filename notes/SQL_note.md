@@ -4,7 +4,7 @@
 DESCRIBE 테이블명
 ```
 
-<img src="./img/sql001.PNG" align="left">
+<img src="./img/sql001.PNG"><br>
 
 <br>
 
@@ -56,7 +56,7 @@ SELECT 컬럼1 || '리터럴 문자' || 컬럼2
 FROM 테이블명;
 ```
 
-<img src="./img/sql002.PNG" align="left">
+<img src="./img/sql002.PNG"><br>
 
 <br>
 
@@ -71,7 +71,7 @@ SELECT DISTINCT 컬럼명
 FROM 테이블명;
 ```
 
-<img src="./img/sql003.PNG" align="left">
+<img src="./img/sql003.PNG"><br>
 
 <br>
 
@@ -85,13 +85,13 @@ FROM 테이블명;
 
 '일-월-년도' , 'DD-MM-YY' 형태의 문자열로 조건값을 주는 경우 날짜값으로 인식
 
-<img src="./img/sql004.PNG" align="left">
+<img src="./img/sql004.PNG"><br>
 
 **BETWEEN A AND B** : A 이상 B 이하
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문자열, 날짜값 범위 연산 가능
 
-<img src="./img/sql005.PNG" align="left">
+<img src="./img/sql005.PNG"><br>
 
 **IN(조건값1, 조건값2, ..., 조건값n)** 
 
@@ -99,7 +99,7 @@ FROM 테이블명;
 
 &nbsp;&nbsp;조건값을 목록으로 여러개를 받을 수 있음
 
-<img src="./img/sql006.PNG" align="left">
+<img src="./img/sql006.PNG"><br>
 
 **LIKE** : 패턴문자의 패턴을 가지는 문자열의 값을 가진 행 출력,
 
@@ -107,15 +107,15 @@ FROM 테이블명;
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**_**  한자리 문자
 
-<img src="./img/sql007.PNG" align="left">
+<img src="./img/sql007.PNG"><br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**%**  0~n자리 문자
 
-<img src="./img/sql008.PNG" align="left">
+<img src="./img/sql008.PNG"><br>
 
 **IS NULL** 컬럼값이 NULL인 행 선택
 
-<img src="./img/sql009.PNG" align="left">
+<img src="./img/sql009.PNG"><br>
 
 **a AND b** a, b 조건을 둘 다 만족
 
@@ -123,15 +123,15 @@ FROM 테이블명;
 
 AND와 OR을 조합해서 사용하는 경우 **AND**가 **우선 연산** → **( )** 사용
 
-<img src="./img/sql010.PNG" align="left">
+<img src="./img/sql010.PNG"><br>
 
 **NOT** 다른 연산자와 조합하여 사용
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;연산식 내용과 반대되는 결과
 
-<img src="./img/sql011.PNG" align="left">
+<img src="./img/sql011.PNG"><br>
 
-<img src="./img/sql012.PNG" align="left">
+<img src="./img/sql012.PNG"><br>
 
 <br>
 
@@ -141,7 +141,7 @@ AND와 OR을 조합해서 사용하는 경우 **AND**가 **우선 연산** → *
 
 정렬기준 여러개(`,`로 구분)인 경우, 정렬 후 결과에서 중복값에 대해 이후 순서의 정렬기준으로 결과를 추가로 정렬
 
-<img src="./img/sql013.PNG" align="left">
+<img src="./img/sql013.PNG" align="left"><br>
 
 <br>
 
@@ -174,11 +174,17 @@ FROM 테이블명;
 
 **날짜 - 날짜** : 두 날짜간의 차이나는 일 수를 숫자로 돌려줌
 
-<img src="./img/sql100.PNG" align="left">
+<img src="./img/sql100.PNG" align="left"><br>
 
-<img src="./img/sql101.PNG" align="left">
 
-<img src="./img/sql102.PNG" align="left">
+
+<img src="./img/sql101.PNG" align="left"><br>
+
+
+
+<img src="./img/sql102.PNG" align="left"><br>
+
+
 
 <br>
 
@@ -188,29 +194,37 @@ FROM 테이블명;
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;뺄셈연산을 개월로 환산하여 출력되므로 순서 고려
 
-<img src="./img/sql103.PNG" align="left">
+<img src="./img/sql103.PNG" align="left"><br>
 
 **ADD_MONTHS** : 입력 날짜 기준, 개월 단위로 날짜 데이터를 반환 
 
 <img src="./img/sql104.PNG" align="left">
 
+<br>
+
 **NEXT_DAY** : 입력 날짜 이후로 오는 특정 요일의 날짜 데이터를 반환
 
 <img src="./img/sql105.PNG" align="left">
+
+<br>
 
 **LAST_DAY** : 입력 날짜가 속한 월의 마지막 날 반환
 
 <img src="./img/sql106.PNG" align="left">
 
+<br>
+
 **ROUND** : 날짜 반올림, **'MONTH'** / **'YEAR'**
 
 <img src="./img/sql107.PNG" align="left">
+
+<br>
 
 **TRUNC** : 날짜 버림, **'MONTH'** / **'YEAR'**
 
 <img src="./img/sql108.PNG" align="left">
 
-
+<br>
 
 <br>
 
