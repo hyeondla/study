@@ -115,11 +115,7 @@ FROM 테이블명;
 
 **IS NULL** 컬럼값이 NULL인 행 선택
 
-
-
-
-
-
+<img src="./img/sql009.PNG" align="left">
 
 **a AND b** a, b 조건을 둘 다 만족
 
@@ -127,7 +123,15 @@ FROM 테이블명;
 
 AND와 OR을 조합해서 사용하는 경우 **AND**가 **우선 연산** → **( )** 사용
 
+<img src="./img/sql010.PNG" align="left">
+
 **NOT** 다른 연산자와 조합하여 사용
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;연산식 내용과 반대되는 결과
+
+<img src="./img/sql011.PNG" align="left">
+
+<img src="./img/sql012.PNG" align="left">
 
 <br>
 
@@ -137,11 +141,9 @@ AND와 OR을 조합해서 사용하는 경우 **AND**가 **우선 연산** → *
 
 정렬기준 여러개(`,`로 구분)인 경우, 정렬 후 결과에서 중복값에 대해 이후 순서의 정렬기준으로 결과를 추가로 정렬
 
+<img src="./img/sql013.PNG" align="left">
+
 <br>
-
-
-
-
 
 
 
