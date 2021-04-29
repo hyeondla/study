@@ -378,3 +378,95 @@ FROM 테이블명;
 
 <br>
 
+> 변환 함수 
+
+**TO_CHAR**  (NUMBER  → CHAR) : TO_CHAR(숫자,'형식 요소')
+
+<img src="./img/sql046.PNG"><br>
+
+<img src="./img/sql047.PNG"><br>
+
+<img src="./img/sql048.PNG"><br>
+
+<img src="./img/sql049.PNG"><br>
+
+---
+
+숫자 형식 요소
+
+**9** : 숫자값을 문자열로 변환 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;숫자값보다 형식문자의 길이가 더 긴 경우 여백
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;숫자값보다 형식문자의 길이가 더 짧은 경우 깨짐(#)
+
+**0** : 숫자값보다 형식문자의 길이가 더 긴 경우 0으로 채워서 출력
+
+**$** : 통화기호 '$' 포함하여 출력
+
+**L** : DB 국가 설정의 통화 기호 포함하여 출력
+
+**.** : 정밀도를 나타내는 소수점 위치 지정
+
+&nbsp;&nbsp;&nbsp;&nbsp;숫자값보다 형식문자의 정밀도가 더 높은 경우 형식문자의 길이에 맞춰 소수점 자리에 0을 더 채움
+
+&nbsp;&nbsp;&nbsp;&nbsp;숫자값보다 형식문자의 정밀도가 더 낮은 경우 형식문자의 길이에 맞춰 반올림 
+
+**,** : 자리값 구분
+
+&nbsp;&nbsp;&nbsp;길이에 맞춰서 쉼표 출력, 정해진 위치 따로 없음
+
+<br>
+
+> 변환 함수 
+
+**TO_NUMBER**  (CHAR → NUMBER) : TO_NUMBER(문자열[,'형식 요소'])
+
+<img src="./img/sql050.PNG"><br>
+
+문자열의 형태를 형식문자를 사용하여 숫자값을 뽑아냄
+
+<br>
+
+> 변환 함수
+
+**TO_DATE**  (CHAR → DATE) : TO_DATE(문자열[,'형식 요소'])
+
+<img src="./img/sql051.PNG"><br>
+
+날짜 형식이 있는 문자열을 날짜 데이터로 출력
+
+날짜 기본 형식인 'DD-MON-YY'는 별도의 형식 요소 없이 변환 가능
+
+시간값 포함 문자열도 변환 가능
+
+<br>
+
+> 일반 함수
+
+**NVL** : **NVL(컬럼, null지정값)**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;null 값을 지정값으로 대체, null이 아닌 값은 그대로 출력
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;날짜, 문자, 숫자 데이터 타입에 사용
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;데이터 타입이 일치해야함
+
+<img src="./img/sql052.PNG"><br>
+
+**NVL2** : **NVL(컬럼, null이 아닐 때, null일 때)**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;null 값의 여부에 따라서 출력값이 달라짐, null 직접 출력 X
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2, 3번째 인자 데이터 타입이 일치해야함
+
+<img src="./img/sql053.PNG"><br>
+
+
+
+
+
+
+
+
+
