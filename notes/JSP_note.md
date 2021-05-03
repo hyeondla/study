@@ -106,3 +106,42 @@ response.sendRedirect("scopeProPro.jsp?id="+id+"&pw="+pw);
 
 <br>
 
+> 액션태그 - **include**
+
+```jsp
+<%@ include file = "포함할 파일" %>
+<!-- ---------------------------------- -->
+<body>
+<jsp:include page="포함할 파일" />
+<!-- ---------------------------------- -->
+<jsp:include page="포함할 파일">
+<jsp:param value=" " name=" " />
+</jsp:include>
+</body>
+```
+
+반복되는 파일
+
+<br>
+
+---
+
+> 세션 **session**
+
+```jsp
+<% 
+//세션공간에 이름:값 저장
+session.setAttribute("session_name", "session_value"); 
+%>
+<% 
+//세션공간에 값 삭제
+session.removeAttribute("session_name"); 
+%>
+<% 
+//세션공간에 값 전체 삭제
+session.invalidate(); 
+%>
+```
+
+<br>
+

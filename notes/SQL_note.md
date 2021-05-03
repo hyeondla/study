@@ -14,6 +14,8 @@ DESCRIBE 테이블명
 SELECT *
 FROM 테이블명
 WHERE 조건컬럼 연산자 조건값
+GROUP BY 표현식
+HAVING 그룹조건
 ORDER BY 컬럼 [ASC|DESC];
 ```
 
@@ -142,6 +144,10 @@ AND와 OR을 조합해서 사용하는 경우 **AND**가 **우선 연산** → *
 정렬기준 여러개(`,`로 구분)인 경우, 정렬 후 결과에서 중복값에 대해 이후 순서의 정렬기준으로 결과를 추가로 정렬
 
 <img src="./img/sql013.PNG"><br>
+
+<br>
+
+---
 
 <br>
 
@@ -444,9 +450,9 @@ FROM 테이블명;
 
 > 일반 함수
 
-**NVL** : **NVL(컬럼, null지정값)**
+**NVL** : **NVL(컬럼, NULL지정값)**
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;null 값을 지정값으로 대체, null이 아닌 값은 그대로 출력
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NULL 값을 지정값으로 대체, NULL이 아닌 값은 그대로 출력
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;날짜, 문자, 숫자 데이터 타입에 사용
 
@@ -454,19 +460,65 @@ FROM 테이블명;
 
 <img src="./img/sql052.PNG"><br>
 
-**NVL2** : **NVL(컬럼, null이 아닐 때, null일 때)**
+**NVL2** : **NVL(컬럼, NULL이 아닐 때, NULL일 때)**
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;null 값의 여부에 따라서 출력값이 달라짐, null 직접 출력 X
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NULL 값의 여부에 따라서 출력값이 달라짐, NULL 직접 출력 X;
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2, 3번째 인자 데이터 타입이 일치해야함
 
 <img src="./img/sql053.PNG"><br>
 
+**NULLIF** : **NULLIF(입력값1, 입력값2)** 
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;두 입력값이 같은 경우 NULL 출력, 다른 경우 입력값1 출력
 
+<img src="./img/sql054.PNG"><br>
 
+**COALESCE** : **COALESCE(입력값1, 입력값2, 입력값3)**
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입력값 중 NULL이 아닌 첫번째 값 출력, 입력값들의 **데이터 타입이 같아야** 함
 
+<img src="./img/sql055.PNG"><br>
 
+<br>
 
+---
 
+<br>
+
+> 그룹 함수
+
+그룹 단위로 연산, GROUP BY절을 사용하지 않은 경우 테이블의 모든 행이 하나의 그룹으로 취급됨
+
+**NULL값을 제외**한 결과 연산
+
+**COUNT** 함수는 *****를 사용해서 NULL 여부와 상관없이 행의 수 연산 가능
+
+**DISTINCT** 키워드를 사용해서 중복값을 제거하고 연산 가능
+
+- 숫자값 입력 받는 함수
+  - **AVG**([DISTINCT|<u>ALL</u>] n) 평균
+  - **STDDEV**([DISTINCT|<u>ALL</u>] n) 표준편차
+  - **VARIANCE**([DISTINCT|<u>ALL</u>] n) 분산
+  - **SUM**([DISTINCT|<u>ALL</u>] n) 합계
+
+- 데이터타입 구분 없는 함수
+  - **COUNT**(* | [DISTINCT|<u>ALL</u>] expr) 행 개수
+  - **MAX**([DISTINCT|<u>ALL</u>] expr) 최대값
+  - **MIN**([DISTINCT|<u>ALL</u>] expr) 최소값
+
+<img src="./img/sql056.PNG"><br>
+
+<img src="./img/sql057.PNG"><br>
+
+<br>
+
+> GROUP BY절
+
+특정 컬럼에서 같은 값을 가지는 행끼리 묶어서 그룹을 만드는 옵션절
+
+GROUP BY절 (O) → SELECT절에 그룹함수, GROUP BY절에 사용된 컬럼 사용
+
+GROUP BY절 (X) → SELECT절에 그룹함수만 사용 가능
+
+<img src="./img/sql058.PNG"><br>
