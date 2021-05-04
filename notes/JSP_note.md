@@ -126,22 +126,89 @@ response.sendRedirect("scopeProPro.jsp?id="+id+"&pw="+pw);
 
 ---
 
+<br>
+
 > 세션 **session**
 
 ```jsp
 <% 
+
 //세션공간에 이름:값 저장
 session.setAttribute("session_name", "session_value"); 
-%>
-<% 
+
 //세션공간에 값 삭제
 session.removeAttribute("session_name"); 
-%>
-<% 
+
 //세션공간에 값 전체 삭제
 session.invalidate(); 
+
 %>
 ```
+
+페이지 상관없이 값 유지
+
+서버에 저장됨
+
+보안상 중요한 데이터 저장
+
+서버와 클라이언트 연결 정보 저장
+
+기본 유지시간 값 30분
+
+<br>
+
+> 쿠키 **cookie**
+
+```jsp
+<%
+
+//쿠키 객체 생성
+Cookie cookie = new Cookie("cookie_name","cookie_value");
+//쿠키 시간 설정 (초단위)
+cookie.setMaxAge(1800); 
+//클라이언트에 저장
+response.addCookie(cookie);
+
+//========================================
+
+//쿠키값 가져오기 => 쿠키 배열 변수에 저장
+Cookie cookie[] = request.getCookies();
+if(cookie != null){
+    for(int i=0; i<cookie.lentgh; i++){
+        if(cookie[i].getName().equals("cookie_name")){
+        	out.println("들고온 쿠키 주소값 : " + cookie[i] + "<br>");
+			out.println("들고온 쿠키 이름 : " + cookie[i].getName() + "<br>");
+			out.println("들고온 쿠키 값 : " + cookie[i].getValue() + "<br>");
+        }
+    }
+}
+
+//========================================
+
+//쿠키값 삭제
+Cookie cookie[] = request.getCookies();
+if(cookie != null){
+	for(int i=0; i<cookie.length; i++){
+		if(cookie[i].getName().equals("cookie_name")){
+			//쿠키 시간 설정 0초
+            cookie[i].setMaxAge(0);
+            //클라이언트에 저장
+			response.addCookie(cookie[i]);
+		}
+	}
+}
+
+%>
+
+```
+
+페이지, 서버 상관없이 값 유지
+
+클라이언트 하드디스크에 저장됨
+
+서버 부하를 줄임
+
+기본 유지시간 값 없음 → 설정 필요
 
 <br>
 
