@@ -14,7 +14,11 @@ public class Ex5 {
 		System.out.println("------------------------------------");
 		MyDate md3 = new MyDate(2030, 5);
 		System.out.printf("%d/%d/%d\n", md3.year, md3.month, md3.day);
-
+		System.out.println("------------------------------------");
+		
+		MyDate md4 = new MyDate(2040, 5, 6);
+		System.out.printf("%d/%d/%d\n", md4.year, md4.month, md4.day);
+		
 	}
 
 }
