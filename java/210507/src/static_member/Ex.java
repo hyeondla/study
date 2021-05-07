@@ -1,3 +1,4 @@
+package static_member;
 
 public class Ex {
 
@@ -21,6 +22,10 @@ public class Ex {
 		System.out.printf("n1.b : %d, n2.b : %d\n", n1.b, n2.b);
 
 		System.out.println("======================================");
+
+		System.out.println("StaticMember.a : " + StaticMember.a);
+		// => 인스턴스가 생성되기 전이지만 이미 메모리에 로딩되어 있으므로 접근 가능
+		System.out.println("--------------------------------------");
 
 		StaticMember s1 = new StaticMember();
 		StaticMember s2 = new StaticMember();
@@ -48,6 +53,11 @@ public class Ex {
 		StaticMember.a = 500;
 //		StaticMember.b = 200; //오류!
 		System.out.printf("s1.a : %d, s2.a : %d\n", StaticMember.a, StaticMember.a);
+
+		System.out.println("======================================");
+
+		// static 멤버 변수의 대표적인 예 : java.lang.Math 클래스의 PI 변수
+		System.out.println("PI 값 : " + Math.PI);
 
 	}
 
