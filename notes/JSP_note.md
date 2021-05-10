@@ -80,6 +80,7 @@ application 값 : <%=application.getAttribute("app") %><br>
 <% 
 String id = request.getParameter("id"); 
 String pw = request.getParameter("pw");
+int num = Integer.parseInt(request.getParameter("num"));
 %>
 <!-- 1)------------------------------------------ -->
 <a href="scopeProPro.jsp?id=<%=id%>&pw=<%=pw%>">
@@ -211,4 +212,104 @@ if(cookie != null){
 기본 유지시간 값 없음 → 설정 필요
 
 <br>
+
+>MySQL
+
+```sql
+#CMD창에서 접속
+mysql -u 계정명 -p
+비밀번호 입력
+
+#데이터베이스 목록 확인
+SHOW DATABASES;
+
+#데이터베이스 생성
+CREATE DATABASE 데이터베이스명;
+
+#데이터베이스 삭제
+DROP DATABASE 데이터베이스명;
+
+#데이터베이스 사용
+USE 데이터베이스명;
+
+#데이터베이스 공간 상태 확인
+STATUS;
+
+#테이블 목록 확인
+SHOW TABLES;
+
+#테이블 생성
+CREATE TABLE 테이블명(
+	컬럼1 int PRIMARY KEY, 
+    컬럼2 varchar(10)
+);
+
+#테이블 삭제
+DROP TABLE 테이블명;
+
+#테이블 구조 확인
+DESC 테이블명;
+DESCRIBE 테이블명;
+
+#데이터 저장
+INSERT INTO 테이블명(컬럼1, 컬럼2) VALUES(컬럼1값, 컬럼2값);
+
+#데이터 수정
+UPDATE 테이블명 SET 칼럼=값
+WHERE 조건;
+
+#데이터 삭제
+DELETE FROM 테이블명
+WHERE 조건;
+
+#데이터 조회
+SELECT * FROM 테이블명;
+
+SELECT 컬럼1, 컬럼2 FROM 테이블명
+WHERE 조건1 AND 조건2
+ORDER BY 컬럼명 ASC|DESC;
+
+#접속 해제
+EXIT
+```
+
+데이터 정의어 : create, alter, delete
+데이터 제어어 : grant, revoke
+데이터 조작어 : insert, update, delete, select
+
+<br>
+
+> JDBC
+
+```jsp
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%
+//폼에서 넘어온 내용 저장
+int num = Integer.parseInt(request.getParameter("num"));
+String name = request.getParameter("name");
+
+//1.Driver.class 불러오기
+Class.forName("com.mysql.jdbc.Driver");
+
+//2.DB 서버 접속
+String dbUrl = "jdbc:mysql://localhost:3306/jspdb3"; //DB이름
+String dbUser = "root"; //아이디
+String dbPass = "1234"; //비밀번호
+Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+
+//3.String 문자열 -> sql 구문
+String sql = "insert into student(num,name) values(?,?)"; 
+PreparedStatement pstmt = con.prepareStatement(sql);
+//setXXX(parameterIndex, x)
+//Index 1번부터 시작 -> sql values ? ? 순서대로 채움
+//x -> '' 사용안함
+pstmt.setInt(1, num); 
+pstmt.setString(2, name); 
+
+//4. sql 구문 실행
+pstmt.executeUpdate();
+%>
+```
 
