@@ -282,6 +282,7 @@ EXIT
 > JDBC
 
 ```jsp
+<%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
@@ -301,6 +302,9 @@ Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
 
 //3.String 문자열 -> sql 구문
 String sql = "insert into student(num,name) values(?,?)"; 
+String sql = "update student set name=? where num=?";
+String sql = "delete from student where num=? and name=?";
+String sql = "select * from student"; 
 PreparedStatement pstmt = con.prepareStatement(sql);
 //setXXX(parameterIndex, x)
 //Index 1번부터 시작 -> sql values ? ? 순서대로 채움
@@ -308,8 +312,42 @@ PreparedStatement pstmt = con.prepareStatement(sql);
 pstmt.setInt(1, num); 
 pstmt.setString(2, name); 
 
-//4. sql 구문 실행
+//4.INSERT/UPDATE/DELETE => sql 구문 실행
 pstmt.executeUpdate();
+
+//----------------------------------------
+
+//4.SELECT => ResultSet 내장객체에 저장
+ResultSet rs = pstmt.executeQuery();
+
+//5.rs.next() 다음 행 이동 -> 데이터 있으면 true, 없으면 false
+while(rs.next()){
+   	out.println(rs.getInt(1)); //첫번째 컬럼(num)
+	out.println(rs.getString(2)+"<br>"); //두번째 컬럼(name)
+    //------------------------------
+    out.println(rs.getInt("num")); 
+	out.println(rs.getString("name")+"<br>");
+}
+%>
+
+```
+
+<br>
+
+> SELECT문 결과 테이블로 출력
+
+```jsp
+<table border="1">
+<tr><td>번호</td><td>이름</td></tr>
+<%
+while(rs.next()){
+	%><tr>
+    	<td><%=rs.getInt("num") %></td>
+    	<td><%=rs.getString("name") %></td>
+    </tr><%	
+}
 %>
 ```
+
+<br>
 

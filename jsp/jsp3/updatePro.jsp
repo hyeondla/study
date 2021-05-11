@@ -10,28 +10,28 @@
 <title>Insert title here</title>
 </head>
 <body>
+<% request.setCharacterEncoding("utf-8"); %>
 <%
 int num = Integer.parseInt(request.getParameter("num"));
 String name = request.getParameter("name");
 
 Class.forName("com.mysql.jdbc.Driver");
 
-String dbUrl = "jdbc:mysql://localhost:3306/jspdb3";
-String dbUser = "root";
-String dbPass = "1234";
-
+String dbUrl = "jdbc:mysql://localhost:3306/jspdb3"; 
+String dbUser = "root"; 
+String dbPass = "1234"; 
 Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
 
-// String sql = "insert into student(num,name) values("+num+",'"+name+"')";
-String sql = "insert into student(num,name) values(?,?)";
+String sql = "update student set name=? where num=?"; 
 PreparedStatement pstmt = con.prepareStatement(sql);
-pstmt.setInt(1, num);
-pstmt.setString(2, name);
+
+pstmt.setString(1, name);
+pstmt.setInt(2, num);
 
 pstmt.executeUpdate();
 %>
 
-학생등록 성공 : <%=pstmt %>
+이름 변경 성공 : <%=pstmt %>
 
 </body>
 </html>

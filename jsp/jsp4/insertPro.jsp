@@ -10,8 +10,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<% request.setCharacterEncoding("utf-8"); %>
 <%
-int num = Integer.parseInt(request.getParameter("num"));
+String id = request.getParameter("id");
+String pass = request.getParameter("pass");
 String name = request.getParameter("name");
 
 Class.forName("com.mysql.jdbc.Driver");
@@ -19,19 +21,16 @@ Class.forName("com.mysql.jdbc.Driver");
 String dbUrl = "jdbc:mysql://localhost:3306/jspdb3";
 String dbUser = "root";
 String dbPass = "1234";
+Connection con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
 
-Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-
-// String sql = "insert into student(num,name) values("+num+",'"+name+"')";
-String sql = "insert into student(num,name) values(?,?)";
+String sql = "insert into member(id,pass,name) values(?,?,?)";
 PreparedStatement pstmt = con.prepareStatement(sql);
-pstmt.setInt(1, num);
-pstmt.setString(2, name);
+pstmt.setString(1, id);
+pstmt.setString(2, pass);
+pstmt.setString(3, name);
 
 pstmt.executeUpdate();
+
 %>
-
-학생등록 성공 : <%=pstmt %>
-
 </body>
 </html>
