@@ -282,14 +282,20 @@ EXIT
 > JDBC
 
 ```jsp
+<%@page import="java.sql.Timestamp"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%
+request.setCharacterEncoding("utf-8");
+
 //폼에서 넘어온 내용 저장
 int num = Integer.parseInt(request.getParameter("num"));
 String name = request.getParameter("name");
+
+//현재 시스템 날짜 시간 저장
+Timestamp date = new Timestamp(System.currentTimeMillis());
 
 //1.Driver.class 불러오기
 Class.forName("com.mysql.jdbc.Driver");
@@ -300,7 +306,7 @@ String dbUser = "root"; //아이디
 String dbPass = "1234"; //비밀번호
 Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
 
-//3.String 문자열 -> sql 구문
+//3.String 문자열 -> sql 구문 (테이블 확인하기)
 String sql = "insert into student(num,name) values(?,?)"; 
 String sql = "update student set name=? where num=?";
 String sql = "delete from student where num=? and name=?";
@@ -311,6 +317,7 @@ PreparedStatement pstmt = con.prepareStatement(sql);
 //x -> '' 사용안함
 pstmt.setInt(1, num); 
 pstmt.setString(2, name); 
+pstmt.setTimestamp(parameterIndex, date);
 
 //4.INSERT/UPDATE/DELETE => sql 구문 실행
 pstmt.executeUpdate();
@@ -327,6 +334,7 @@ while(rs.next()){
     //------------------------------
     out.println(rs.getInt("num")); 
 	out.println(rs.getString("name")+"<br>");
+    out.println(rs.getTimestamp("date"));
 }
 %>
 
@@ -347,6 +355,114 @@ while(rs.next()){
     </tr><%	
 }
 %>
+```
+
+<br>
+
+> 로그인
+
+```jsp
+<%
+String sql = "select * from member where id=? and pass=?";
+PreparedStatement pstmt = con.prepareStatement(sql);
+pstmt.setString(1,id);
+pstmt.setString(2,pass);
+
+if(rs.next()){ //아이디와 비밀번호가 일치함
+	//세션값 생성
+	session.setAttribute("id", id);
+	response.sendRedirect("main.jsp");
+	}	
+} else {
+%>	
+	<script type="text/javascript">
+		alert("입력하신 정보가 틀립니다");
+		history.back(); 
+	</script>
+<%
+}
+%>
+<!-- ---------------------------------------- -->
+<%
+String sql = "select * from member where id=?";
+PreparedStatement pstmt = con.prepareStatement(sql);
+pstmt.setString(1,id);
+
+ResultSet rs = pstmt.executeQuery();
+
+if(rs.next()){ //아이디 일치
+	if(pass.equals(rs.getString("pass"))){
+		//비밀번호 일치 => 세션값 생성
+		session.setAttribute("id", id);
+		response.sendRedirect("main.jsp");
+	} else {
+		%>	
+		<script type="text/javascript">
+		alert("비밀번호가 일치하지 않습니다");
+		history.back();
+		</script>
+		<%
+	}
+} else {
+%>	
+<script type="text/javascript">
+alert("가입되지 않은 아이디입니다");
+history.back();
+</script>
+<%
+}
+%> 
+<!-- ======================================== -->
+<%
+//세션값 가져오기 (페이지 상관없이 값 유지)
+//=> Object형으로 저장되어있기 때문에 형변환 필요
+String id = (String)session.getAttribute("id");
+
+Class.forName("com.mysql.jdbc.Driver");
+
+String dbUrl = "jdbc:mysql://localhost:3306/jspdb3"; 
+String dbUser = "root"; 
+String dbPass = "1234"; 
+Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+
+String sql = "select * from member where id=?";
+PreparedStatement pstmt = con.prepareStatement(sql);
+pstmt.setString(1,id);
+
+ResultSet rs = pstmt.executeQuery();
+
+if(rs.next()){
+    %> 
+	아이디 : <%=rs.getString("id") %><br>
+	비밀번호 : <%=rs.getString("pass") %><br>
+	이름 : <%=rs.getString("name") %><br>
+	가입날짜 : <%=rs.getTimestamp("date") %><br>
+	<%
+}
+%>
+```
+
+<br>
+
+> 로그아웃
+
+```jsp
+<%
+session.invalidate();
+%>
+<script type="text/javascript">
+	alert("로그아웃");
+	location.href="main.jsp";
+</script>
+<!-- ======================================== -->
+<%
+String id = (String)session.getAttribute("id");
+
+if(id==null){
+	response.sendRedirect("loginForm.jsp");
+} 
+%>
+
 ```
 
 <br>
