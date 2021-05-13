@@ -509,16 +509,25 @@ FROM 테이블명;
 
 <img src="./img/sql056.PNG"><br>
 
-<img src="./img/sql057.PNG"><br>
-
-<br>
+<img src="./img/sql057.PNG"><br><br>
 
 > GROUP BY절
 
 특정 컬럼에서 같은 값을 가지는 행끼리 묶어서 그룹을 만드는 옵션절
 
-GROUP BY절 (O) → SELECT절에 그룹함수, GROUP BY절에 사용된 컬럼 사용
+SELECT절에 그룹함수, GROUP BY절에 사용된 컬럼 사용 가능
 
-GROUP BY절 (X) → SELECT절에 그룹함수만 사용 가능
+GROUP BY절이 없으면  SELECT절에 그룹함수만 사용 가능
 
 <img src="./img/sql058.PNG"><br>
+
+> HAVING절
+
+GROUP BY절을 통해서 만들어진 그룹들에 대한 조건절
+
+조건식을 만족하는 그룹만 결과로 출력됨
+
+그룹함수의 연산결과로 조건 설정
+
+<img src="./img/sql059.PNG"><br><br>
+
