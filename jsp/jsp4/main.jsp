@@ -22,7 +22,16 @@ if(id==null){
 <a href="info.jsp">회원정보조회</a><br>
 <a href="updateForm.jsp">회원정보수정</a><br>
 <a href="deleteForm.jsp">회원정보삭제</a><br>
-<a href="list.jsp">회원정보목록</a><br>
+
+<%
+if(id!=null){
+	if(id.equals("admin")){
+		%>
+		<a href="list.jsp">회원정보목록</a><br>
+		<%
+	}
+}
+%>
 
 </body>
 </html>
