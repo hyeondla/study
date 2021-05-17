@@ -12,7 +12,8 @@ DESCRIBE 테이블명
 
 ```sql
 SELECT *
-FROM 테이블명
+FROM 테이블명 [alias] JOIN 테이블명 [alias]
+ON 연결조건
 WHERE 조건컬럼 연산자 조건값
 GROUP BY 표현식
 HAVING 그룹조건
@@ -519,7 +520,7 @@ SELECT절에 그룹함수, GROUP BY절에 사용된 컬럼 사용 가능
 
 GROUP BY절이 없으면  SELECT절에 그룹함수만 사용 가능
 
-<img src="./img/sql058.PNG"><br>
+<img src="./img/sql058.PNG"><br><br>
 
 > HAVING절
 
@@ -530,4 +531,38 @@ GROUP BY절을 통해서 만들어진 그룹들에 대한 조건절
 그룹함수의 연산결과로 조건 설정
 
 <img src="./img/sql059.PNG"><br><br>
+
+---
+
+<br>
+
+> JOIN - ON절
+
+테이블 정보를 연결하여 데이터 조회 → 하나의 테이블인것처럼 사용
+
+SELECT절에서 출력할 컬럼을 지정할 때 **테이블명.컬럼명** 명시
+
+→ JOIN한 모든 테이블에서 고유한 이름을 가진 경우 테이블명 생략 가능
+
+<img src="./img/sql060.PNG"><br><br>
+
+>  SELF - JOIN
+
+하나의 같은 테이블을 연결
+
+Column Alias 반드시 명시
+
+<img src="./img/sql061.PNG"><br>
+
+<br>
+
+> 서브쿼리 Subquery
+
+쿼리문 안에서 보조 역할을 하는 쿼리문
+
+IN 연산자는 여러개의 값을 목록으로 받을 수 있기 때문에 리턴값이 여러 행인 서브쿼리 사용 가능
+
+<img src="./img/sql062.PNG"><br>
+
+<br>
 

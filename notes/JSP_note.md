@@ -244,6 +244,10 @@ CREATE TABLE 테이블명(
     컬럼2 varchar(10)
 );
 
+#테이블 컬럼 추가
+ALTER TABLE 테이블명
+ADD 컬럼명 데이터타입;
+
 #테이블 삭제
 DROP TABLE 테이블명;
 
@@ -464,6 +468,26 @@ if(id==null){
 %>
 
 ```
+
+<br>
+
+> 글번호 
+
+```jsp
+<%
+int num=0; 
+String sql = "select max(num) from board";
+PreparedStatement pstmt = con.prepareStatement(sql);
+ResultSet rs = pstmt.executeQuery();
+if(rs.next()){
+	num=rs.getInt("max(num)")+1;
+}
+%>
+```
+
+max() → 가장 큰 값을 리턴받음
+
+null + 1 = 1
 
 <br>
 
