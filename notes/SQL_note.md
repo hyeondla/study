@@ -544,6 +544,8 @@ SELECT절에서 출력할 컬럼을 지정할 때 **테이블명.컬럼명** 명
 
 → JOIN한 모든 테이블에서 고유한 이름을 가진 경우 테이블명 생략 가능
 
+<img src="./img/sql060.PNG"><br>
+
 <img src="./img/sql060.PNG"><br><br>
 
 >  SELF - JOIN
@@ -560,9 +562,45 @@ Column Alias 반드시 명시
 
 쿼리문 안에서 보조 역할을 하는 쿼리문
 
+서브쿼리가 메인쿼리보다 먼저 실행되어 그 결과가 메인쿼리로 전달됨
+
 IN 연산자는 여러개의 값을 목록으로 받을 수 있기 때문에 리턴값이 여러 행인 서브쿼리 사용 가능
 
 <img src="./img/sql062.PNG"><br>
 
+<img src="./img/sql064.PNG"><br><br>
+
+> Inline View
+
+서브쿼리를 활용하여 뷰의 역할을 대신함
+
+<img src="./img/sql065.PNG"><br><br>
+
+---
+
 <br>
+
+> 데이터 조작어 DML
+
+**INSERT** : 테이블에 새로운 데이터를 추가
+
+- INSERT INTO절 : 데이터가 입력 될 테이블과 컬럼의 목록 작성
+- VALUES절 : 테이블에 실제 입력 될 값의 목록 작성
+
+- INSERT INTO절에 명시된 컬럼 목록 순서에 맞춰
+
+  VALUES절에 명시된 입력 값이 해당 컬럼에 순서대로 입력,
+
+  명시되지 않은 컬럼의 경우 기본적으로 NULL값이 입력됨
+
+```sql
+INSERT INTO 테이블명[(컬럼1[, 컬럼2, …])]
+VALUES (데이터[, 데이터, …]);
+```
+
+<img src="./img/sql066.PNG"><br><br>
+
+
+
+
 
