@@ -259,7 +259,7 @@ DESCRIBE 테이블명;
 INSERT INTO 테이블명(컬럼1, 컬럼2) VALUES(컬럼1값, 컬럼2값);
 
 #데이터 수정
-UPDATE 테이블명 SET 칼럼=값
+UPDATE 테이블명 SET 컬럼1=값1, 컬럼2=값2
 WHERE 조건;
 
 #데이터 삭제
@@ -342,6 +342,41 @@ while(rs.next()){
 }
 %>
 
+```
+
+자바 파일 만들기 
+
+src/main/java → 패키지 생성 → 클래스 생성
+
+```java
+package member;
+
+public class MemberDAO {
+	//메서드 정의
+	
+	//insert
+	public void insertMember() {
+		System.out.println("MemberDAO 파일 insertMember 메서드");
+
+		//1. 드라이버 로더
+		//2. DB 서버 접속
+		//3. sql 
+        //4. 실행
+        
+		return;
+    }
+}
+```
+
+```jsp
+<%@page import="member.MemberDAO"%>
+<!-- -------------------------- -->
+<%
+//MemberDAO 기억장소 할당 => 객체 생성
+MemberDAO mdao = new MemberDAO();
+//메서드 호출
+mdao.insertMember();
+%>
 ```
 
 <br>
@@ -491,3 +526,13 @@ null + 1 = 1
 
 <br>
 
+> 조회수
+
+```
+String sql = "update board set readcount=readcount+1 where num=?";
+PreparedStatement pstmt = con.prepareStatement(sql);
+pstmt.setInt(1, num);
+pstmt.executeUpdate();
+```
+
+<br>
