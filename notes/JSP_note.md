@@ -351,32 +351,150 @@ src/main/java → 패키지 생성 → 클래스 생성
 ```java
 package member;
 
-public class MemberDAO {
-	//메서드 정의
-	
-	//insert
-	public void insertMember() {
-		System.out.println("MemberDAO 파일 insertMember 메서드");
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
-		//1. 드라이버 로더
-		//2. DB 서버 접속
-		//3. sql 
-        //4. 실행
-        
+public class MemberDAO { //메서드 정의
+	
+    //DB연결
+	private Connection getConnection() throws Exception {//예외처리 → 메서드 호출하는 곳에서 처리
+		//드라이버 로더
+		Class.forName("com.mysql.jdbc.Driver");
+		//DB 서버 접속
+		String dbUrl="jdbc:mysql://localhost:3306/jspdb3";
+		String dbUser="root";
+		String dbPass="1234";
+		Connection con=DriverManager.getConnection(dbUrl,dbUser,dbPass);
+		
+		return con;
+	}
+    
+    //insert
+	public void insertMember(MemberBean mb) {
+		try { //예외처리
+			//연결 메서드 호출
+			Connection con=getConnection();
+			//sql문
+			String sql="insert into member(id,pass,name,date) values(?,?,?,?)";
+			PreparedStatement pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mb.getId());
+			pstmt.setString(2, mb.getPass());
+			pstmt.setString(3, mb.getName());
+			pstmt.setTimestamp(4, mb.getDate());
+			//실행
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace(); //예외 추적 메시지 출력
+		} finally { //예외 상관없이 처리
+			//기억장소 해제
+		} 
 		return;
     }
+    
+    //info
+	public MemberBean getMember(String id) {
+
+		MemberBean mb = new MemberBean();
+		
+		try {
+            //연결 메서드 호출
+			Connection con=getConnection();
+			//sql문
+			String sql = "select * from member where id=?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			//실행
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				mb.setId(rs.getString("id"));
+				mb.setPass(rs.getString("pass"));
+				mb.setName(rs.getString("name"));
+				mb.setDate(rs.getTimestamp("date"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		return mb;
+	}
+    
+}
+```
+
+```java
+package member;
+
+import java.sql.Timestamp;
+
+public class MemberBean { //데이터 담아서 전달
+	//멤버변수 접근자 private 
+    //→ 아무나 접근 못하게 막아줌(은닉, 캡슐화)
+	private String id;
+	private String pass;
+	private String name;
+	private Timestamp date;
+	
+    //멤버함수 접근자 public
+    //→ Getter, Setter 
+    public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Timestamp getDate() {
+		return date;
+	}
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
 }
 ```
 
 ```jsp
+<%@page import="member.MemberBean"%>
 <%@page import="member.MemberDAO"%>
 <!-- -------------------------- -->
 <%
-//MemberDAO 기억장소 할당 => 객체 생성
+//MemberDAO 기억장소 할당 → 객체 생성
 MemberDAO mdao = new MemberDAO();
+
+//MemberDTO (MemberBean) 데이터 전달
+MemberBean mb = new MemberBean();
+mb.setId(id);
+mb.setPass(pass);
+mb.setName(name);
+mb.setDate(date);
+
 //메서드 호출
-mdao.insertMember();
+mdao.insertMember(mb);
 %>
+<!-- -------------------------- -->
+<%
+String id = (String)session.getAttribute("id"); 
+MemberDAO mdao = new MemberDAO();
+MemberBean mb = mdao.getMember(id);
+%>
+아이디 : <%=mb.getId() %><br>
+비밀번호 : <%=mb.getPass() %><br>
+이름 : <%=mb.getName() %><br>
+가입날짜 : <%=mb.getDate() %><br>
 ```
 
 <br>
@@ -536,3 +654,4 @@ pstmt.executeUpdate();
 ```
 
 <br>
+
