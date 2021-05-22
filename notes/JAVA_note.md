@@ -1104,13 +1104,77 @@ public static final 형태로 선언
 복잡한 데이터도 이름만으로 단순 사용 가능
 
 <br>
+> 열거형 Enum
+	
+데이터타입이 일치하면 다른 데이터라도 사용 가능한 상수의 단점을 해결
 
+java.lang.Enum 클래스를 상속받음
+	
+데이터타입 구분 없이 나열
 
+참조변수의 데이터타입으로 사용 가능
+	
+enum 상수 값은 동등비교연산자(==)로 일치 여부 비교 가능
 
+switch~case문 타입으로 사용 가능
+	
+→ enum타입명.상수가 아닌 상수 자체를 비교
+	
+enum 상수에 각각 ordinal (순서번호) 값이 0부터 자동 부여됨 
+	
+ordinal() : 상수의 순서번호를 정수로 리턴
+	
+name() : 상수명을 문자열로 리턴
+	
+```java
+public enum 타입명 {
+	상수1, 상수2, …, 상수n
+}
+//===================================================================
+enum Week {
+	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+//--------------------------------------------------------------------
+class WeekClass {
+	public static final int MONDAY = 1;
+	public static final int TUESDAY = 2;
+	public static final int WEDNESDAY = 3;
+	public static final int THURSDAY = 4;
+	public static final int FRIDAY = 5;
+	public static final int SATURDAY = 6;
+	public static final int SUNDAY = 7;
+}
+//--------------------------------------------------------------------
+Week today; // Week 타입 변수에는 Week 타입 상수만 저장 가능
+today = Week.FRIDAY;
 
-
-
-
+switch(today) {
+	case MONDAY : 
+	case TUESDAY : 
+	case WEDNESDAY : 
+	case THURSDAY : 
+	case FRIDAY : 
+	case SATURDAY : 
+	case SUNDAY : 
+}
+//==================================================================
+enum Month {
+	// 생성자를 사용하면 상수에 다른 값 결합 가능
+	JANUARY("1월"), FEBRUARY("2월");
+	
+	private String monthKor;
+	Month(String monthKor) {
+		this.monthKor = monthKor;
+	}
+	
+	public String getMonthKor() {
+		return monthKor;
+	}
+	
+	public void setMontKor (String monthKor) {
+		this.monthKor = monthKor;
+}
+```
 <br>
 
 
