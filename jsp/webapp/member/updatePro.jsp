@@ -14,21 +14,33 @@ request.setCharacterEncoding("utf-8");
 
 String id = request.getParameter("id");
 String pass = request.getParameter("pass");
+String name = request.getParameter("name");
 
 MemberDAO mdao = new MemberDAO();
 MemberBean mb = mdao.userCheck(id, pass);
 
 if(mb != null){
-	session.setAttribute("id", id);
-	response.sendRedirect("main.jsp");
+	
+	MemberBean mb2 = new MemberBean();
+	mb2.setId(id);
+	mb2.setPass(pass);
+	mb2.setName(name);
+	mdao.updateMember(mb2);
+	%>
+	<script type="text/javascript">	
+		alert("회원정보수정 완료");
+		location.href="main.jsp";
+	</script>
+	<%
 } else {
 	%>
 	<script type="text/javascript">
 		alert("입력하신 정보가 틀립니다");
 		history.back();
-	</script> 
+	</script>
 	<%
 }
 %>
+
 </body>
 </html>

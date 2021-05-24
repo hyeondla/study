@@ -422,6 +422,29 @@ public class MemberDAO { //메서드 정의
 		return mb;
 	}
     
+    //login
+    public MemberBean userCheck(String id, String pass) {
+		MemberBean mb = null;
+		try {
+			Connection con = getConnection();
+	
+			String sql = "select * from member where id=? and pass=?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pass);
+						
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mb = new MemberBean();
+				mb.setId(rs.getString("id"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		return mb;
+	}
 }
 ```
 
@@ -495,6 +518,26 @@ MemberBean mb = mdao.getMember(id);
 비밀번호 : <%=mb.getPass() %><br>
 이름 : <%=mb.getName() %><br>
 가입날짜 : <%=mb.getDate() %><br>
+<!-- -------------------------- -->
+<%
+String id = request.getParameter("id");
+String pass = request.getParameter("pass");
+
+MemberDAO mdao = new MemberDAO();
+MemberBean mb = mdao.userCheck(id, pass);
+
+if(mb != null){
+	session.setAttribute("id", id);
+	response.sendRedirect("main.jsp");
+} else {
+	%>
+	<script type="text/javascript">
+		alert("입력하신 정보가 틀립니다");
+		history.back();
+	</script> 
+	<%
+}
+%>
 ```
 
 <br>
