@@ -698,12 +698,136 @@ COMMIT;
 오브젝트 종류
 
 - 테이블 Table : 데이터의 기본 저장 단위, 행으로 구성
-  - 필수 요소 : 테이블명, 컬럼명, 컬럼 데이터타입, 컬럼 크기
-  - 옵션 : DEFAULT, 제약조건
 - 뷰 View : 하나 이상의 테이블들의 논리적인 부분 집합
 - 시퀀스 Sequence : 숫자값 생성
 - 인덱스 Index : 일부 쿼리 구문 성능 향상
 - 시노님 Synonym : 오브젝트에 추가적인 이름(별명) 부여
+
+<br>
+
+> 테이블 Table
+
+필수 요소 : 테이블명, 컬럼명, 컬럼 데이터타입, 컬럼 크기
+
+옵션 : DEFAULT, 제약조건
+
+```sql
+CREATE TABLE 테이블명 (
+	컬럼명	      	  데이터타입(컬럼사이즈),
+	deptno	    	NUMBER(2),
+	dname	    	VARCHAR2(14),
+	create_date 	DATE [DEFAULT] SYSDATE
+);
+```
+
+제약조건 : 
+
+테이블의 데이터에 정확한 데이터가 들어가도록 정하는 규칙
+
+제약조건명은 제약조건을 관리하는 목적으로 사용
+
+제약조건명을 생략한 경우 DB에서 임의 생성
+
+테이블명＿컬럼명＿제약조건종류 형태로 작성
+
+동일한 스키마 범위 내에서 중복값으로 만들 수 없음
+
+- **NOT NULL** : NULL값을 입력할 수 없음, 컬럼 레벨
+
+- **UNIQUE** : 중복값을 허용하지 않음
+
+- **PRIMARY KEY** 
+
+  테이블 당 한번만 사용 가능 → 테이블을 대표하는 컬럼에 설정 
+
+  NOT NULL, UNIQUE 성질을 가짐
+
+- **FOREIGN KEY** 
+
+  자신의 테이블/다른 테이블의 특정 컬럼(PK, UK) 참조 
+
+  → 조인의 조건으로 활용
+
+  외래키가 설정되는 컬럼의 값은 
+
+  외래키가 참조하는 컬럼의 값의 범위에서 데이터를 선택하여 입력 가능
+
+- **CHECK** 
+
+  특정 컬럼에 대해서 작성한 조건값에 맞는 값만 입력을 허용
+
+  기존 WHERE절에서 사용했던 조건식 사용 가능
+
+  하나의 컬럼으로 PK 특성을 만족하지 못하는 경우 
+
+  → 여러 컬럼을 묶어서 제약조건 설정 가능
+
+  → 참조하는 쪽도 같은 조합(데이터타입, 크기, 순서)으로 값을 받아와야 함 
+
+```sql
+CREATE TABLE test3(
+    id 	 	   NUMBER(10)	 CONSTRAINT t3_id_pk PRIMARY KEY,
+    name  	   VARCHAR2(30)	 CONSTRAINT t3_name_nn NOT NULL, 
+    job  	   VARCHAR2(20),
+	email 	   VARCHAR2(20),
+	phone	   VARCHAR2(20)  CONSTRAINT t3_ph_nn NOT NULL
+    					     CONSTRAINT t3_ph_uk UNIQUE, 
+    start_date DATE,
+    CONSTRAINT t2_email_uk UNIQUE(email) 
+);
+```
+
+```sql
+-- 제약조건 조회 (UNIQUE 조회 불가)
+DESC user_constraints
+
+-- 테이블명 대문자로 조회
+SELECT constraint_name, constraint_type, search_condition, r_constraint_name
+FROM user_constraints
+WHERE table_name = 'TEST3';
+```
+
+<img src="./img/sql071.PNG"><br>
+
+```sql
+-- FK 
+-- REFERENCES 참조테이블명(참조컬럼명)
+
+-- 테이블 레벨
+CREATE TABLE employees(
+	...
+	department_id	NUMBER(4),
+	CONSTRAINT emp_dept_fk FOREIGN KEY(department_id)
+						   REFERENCES departments(department_id)
+);
+
+-- 컬럼 레벨
+CREATE TABLE employees(
+	...
+    department_id NUMBER(4) CONSTRAINT emp_deptid_fk
+    						REFERENCES departments(department_id),
+    ...
+);
+```
+
+서브쿼리를 사용한 테이블 생성
+
+- 복사된 테이블의 일부 제약조건이 복사되어 생성됨
+- 복사된 제약조건 이름은 DB에서 자동 생성됨 (제약조건 이름은 고유해야함)
+
+```sql
+CREATE TABLE dept80
+	AS
+		SELECT employee_id, last_name, salary*12 ANNSAL, hire_date
+		FROM employees
+		WHERE 1 = 2;
+		-- 데이터 없이 테이블 구조만 복사하고 싶을 때
+		-- 항상 거짓이 되는 조건식 사용
+```
+
+
+
+
 
 <br>
 
