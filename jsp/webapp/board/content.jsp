@@ -1,7 +1,5 @@
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
+<%@page import="board.BoardBean"%>
+<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,37 +12,22 @@
 <%
 int num = Integer.parseInt(request.getParameter("num"));
 
-Class.forName("com.mysql.jdbc.Driver");
+BoardDAO bdao = new BoardDAO();
+bdao.updateReadcount(num);
+BoardBean bb = bdao.getBoard(num);
 
-String dbUrl = "jdbc:mysql://localhost:3306/jspdb3";
-String dbUser = "root"; 
-String dbPass = "1234"; 
-Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-
-String sql2 = "update board set readcount=readcount+1 where num=?";
-PreparedStatement pstmt2 = con.prepareStatement(sql2);
-pstmt2.setInt(1, num);
-
-pstmt2.executeUpdate();
-
-String sql = "select * from board where num=?";
-PreparedStatement pstmt = con.prepareStatement(sql);
-pstmt.setInt(1, num);
-
-ResultSet rs = pstmt.executeQuery();
-
-if(rs.next()){
+if(bb != null){
 	%>
 	<table border="1">
-		<tr><td>글번호</td><td><%=rs.getInt("num") %></td>
-			<td>글쓴이</td><td><%=rs.getString("name") %></td></tr>
-		<tr><td>작성날짜</td><td><%=rs.getString("date") %></td>
-			<td>조회수</td><td><%=rs.getInt("readcount") %></td></tr>
-		<tr><td>제목</td><td colspan="3"><%=rs.getString("subject") %></td></tr>
-		<tr><td>내용</td><td colspan="3"><%=rs.getString("content") %></td></tr>
+		<tr><td>글번호</td><td><%=bb.getNum() %></td>
+			<td>글쓴이</td><td><%=bb.getName() %></td></tr>
+		<tr><td>작성날짜</td><td><%=bb.getDate() %></td>
+			<td>조회수</td><td><%=bb.getReadcount() %></td></tr>
+		<tr><td>제목</td><td colspan="3"><%=bb.getSubject() %></td></tr>
+		<tr><td>내용</td><td colspan="3"><%=bb.getContent() %></td></tr>
 		<tr><td colspan="4">
-				<input type="button" value="글수정" onClick="location.href='updateForm.jsp?num=<%=rs.getInt("num")%>'">
-				<input type="button" value="글삭제" onClick="location.href='deleteForm.jsp?num=<%=rs.getInt("num")%>'">
+				<input type="button" value="글수정" onClick="location.href='updateForm.jsp?num=<%=bb.getNum()%>'">
+				<input type="button" value="글삭제" onClick="location.href='deleteForm.jsp?num=<%=bb.getNum()%>'">
 				<input type="button" value="글목록" onClick="location.href='list.jsp'">
 			</td></tr>
 	</table>

@@ -1,7 +1,5 @@
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
+<%@page import="board.BoardBean"%>
+<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,30 +18,21 @@ String pass = request.getParameter("pass");
 String subject = request.getParameter("subject");
 String content = request.getParameter("content");
 
-Class.forName("com.mysql.jdbc.Driver");
+BoardDAO bdao = new BoardDAO();
 
-String dbUrl = "jdbc:mysql://localhost:3306/jspdb3";
-String dbUser = "root"; 
-String dbPass = "1234"; 
-Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+BoardBean bb = bdao.numCheck(num, pass);
 
-String sql = "select * from board where num=? and pass=?";
-
-PreparedStatement pstmt = con.prepareStatement(sql);
-pstmt.setInt(1, num);
-pstmt.setString(2, pass);
-
-ResultSet rs = pstmt.executeQuery();
-
-if(rs.next()){
+if(bb != null){
 	
-	sql = "update board set subject=?, content=? where num=?";
-	pstmt = con.prepareStatement(sql);
-	pstmt.setString(1, subject);
-	pstmt.setString(2, content);
-	pstmt.setInt(3, num);
+	BoardBean bb2 = new BoardBean();
 	
-	pstmt.executeUpdate();
+	bb2.setNum(num);
+	bb2.setName(name);
+	bb2.setPass(pass);
+	bb2.setSubject(subject);
+	bb2.setContent(content);
+	
+	bdao.updateBoard(bb2);
 	
 	%>
 	<script type="text/javascript">

@@ -1,7 +1,5 @@
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
+<%@page import="board.BoardBean"%>
+<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,28 +13,12 @@
 int num = Integer.parseInt(request.getParameter("num"));
 String pass = request.getParameter("pass");
 
-Class.forName("com.mysql.jdbc.Driver");
+BoardDAO bdao = new BoardDAO();
+BoardBean bb = bdao.numCheck(num, pass);
 
-String dbUrl = "jdbc:mysql://localhost:3306/jspdb3";
-String dbUser = "root"; 
-String dbPass = "1234"; 
-Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-
-String sql = "select * from board where num=? and pass=?";
-
-PreparedStatement pstmt = con.prepareStatement(sql);
-pstmt.setInt(1, num);
-pstmt.setString(2, pass);
-
-ResultSet rs = pstmt.executeQuery();
-
-if(rs.next()){
+if(bb != null){
 	
-	sql = "delete from board where num=?";
-	pstmt = con.prepareStatement(sql);
-	pstmt.setInt(1, num);
-	
-	pstmt.executeUpdate();
+	bdao.deleteBoard(num);
 	
 	%>
 	<script type="text/javascript">

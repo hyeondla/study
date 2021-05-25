@@ -769,8 +769,8 @@ CREATE TABLE test3(
     id 	 	   NUMBER(10)	 CONSTRAINT t3_id_pk PRIMARY KEY,
     name  	   VARCHAR2(30)	 CONSTRAINT t3_name_nn NOT NULL, 
     job  	   VARCHAR2(20),
-	email 	   VARCHAR2(20),
-	phone	   VARCHAR2(20)  CONSTRAINT t3_ph_nn NOT NULL
+    email 	   VARCHAR2(20),
+    phone	   VARCHAR2(20)  CONSTRAINT t3_ph_nn NOT NULL
     					     CONSTRAINT t3_ph_uk UNIQUE, 
     start_date DATE,
     CONSTRAINT t2_email_uk UNIQUE(email) 
@@ -803,7 +803,7 @@ CREATE TABLE employees(
 
 -- 컬럼 레벨
 CREATE TABLE employees(
-	...
+    ...
     department_id NUMBER(4) CONSTRAINT emp_deptid_fk
     						REFERENCES departments(department_id),
     ...

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDAO {
 	//메서드 정의
@@ -26,7 +28,7 @@ public class MemberDAO {
 		
 		try { //예외처리
 			//연결 메서드 호출
-			Connection con=getConnection();
+			Connection con = getConnection();
 			//sql문
 			String sql="insert into member(id,pass,name,date) values(?,?,?,?)";
 			PreparedStatement pstmt=con.prepareStatement(sql);
@@ -54,7 +56,7 @@ public class MemberDAO {
 		
 		try {
 			
-			Connection con=getConnection();
+			Connection con = getConnection();
 			
 			String sql = "select * from member where id=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -78,4 +80,92 @@ public class MemberDAO {
 		return mb;
 	}
 	
+	//login
+	public MemberBean userCheck(String id, String pass) {
+		
+		MemberBean mb = null;
+		
+		try {
+			Connection con = getConnection();
+			
+			String sql = "select * from member where id=? and pass=?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pass);
+						
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mb = new MemberBean();
+				mb.setId(rs.getString("id"));
+				mb.setPass(rs.getString("pass"));
+				mb.setName(rs.getString("name"));
+				mb.setDate(rs.getTimestamp("date"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		
+		return mb;
+	}
+	
+	//update
+	public void updateMember(MemberBean mb) {
+		try {
+			Connection con = getConnection();
+			
+			String sql = "update member set name=? where id=?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,mb.getName());
+			pstmt.setString(2,mb.getId());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+	}
+	
+	//delete
+	public void deleteMember(String id) {
+		try {
+			Connection con = getConnection();
+			
+			String sql = "delete from member where id=?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+	}
+	
+	public List getMemberList() {
+		
+		List memberList = new ArrayList();
+		
+		try {
+			Connection con = getConnection();
+			String sql = "select * from member";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberBean mb = new MemberBean();
+				mb.setId(rs.getString("id"));
+				mb.setPass(rs.getString("pass"));
+				mb.setName(rs.getString("name"));
+				mb.setDate(rs.getTimestamp("date"));
+				
+				memberList.add(mb);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		return memberList;
+	}
 }
