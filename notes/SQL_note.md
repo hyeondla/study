@@ -705,7 +705,7 @@ COMMIT;
 
 <br>
 
-> 테이블 Table
+> 테이블 TABLE
 
 필수 요소 : 테이블명, 컬럼명, 컬럼 데이터타입, 컬럼 크기
 
@@ -810,7 +810,9 @@ CREATE TABLE employees(
 );
 ```
 
-서브쿼리를 사용한 테이블 생성
+<br>
+
+> 서브쿼리를 사용한 테이블 생성
 
 - 복사된 테이블의 일부 제약조건이 복사되어 생성됨
 - 복사된 제약조건 이름은 DB에서 자동 생성됨 (제약조건 이름은 고유해야함)
@@ -821,13 +823,169 @@ CREATE TABLE dept80
 		SELECT employee_id, last_name, salary*12 ANNSAL, hire_date
 		FROM employees
 		WHERE 1 = 2;
-		-- 데이터 없이 테이블 구조만 복사하고 싶을 때
-		-- 항상 거짓이 되는 조건식 사용
+		-- 데이터 없이 테이블 구조만 복사하고 싶을 때 항상 거짓이 되는 조건식 사용
 ```
-
-
-
-
 
 <br>
 
+> 테이블 수정 : 테이블 구조 수정
+
+- **ADD** : 새로운 구조 추가
+
+  제약조건 사용 시 새로 추가되는 컬럼은 데이터가 없으므로 NOT NULL 같은 경우 문제 발생 가능
+
+  ```sql
+  ALTER TABLE 테이블명 ADD (
+  	컬럼명	데이터타입(크기)
+  );
+  ```
+
+- **MODIFY** : 기존 구조 수정
+
+  제약조건 사용 시 기존 데이터의 데이터타입, 크기에 따라 제한될 수 있음
+
+  ```sql
+  ALTER TABLE 테이블명 MODIFY (
+  	컬럼명 데이터타입(크기)
+  );
+  ```
+
+- **DROP** : 기존 구조 삭제
+
+  ```sql
+  ALTER TABLE 테이블명 DROP COLUMN 컬럼명;
+  ```
+
+- 제약조건 추가
+
+  ```sql
+  ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건;
+  ```
+
+- 제약조건 제거
+
+  ```sql
+  ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명;
+  ```
+
+- 제약조건 일시적 제어
+
+  ```sql
+  ALTER TABLE 테이블명 DISABLE CONSTRAINT 제약조건명;
+  ALTER TABLE 테이블명 ENABLE CONSTRAINT 제약조건명;
+  ```
+
+<br>
+
+> 테이블 삭제
+
+```sql
+-- recyclebin
+DROP TABLE 테이블명;
+
+-- 영구 삭제
+DROP TABLE 테이블명 PURGE;
+```
+
+<br>
+
+> 테이블 복구
+
+실수로 삭제한 경우 recyclebin에서 복구 가능
+
+```sql
+-- 삭제 테이블 조회
+SELECT original_name, operation, droptime
+FROM recyclebin;
+
+-- 삭제 테이블 복구
+FLASHBACK TABLE 테이블명 TO BEFORE DROP;
+
+-- 테이블 목록 확인
+SELECT *
+FROM tab;
+```
+
+<br>
+
+> 테이블 절단
+
+테이블의 저장공간을 잘라서 반납 → 데이터 입력 불가능
+
+<br>
+
+> 뷰 View
+
+테이블의 데이터를 사용해서 연산한 결과를 출력하는 가상 테이블
+
+물리적 데이터 보관 X, 기반이 되는(bastable) 테이블의 데이터를 가져옴
+
+데이터 조회의 편의성, 보안성
+
+서브쿼리에 표현식 함수 → 컬럼 alias 사용해야 함
+
+옵션 
+
+- OR REPLACE 
+
+  뷰의 수정은 새로운 서브쿼리로 덮어 씌우는 형태로 동작
+
+  기존의 뷰를 대체 생성하는 경우 사용
+
+- FORCE | <u>NOFORCE</u> 
+
+```sql
+CREATE [OR REPLACE] [FORCE|NOFORCE] VIEW 뷰이름 [alias] AS 서브쿼리;
+```
+
+<br>
+
+> 시퀀스 SEQUENCE
+
+옵션 : 시작값 제외 나머지 옵션은 변경 가능
+
+- INCREMENT BY n : 증감 간격 설정 (기본값 1)
+
+- START WITH n : 시작값 설정 (기본값 1)
+
+- MAXVALUE n | NOMAXVALUE 
+
+  증가 시퀀스에서 최대값 설정 | 최대값 없음 (데이터 타입 최대값 적용)
+
+- MINVALUE n | NOMINvALUE 
+
+  감소 시퀀스에서 최소값 설정 | 최소값 없음 (데이터 타입 최소값 적용)
+
+- CYCLE | NOCYCLE
+
+  한계값 도달 시 초기화 | 한계값 도달 시 멈춤
+
+- CACHE n | NOCACHE
+
+  예비 값 생성 | 예비 값 생성 X 
+
+```sql
+CREATE SEQUENCE 시퀀스명 옵션1 옵션2 옵션…;
+
+-- 다음 시퀀스값 반환
+SELECT 시퀀스명.NEXTVAL
+FROM 테이블명;
+
+-- 현재(마지막) 시퀀스값 반환
+SELECT 시퀀스명.CURRVAL
+FROM 테이블명;
+```
+
+<br>
+
+> 인덱스 INDEX
+
+Oracle 서버에서 포인터를 사용하여 행의 검색 속도를 높임
+
+<br>
+
+> 시노님 SYNONYM
+
+객체에 다른 이름 부여
+
+<br>
