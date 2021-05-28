@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function fun1() {
+	alert("문서 제목: " + document.title);
+	document.title="문서 제목";
+}
+function fun2() {
+// 	alert("문서 배경색: " + document.bgColor);
+	document.bgColor="black";
+	document.fgColor="white";
+}
+function fun3(color) {
+	document.bgColor=color;
+}
+document.write("문서출력");
+</script>
+</head>
+<body>
+
+<h1>test10</h1>
+<input type="button" value="문서 제목 변경" onclick="fun1()">
+<input type="button" value="문서 배경색 변경" onclick="fun2()">
+<input type="radio" name="ra" value="pink" onclick="fun3('pink')">pink
+<input type="radio" name="ra" value="skyblue" onclick="fun3('skyblue')">skyblue
+<input type="radio" name="ra" value="gray" onclick="fun3('gray')">gray <br>
+
+</body>
+</html>
