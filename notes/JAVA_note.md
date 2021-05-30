@@ -1408,6 +1408,47 @@ System.out.println(Character.toLowerCase(ch)); //소문자로 변환
 
 <br>
 
+> Math 클래스
+
+java.lang 패키지
+
+클래스명만으로 상수와 메서드에 접근
+
+```java
+System.out.println(Math.abs(num)); // 절대값
+System.out.println(Math.max(num1, num2)); // 큰 값
+System.out.println(Math.min(num1, num2)); // 작은 값
+System.out.println(Math.sqrt(num)); // 제곱근
+System.out.println(Math.pow(num1,num2)); // num1^num2
+
+System.out.println(Math.ceil(num)); // 소수점 첫째자리 올림
+System.out.println(Math.floor(num)); // 소수점 첫째자리 버림
+System.out.println(Math.round(num)); // 소수점 첫째자리 반올림 → 정수 리턴
+
+// 난수 발생
+// (int)(Math.random() * 상한값) + 1 (1 <= x <= 상한값)
+System.out.println(Math.random()); // 0.0 <= x < 1.0
+System.out.println((int)(Math.random() * 20) + 1 ); // 1 <= x <= 20 
+```
+
+특정 위치의 숫자까지 남기고 나머지 제거
+
+1. 원하는 자리의 숫자까지 정수자리에 위치하도록 곱함
+
+2. 정수화 수행 → 소수 부분 제거
+
+3. 처음 곱한 값으로 다시 나눔
+
+   소수점 표현을 위해 double 타입 실수로 나누어야 함
+
+<br>
+
+
+
+
+
+
+
 
 
 ---
