@@ -1070,7 +1070,7 @@ if(p instanceof Child) {
 
 슈퍼클래스에 추상메서드가 구현되어있는 경우 강제성 X, 선택적으로 오버라이딩 가능
 
-추상메서드에 대한 구현을 강제함으로써 코드의 강제성, 통일성
+**추상메서드에 대한 구현을 강제**함으로써 코드의 강제성, 통일성
 
 class 키워드 앞에 abstract 키워드
 
@@ -1180,9 +1180,9 @@ enum Month {
 
 > 인터페이스 Interface
 
-interface 키워드를 사용하여 정의
+**interface** 키워드를 사용하여 정의
 
-상수와 추상메서드만 가질 수 있음
+**상수**와 **추상메서드**만 가질 수 있음, 생성자 X
 
 모든 멤버변수는 **public static final** 상수로 취급됨 (생략 가능)
 
@@ -1192,13 +1192,15 @@ interface 키워드를 사용하여 정의
 
 → 메서드 바디를 가질 수 없음, public 누구나 접근 가능
 
-추상메서드를 포함하므로 객체 생성 불가능
+추상메서드를 포함하므로 **객체 생성 불가능**
 
-참조변수 타입으로 사용 가능 → 다형성을 활용한 업캐스팅
+**참조변수** 타입으로 사용 가능 
+
+→ 구현체 클래스의 인스턴스를 인터페이스 타입으로 업캐스팅 (다형성)
 
 서브클래스(구현클래스)에서 상속받을 경우 **implements** 키워드 사용
 
-→ 반드시 인터페이스가 가진 추상메서드를 오버라이딩하여 구현
+→ 반드시 인터페이스가 가진 추상메서드를 **오버라이딩**하여 구현
 
 인터페이스끼리 상속받을 경우 **extends** 키워드 사용
 
@@ -1233,7 +1235,176 @@ interface 키워드를 사용하여 정의
 
 4. 모듈간 독립적 프로그래밍으로 인한 개발 기간 단축
 
+<br>
 
+> Object 클래스
+
+java.lang 패키지
+
+모든 클래스의 슈퍼클래스, 자동으로 상속됨
+
+Object 클래스의 모든 멤버는 다른 클래스에서 사용/오버라이딩 가능
+
+- equals()
+
+  두 객체가 같은지 동등비교 (==), 주소값을 비교하여 같으면  true 다르면 false 리턴
+
+  → 오버라이딩하여 각 객체의 주소값이 아닌 내용을 비교하도록 수정하여 사용 
+
+  `Alt` `Shift` `S` + `H` 
+
+  ```java
+  public boolean equals(Object o) {}
+  ```
+
+- toString()
+
+  객체의 주소값을 문자열로 변환하여 리턴
+
+  → 오버라이딩하여 객체가 가진 멤버변수 값을 문자열로 결합하여 리턴하도록 수정하여 사용
+
+  출력문 내에서는 toString() 메서드 생략 가능 (참조변수명만 사용 가능)
+
+  `Alt` `Shift` `S` + `S` 
+
+  ```java
+  public String toString() {}
+  ```
+
+<br>
+
+> String 클래스
+
+문자열 데이터를 처리 (수정, 검색, 치환 등)
+
+객체 생성 방법
+
+1. 리터럴 할당 (일반적)
+
+   상수풀(Constant Pool)에서 동일한 문자열이 존재하는지 검사 후 
+
+   존재하지 않으면 새로 생성, 존재하면 해당 주소값 리턴
+
+   → 메모리 공간 절약
+
+2. new 연산자 사용
+
+   Heap 공간에 문자열 객체를 생성
+
+   동일한 문자열을 가진 객체가 존재하더라도 새로 생성
+
+문자열 생성 시 String 클래스 내부적으로 char[]로 관리됨
+
+불변 객체이므로 데이터 처리 시 원본 문자열을 수정하지 않고 수정된 데이터를 새로 생성함
+
+→ StringBuilder / StringBuffer 클래스 활용
+
+```java
+System.out.println(s.toString()); // 저장된 문자열 리턴, 메서드 생략 가능
+System.out.println(s.length()); // 문자열 길이
+System.out.println(s.equals(문자열)); // 문자열 비교 (대소문자 구별)
+System.out.println(s.equalsIgnoreCase(문자열)); // 문자열 비교 (대소문자 구별 X)
+System.out.println(s.charAt(인덱스)); // 특정 인덱스 문자
+
+System.out.println(s.substring(인덱스)); // 특정 인덱스 ~ 끝 문자열 추출
+System.out.println(s.substring(시작인덱스,끝인덱스)); // 시작 ~ 끝-1 문자열 추출
+System.out.println(s.concat(문자열)); // 문자열 결합, 연결 연산자보다 연산 속도 빠름
+
+System.out.println(s.indexOf(문자[열])); // 문자[열]의 인덱스 리턴, 없을 시 -1 
+System.out.println(s.lastIndexOf(문자[열])); // 뒤에서부터 탐색, 인덱스 리턴
+System.out.println(s.contains(문자열)); // 문자열 포함 여부
+System.out.println(s.replace(문자[열]1,문자[열]2)); // 문자1 → 문자2 치환 
+System.out.println(s.toUpperCase()); // 대문자로 변환
+System.out.println(s.toLowerCase()); // 소문자로 변환
+
+System.out.println(s.trim()); // 문자열 앞,뒤 불필요한 공백 제거 (문자열 사이 제외)
+String[] sArr = s.split(구분자); // 특정 기준 문자열 분리 → 배열로 관리됨
+String[] sArr = s.split("\\."); // 정규표현식 규칙
+
+// 특정 문자열을 형식지정문자(% ?)와 결합하여 리턴
+String str = String.format("이름 : %s 나이 : %d 키 : %f \n", name, age, height); // printf() 메서드 형식지정문자 동일
+
+char[] chArr = s.toCharArray(); // 문자열 → char[] 배열 리턴
+System.out.println(Arrays.toString(chArr)); // 배열 내 모든 데이터를 문자열로 결합하여 리턴
+```
+
+<br>
+
+> Wrapper 클래스
+
+java.lang 패키지
+
+기본 데이터 타입을 객체 형태로 관리해주는 클래스 모음
+
+Byte, Short, Integer, Long, Float, Double, Character, Boolean
+
+```java
+System.out.println(데이터타입.SIZE); // 메모리 크기 (bit)
+System.out.println(데이터타입.BYTES); // 메모리 크기 (byte)
+System.out.println(데이터타입.MIN_VALUE); // 최소값
+System.out.println((int)Character.MIN_VALUE);
+System.out.println(데이터타입.MAX_VALUE); // 최대값
+System.out.println((int)Character.MAX_VALUE);
+```
+
+기본 데이터 타입은 Stack 공간에 실제 데이터 저장, 객체는 Heap 공간에 실제 데이터 저장
+
+→ 기본 데이터 타입 변수와 참조 데이터 타입 변수 호환 불가능
+
+→ 변환시 메서드 사용 → Java 1.5부터 자동 변환 → 대입연산자를 통해 직접 대입이 가능
+
+기본 데이터 타입과 Wrapper 클래스 타입 간 연산 시 Wrapper 클래스 타입 객체를 오토 언박싱 후 연산 수행
+
+Object 타입 변수에 기본 데이터 타입 저장 가능
+
+기본 데이터 타입 → Wrapper 클래스 타입 (오토박싱) 후 Wrapper → Object으로 업캐스팅 
+
+- **오토 박싱** (Auto Boxing)
+
+  기본 데이터 타입 → Wrapper 클래스 타입 객체로 자동 변환
+
+  (int → Integer, char → Character)  
+
+- **오토 언박싱 (Auto Unboxing)**
+
+  Wrapper 클래스 타입 객체 → 기본 데이터 타입 객체로 자동 변환
+
+  (Integer → int, Character → char)
+
+<br>
+
+문자열 → 기본 데이터 타입 변환
+
+실수형에서 정수형으로 변환 시 실행 시점에 오류 발생 (NumberFormatException)
+
+```java
+// Wrapper클래스명.parse기본데이터타입명(데이터)
+int iNum = Integer.parseInt(strNum);
+double dNum = Double.parseDouble(strNum);
+```
+
+10진수 정수 → 2/8/16진법 변환
+
+```java
+Sytem.out.println(Integer.toBinaryString(num)); //2진수
+Sytem.out.println(Integer.toOctalString(num)); //8진수
+Sytem.out.println(Integer.toHexString(num)); //16진수
+```
+
+<br>
+
+> Character 클래스
+
+특정 문자에 대한 판별, 변환 수행
+
+```java
+System.out.println(Character.isUpperCase(ch)); //대문자 판별
+System.out.println(Character.isLowerCase(ch)); //소문자 판별
+System.out.println(Character.isDigitCase(ch)); //숫자 판별
+
+System.out.println(Character.toUpperCase(ch)); //대문자로 변환
+System.out.println(Character.toLowerCase(ch)); //소문자로 변환
+```
 
 <br>
 
