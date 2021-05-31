@@ -698,3 +698,40 @@ pstmt.executeUpdate();
 
 <br>
 
+
+
+
+
+---
+
+
+
+main → webapp → WEB-INF → lib → **mysql-connector-java-5.1.49.jar**
+
+main → webapp → META-INF → **context.xml**
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/MysqlDB"
+			  auth="Container"
+			  type="javax.sql.DataSource"
+			  driverClassName="com.mysql.jdbc.Driver"
+			  url="jdbc:mysql://localhost:3306/jspdb3"
+			  username="root"
+			  password="1234"
+	/>
+</Context>
+```
+
+main → java → member → Member**Bean.java**
+
+```
+
+```
+
+main → java → member → Member**DAO.java**
+
+ ```
+ ```
+
