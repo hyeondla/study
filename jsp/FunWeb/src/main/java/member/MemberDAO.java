@@ -2,6 +2,7 @@ package member;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -46,4 +47,38 @@ public class MemberDAO {
 			}
 		}
 	}
+	
+	public MemberBean userCheck(String id, String pass) {
+		MemberBean mb = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = getConnection();
+			String sql = "select * from member where id=? and pass=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pass);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mb = new MemberBean();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(pstmt != null) {
+				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(con != null) {
+				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+		}
+		return mb;
+	}
+	
+	
+	
 }

@@ -706,9 +706,9 @@ pstmt.executeUpdate();
 
 
 
-main → webapp → WEB-INF → lib → **mysql-connector-java-5.1.49.jar**
+> main → webapp → WEB-INF → lib → **mysql-connector-java-5.1.49.jar**
 
-main → webapp → META-INF → **context.xml**
+> main → webapp → META-INF → **context.xml**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -724,14 +724,180 @@ main → webapp → META-INF → **context.xml**
 </Context>
 ```
 
-main → java → member → Member**Bean.java**
+> main → java → member → Member**Bean.java**
 
+```java
+import java.sql.Timestamp;
+
+public class MemberBean {
+	
+    private String id;
+    private String pass;
+	private Timestamp date;
+    
+    public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public Timestamp getDate() {
+		return date;
+	}
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
+    
+}
 ```
 
+> main → java → member → Member**DAO.java**
+
+ ```java
+ import java.sql.Connection;
+ import java.sql.PreparedStatement;
+ import java.sql.SQLException;
+ 
+ import javax.naming.Context;
+ import javax.naming.InitialContext;
+ import javax.sql.DataSource;
+ 
+ public class MemberDAO {
+     
+     private Connection getConnection() throws Exception {
+ 		Context init = new InitialContext();
+ 		DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/MysqlDB");
+ 		Connection con = ds.getConnection();
+ 		return con;
+ 	}
+     
+     public void insertMember(MemberBean mb) {
+         Connection con = null;
+ 		PreparedStatement pstmt = null;
+         try {
+ 			con = getConnection();
+ 			String sql = "insert into member(id,pass,date) values(?,?,?)";
+ 			pstmt = con.prepareStatement(sql);
+ 			pstmt.setString(1, mb.getId());
+ 			pstmt.setString(2, mb.getPass());
+ 			pstmt.setTimestamp(3, mb.getDate());
+ 			pstmt.executeUpdate();
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			if(pstmt != null) {
+ 				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 			if(con != null) {
+ 				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 		}
+     }
+     
+     public MemberBean userCheck(String id, String pass) {
+ 		MemberBean mb = null;
+ 		Connection con = null;
+ 		PreparedStatement pstmt = null;
+ 		ResultSet rs = null;
+ 		try {
+ 			con = getConnection();
+ 			String sql = "select * from member where id=? and pass=?";
+ 			pstmt = con.prepareStatement(sql);
+ 			pstmt.setString(1, id);
+ 			pstmt.setString(2, pass);
+ 			rs = pstmt.executeQuery();
+ 			if(rs.next()) {
+ 				mb = new MemberBean();
+ 			}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			if(rs != null) {
+ 				try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 			if(pstmt != null) {
+ 				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 			if(con != null) {
+ 				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 		}
+ 		return mb;
+ 	}
+     
+ }
+ ```
+
+> joinPro.jsp
+
+```jsp
+<%@page import="member.MemberDAO"%>
+<%@page import="member.MemberBean"%>
+<%@page import="java.sql.Timestamp"%>
+...
+<body>
+<%
+request.setCharacterEncoding("utf-8");
+String id = request.getParameter("id");
+String pass = request.getParameter("pass");
+Timestamp date = new Timestamp(System.currentTimeMillis());
+    
+MemberBean mb = new MemberBean();
+mb.setId(id);
+mb.setPass(pass);
+mb.setDate(date);
+    
+MemberDAO mdao = new MemberDAO();
+mdao.insertMember(mb);
+%>
+</body>
 ```
 
-main → java → member → Member**DAO.java**
+> loginPro.jsp
 
- ```
- ```
+```jsp
+<%@page import="member.MemberDAO"%>
+<%@page import="member.MemberBean"%>
+...
+<body>
+<%
+request.setCharacterEncoding("utf-8");
+
+String id = request.getParameter("id");
+String pass = request.getParameter("pass");
+
+MemberDAO mdao = new MemberDAO();
+MemberBean mb = mdao.userCheck(id, pass);
+
+if(mb != null){
+	session.setAttribute("id", id); // 세션 생성
+	response.sendRedirect("main.jsp");
+} else {
+	%>
+	<script type="text/javascript">
+		alert("입력하신 정보가 틀립니다");
+		history.back();
+	</script> 
+	<%
+}
+%>
+</body>
+```
+
+
+
+---
+
+
+
+```jsp
+<!-- 반복되는 부분 분리 - 액션태그 -->
+<jsp:include page="파일 경로"/> 
+```
 

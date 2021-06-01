@@ -38,5 +38,9 @@ MemberDAO mdao = new MemberDAO();
 mdao.insertMember(mb);
 
 %>
+<script type="text/javascript">
+	alert("회원가입 성공");
+	location.href = "login.jsp";
+</script>
 </body>
 </html>
