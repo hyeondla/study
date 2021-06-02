@@ -831,6 +831,69 @@ public class MemberBean {
  		return mb;
  	}
      
+     public MemberBean getMember(String id) {
+ 		Connection con = null;
+ 		PreparedStatement pstmt = null;
+ 		ResultSet rs = null;
+ 		MemberBean mb = new MemberBean();
+ 		try {
+ 			con = getConnection();
+ 			String sql = "select * from member where id=?";
+ 			pstmt = con.prepareStatement(sql);
+ 			pstmt.setString(1, id);
+ 			rs = pstmt.executeQuery();
+ 			if(rs.next()) {
+ 				mb.setId(rs.getString("id"));
+ 				mb.setPass(rs.getString("pass"));
+ 				mb.setName(rs.getString("name"));
+ 				mb.setEmail(rs.getString("email"));
+ 				mb.setAddress(rs.getString("address"));
+ 				mb.setPhone(rs.getString("phone"));
+ 				mb.setMobile(rs.getString("mobile"));
+ 			}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			if(rs != null) {
+ 				try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 			if(pstmt != null) {
+ 				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 			if(con != null) {
+ 				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 		}
+ 		return mb;
+ 	}
+     
+     public void updateMember(MemberBean mb) {
+ 		Connection con = null;
+ 		PreparedStatement pstmt = null;
+ 		try {
+ 			con = getConnection();
+ 			
+ 			String sql = "update member set name=?, email=?, address=?, phone=?, mobile=? where id=?";
+ 			pstmt = con.prepareStatement(sql);
+ 			pstmt.setString(1,mb.getName());
+ 			pstmt.setString(2,mb.getEmail());
+ 			pstmt.setString(3,mb.getAddress());
+ 			pstmt.setString(4,mb.getPhone());
+ 			pstmt.setString(5,mb.getMobile());
+ 			pstmt.setString(6,mb.getId());
+ 			pstmt.executeUpdate();
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			if(pstmt != null) {
+ 				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 			if(con != null) {
+ 				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+ 			}
+ 		}
+ 	}
+     
  }
  ```
 
@@ -890,6 +953,85 @@ if(mb != null){
 </body>
 ```
 
+> logout.jsp
+
+```jsp
+<body>
+<%
+session.invalidate();
+%>
+<script type="text/javascript">
+	location.href="../member/login.jsp";
+</script>
+</body>
+```
+
+> update.jsp
+
+```jsp
+<%@page import="member.MemberBean"%>
+<%@page import="member.MemberDAO"%>
+...
+<body>
+<%
+String id = (String)session.getAttribute("id");
+
+if(id==null){
+	response.sendRedirect("../member/login.jsp");
+}
+
+MemberDAO mdao = new MemberDAO();
+MemberBean mb = mdao.getMember(id);
+%>
+...
+<input type="text" name="id" value="<%=mb.getId() %>" readonly class="id"><br>
+```
+
+> updatePro.jsp
+
+```jsp
+<%@page import="member.MemberBean"%>
+<%@page import="member.MemberDAO"%>
+<body>
+<%
+request.setCharacterEncoding("utf-8");
+String id = request.getParameter("id");
+String pass = request.getParameter("pass");
+String name = request.getParameter("name");
+String email = request.getParameter("email");
+String address = request.getParameter("address");
+String phone = request.getParameter("phone");
+String mobile = request.getParameter("mobile");
+MemberDAO mdao = new MemberDAO();
+MemberBean mb = mdao.userCheck(id, pass);
+if(mb != null){
+	MemberBean mb2 = new MemberBean();
+	mb2.setId(id);
+	mb2.setPass(pass);
+	mb2.setName(name);
+	mb2.setEmail(email);
+	mb2.setAddress(address);
+	mb2.setPhone(phone);
+	mb2.setMobile(mobile);
+	mdao.updateMember(mb2);
+	%>
+	<script type="text/javascript">	
+		alert("회원정보수정 완료");
+		location.href="main.jsp";
+	</script>
+	<%
+} else {
+	%>
+	<script type="text/javascript">
+		alert("입력하신 정보가 틀립니다");
+		history.back();
+	</script>
+	<%
+}
+%>
+</body>
+```
+
 
 
 ---
@@ -897,7 +1039,70 @@ if(mb != null){
 
 
 ```jsp
+<html>
+<head>
+<title></title>    
+<link href="../css/default.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="wrap">
+<!-- 헤더 -->
 <!-- 반복되는 부분 분리 - 액션태그 -->
-<jsp:include page="파일 경로"/> 
+<jsp:include page="../inc/top.jsp"/>     
+
+<!-- 본문 -->
+    <!-- 메인 이미지 -->
+    <div id="sub_img"></div>
+    <!-- 왼쪽 메뉴 -->
+	<nav id="sub_menu">
+    	<ul>
+            <li><a href="#">왼쪽메뉴1</a></li>
+            <li><a href="#">왼쪽메뉴2</a></li>
+        </ul>
+    </nav>
+    <!-- 본문 내용 -->
+    <article>
+    	...
+    </article>
+<div class="clear"></div>
+<!-- 푸터 -->
+<jsp:include page="../inc/bottom.jsp"/>
+</div>    
+</body>
+</html>
+```
+
+```jsp
+<header>
+    ...
+</header>
+```
+
+```jsp
+<footer>
+    ...
+</footer>
+```
+
+
+
+---
+
+
+
+```css
+@charset "UTF-8";
+
+body{
+	...
+}
+
+#wrap{ /* id */
+    ...
+}
+
+.clear{ /* class */
+    clear: both;
+}
 ```
 

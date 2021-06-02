@@ -79,6 +79,72 @@ public class MemberDAO {
 		return mb;
 	}
 	
+	//info
+	public MemberBean getMember(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberBean mb = new MemberBean();
+		try {
+			
+			con = getConnection();
+			
+			String sql = "select * from member where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				mb.setId(rs.getString("id"));
+				mb.setPass(rs.getString("pass"));
+				mb.setName(rs.getString("name"));
+				mb.setEmail(rs.getString("email"));
+				mb.setAddress(rs.getString("address"));
+				mb.setPhone(rs.getString("phone"));
+				mb.setMobile(rs.getString("mobile"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(pstmt != null) {
+				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(con != null) {
+				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+		}
+		return mb;
+	}
 	
+	public void updateMember(MemberBean mb) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = getConnection();
+			
+			String sql = "update member set name=?, email=?, address=?, phone=?, mobile=? where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,mb.getName());
+			pstmt.setString(2,mb.getEmail());
+			pstmt.setString(3,mb.getAddress());
+			pstmt.setString(4,mb.getPhone());
+			pstmt.setString(5,mb.getMobile());
+			pstmt.setString(6,mb.getId());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(con != null) {
+				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+		}
+	}
 	
 }
