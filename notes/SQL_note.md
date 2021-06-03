@@ -908,7 +908,7 @@ FROM tab;
 
 <br>
 
-> 테이블 절단
+> 테이블 절단 TRUNCATE
 
 테이블의 저장공간을 잘라서 반납 → 데이터 입력 불가능
 
@@ -918,9 +918,17 @@ FROM tab;
 
 테이블의 데이터를 사용해서 연산한 결과를 출력하는 가상 테이블
 
-물리적 데이터 보관 X, 기반이 되는(bastable) 테이블의 데이터를 가져옴
+물리적 데이터 보관 X, 기반이 되는(basetable) 테이블의 데이터를 가져옴
+
+→ 베이스 테이블의 데이터 수정 시 뷰의 데이터도 수정됨
+
+simple view : 베이스 테이블이 하나인 뷰
+
+complex view : 베이스 테이블이 여러개인 뷰 
 
 데이터 조회의 편의성, 보안성
+
+서브쿼리의 출력 결과, 뷰를 구성하는 서브쿼리는 data dictionary에 저장되어 있음
 
 서브쿼리에 표현식 함수 → 컬럼 alias 사용해야 함
 
@@ -935,8 +943,11 @@ FROM tab;
 - FORCE | <u>NOFORCE</u> 
 
 ```sql
-CREATE [OR REPLACE] [FORCE|NOFORCE] VIEW 뷰이름 [alias] AS 서브쿼리;
+CREATE [OR REPLACE] [FORCE|NOFORCE] VIEW 뷰이름 [(alias[, alias]...)] 
+AS 서브쿼리;
 ```
+
+<img src="./img/sql072.PNG"><br>
 
 <br>
 
@@ -952,7 +963,7 @@ CREATE [OR REPLACE] [FORCE|NOFORCE] VIEW 뷰이름 [alias] AS 서브쿼리;
 
   증가 시퀀스에서 최대값 설정 | 최대값 없음 (데이터 타입 최대값 적용)
 
-- MINVALUE n | NOMINvALUE 
+- MINVALUE n | NOMINVALUE 
 
   감소 시퀀스에서 최소값 설정 | 최소값 없음 (데이터 타입 최소값 적용)
 
@@ -989,3 +1000,8 @@ Oracle 서버에서 포인터를 사용하여 행의 검색 속도를 높임
 객체에 다른 이름 부여
 
 <br>
+
+---
+
+<br>
+
