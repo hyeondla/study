@@ -2,7 +2,6 @@ package collection_framework;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Test {
@@ -16,12 +15,11 @@ public class Test {
 		}
 		System.out.println("내 로또 번호 : " + myLotto);
 		
-		List<Integer> lotto = Arrays.asList(7,8,11,13,15,23);
-		Set<Integer> thisWeekLotto = new HashSet<Integer>(lotto);
+		Set<Integer> thisWeekLotto = new HashSet<Integer>(Arrays.asList(7,8,11,13,15,23));
 		System.out.println("이번주 추첨 번호 : " + thisWeekLotto);
 		
 		int count = 0;
-		for(Object o : thisWeekLotto) {
+		for(int o : thisWeekLotto) {
 			if(myLotto.contains(o)) {
 				count++;
 			}
