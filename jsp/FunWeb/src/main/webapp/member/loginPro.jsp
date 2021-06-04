@@ -20,7 +20,7 @@ MemberBean mb = mdao.userCheck(id, pass);
 
 if(mb != null){
 	session.setAttribute("id", id);
-	response.sendRedirect("main.jsp");
+	response.sendRedirect("../main/main.jsp");
 } else {
 	%>
 	<script type="text/javascript">

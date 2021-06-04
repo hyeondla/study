@@ -37,7 +37,7 @@ if(mb != null){
 	%>
 	<script type="text/javascript">	
 		alert("회원정보수정 완료");
-		location.href="main.jsp";
+		location.href="../main/main.jsp";
 	</script>
 	<%
 } else {
