@@ -1237,6 +1237,10 @@ enum Month {
 
 <br>
 
+---
+
+<br>
+
 > Object 클래스
 
 java.lang 패키지
@@ -1440,6 +1444,620 @@ System.out.println((int)(Math.random() * 20) + 1 ); // 1 <= x <= 20
 3. 처음 곱한 값으로 다시 나눔
 
    소수점 표현을 위해 double 타입 실수로 나누어야 함
+
+<br>
+
+> Random 클래스
+
+**nextXXX()** : 다양한 타입의 난수 생성
+
+static 메서드 X → 인스턴스 생성 필수
+
+```java
+import java.util.Random;
+//------------------------------------------------
+Random r = new Random();
+System.out.println(r.nextInt()); // int형 범위
+System.out.println(r.nextInt(10)); // 0 ~ 9
+System.out.println(r.nextDouble()); // double형 범위
+System.out.println(r.nextBoolean()); // true, false
+```
+
+<br>
+
+> Date 클래스
+
+대부분의 생성자 및 메서드가 deprecate 처리
+
+toString() 메서드가 오버라이딩 되어 있음
+
+**getTime()** : 객체의 날짜 정보가 long 타입으로 리턴
+
+```java
+import java.util.Date;
+//------------------------------------------------
+Date d = new Date();
+Date d = new Date(0); // 1970년 1월 1일 09시
+Date d = new Date(2000000000000L); // +2000000000000밀리초
+```
+
+<br>
+
+> Calendar 클래스
+
+추상클래스 → 인스턴스 생성 불가 → getInstance() 메서드로 리턴받아 사용
+
+get() : 날짜 / 시각 정보 조회
+
+set() : 날짜 / 시각 정보 설정
+
+```java
+import java.util.Calendar;
+//------------------------------------------------
+Calendar cal = Calendar.getInstance();
+
+int year = cal.get(Calendar.YEAR);
+int month = cal.get(Calendar.MONTH) + 1; // 0 ~ 11 → +1
+int day = cal.get(Calendar.DAY_OF_MONTH);
+int hour = cal.get(Calendar.HOUR[_OF_DAY]); // 12시간[24시간]제
+int min = cal.get(Calendar.MINUTE);
+int sec = cal.get(Calendar.SECOND);
+
+cal.set(year, month-1, day);
+cal.set(Calendar.YEAR, 2000);
+```
+
+```java
+// Calendar → Date
+Date date = cal.getTime();
+// Date → Calendar
+cal.setTime(date);
+```
+
+<br>
+
+> Time 패키지
+
+```java
+import java.time.*;
+//------------------------------------------------
+LocalDate date = LocalDate.now(); // 시스템 날짜 정보 리턴
+LocalTime time = LocalTime.now(); // 시스템 시각 정보 리턴
+LocalDateTime dateTime = LocalDateTime.now(); // 날짜, 시각 정보 리턴
+
+LocalDate date = LocalDate.of(2000, 1, 1); // 연, 월, 일 설정
+LocalTime time = LocalTime.of(16, 40, 01); // 시, 분, 초 설정
+LocalDateTime dateTime = LocalDateTime.of(date, time);
+
+System.out.println(date.plusMonths(6)); // 6개월 뒤 날짜 설정
+System.out.println(date.plusDays(30)); // 30일 뒤 날짜 설정
+System.out.println(date.plusMonths(6).plusDays(30)); // 빌더 패턴
+
+System.out.println(date1.compareTo(date2)); // 이전→음수, 같음→0, 이후→양수 리턴
+System.out.println(date1.isAfter(date2)); // 이후→true, 이전→false 리턴
+System.out.println(date1.isBefore(date2)); // 이전→true, 이후→false 리턴
+System.out.println(date1.isEqual(date2)); // 동일→true, 다름→false 리턴
+System.out.println(date1.until(date2, ChronoUnit.YEARS)); // 차이 계산
+
+int year = date.getYear(); 
+int month = date.getMonthValue();
+int day = date.getDayOfMonth();
+
+// Month 타입 객체 → enum 타입으로 관리됨 (각 월 이름이 상수로 제공)
+Month enumMonth = date.getMonth();
+String monthName = enumMonth.toString(); // 변수 저장 시 String 변환 필수
+String monthKorName = enumMonth.getDisplayName(TextStyle.FULL, Locale.KOREAN); //표현법
+```
+
+<br>
+
+> 형식화 Formatting
+
+날짜, 시각 정보를 원하는 형식으로 변환
+
+<img src="./img/java003.PNG"><br>
+
+```java
+import java.text.SimpleDateFormat; // Date 타입 객체 형식화
+import java.time.format.DateTimeFormatter; // LocalXXX 타입 객체 형식화
+//------------------------------------------------
+String pattern = "yyyy/MM/dd(E) a HH:mm:ss";
+
+Date today = new Date();
+SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+String formatToday = sdf.format(today);
+System.out.println(formatToday);
+
+// LocalXXX → 패턴 문자열이 존재하지 않는 정보를 포함하지 않도록 주의
+LocalDateTime now = LocalDateTime.now();
+DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
+System.out.println(now.format(dtf));
+```
+
+<br>
+
+---
+
+<br>
+
+> 컬렉션 프레임워크 Collection Framework
+
+컴퓨터 시스템에서 데이터를 효율적으로 저장 및 관리하는 방법 
+
+= 자료구조 Data Structure
+
+API : 자료구조를 자바에서 구현하여 제공하는 클래스들의 모음
+
+java.util 패키지에 컬렉션 프레임워크 API 들이 제공
+
+Set, List, Map 인터페이스 계열로 구분
+
+(Set, List 는 공통적으로 Collection 인터페이스를 상속)
+
+각 인터페이스들의 구현체 클래스를 사용하여 데이터를 관리
+
+toString() 메서드가 오버라이딩 되어 있음
+
+모든 데이터는 객체 형태로 관리
+
+기본 데이터타입을 사용 → Wrapper 클래스 타입으로 오토 박싱
+
+<br>
+
+> Set
+
+순서 X → 인덱스를 사용하지 않음
+
+데이터 중복 X
+
+- HashSet
+
+  Set 인터페이스 구현체이므로 업캐스팅 
+
+  Set / List 계열 객체 생성 시 기존 객체 데이터 복사 가능
+
+  복사한 객체의 요소를 삭제하더라도 다른 객체 요소에 영향 X
+
+- TreeSet
+
+  같은 타입 데이터 정렬 가능, 오름차순 정렬
+
+  다른 타입 → 예외 발생
+
+```java
+import java.util.Set;
+import java.util.HashSet;
+import java.util.TreeSet;
+//------------------------------------------------
+Set set = new HashSet();
+set.add(데이터); // 추가→true, 중복→false 리턴, 파라미터 Object 타입 → 모든 타입 추가 가능
+set.remove(데이터); // 삭제→true, 없을시→false 리턴
+set.clear(); // 초기화
+System.out.println(set.isEmpty()); // 컬렉션 객체가 비어있는지 여부 리턴
+System.out.println(set.size()); // 저장된 요소 갯수 리턴
+System.out.println(set.contains(데이터)); // 포함 여부 리턴
+
+Object[] oArr = set.toArray(); // 배열로 변환
+Set set2 = new HashSet();
+set2.addAll(set); // 복사
+
+TreeSet treeSet = new TreeSet(set2);
+System.out.println(treeSet);
+```
+
+컬렉션 요소에 반복 접근 하는 방법
+
+```java
+// forEach문 (인덱스가 없으므로 일반 for문 사용 불가)
+for(Object o : set) { // Object 타입 선언
+    System.out.println(o);
+}
+
+Set<Integer> set = new HashSet<Integer>(); // 제네릭 타입 
+for(int num : set) { // Integer 타입 지정 가능
+    System.out.println(num);
+}
+
+// 반복자 사용
+import java.util.Iterator;
+
+Iterator ite = set.iterator(); // Iterator 객체 얻어오기
+Iterator<Integer> ite = set.iterator(); // 제네릭 타입 지정 가능
+while(ite.hasNext()){ // 다음 요소가 존재할 동안 반복
+    System.out.println(ite.next()); 
+}
+```
+
+<br>
+
+> List
+
+저장 데이터 순서 유지, 저장 시점에서 자동으로 인덱스가 부여됨
+
+중복 가능
+
+ArrayList, Vector, LinkedList
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Arrays;
+//------------------------------------------------
+List<Integer> List = new ArrayList<Integer>();
+list.add(데이터);
+list.add(인덱스, 데이터); // 인덱스에 데이터 추가, 기존 데이터는 뒤로 밀려남
+list.addAll(리스트);
+list.set(인덱스, 데이터); // 인덱스에 데이터 덮어씀
+list.remove(인덱스);
+list.remove(list.indexOf(데이터));
+System.out.println(list.isEmpty());
+System.out.println(list.size());
+System.out.println(list.get(인덱스)); // 인덱스에 저장된 데이터 리턴
+System.out.println(list.indexOf(데이터)); // 데이터가 위치한 인덱스 리턴
+System.out.println(list.lastIndexOf(데이터)); // 뒤에서부터 탐색
+
+List subList = list.subList(시작인덱스, 끝인덱스); // 시작 ~ 끝-1 추출
+Collections.sort(list); // 정렬, 같은 타입 요소만 가능
+Collections.shuffle(list); // 무작위 섞기, 타입 무관
+
+// 배열 → 리스트 변환
+List nameList = Arrays.atList(배열);
+List nameList = Arrays.atList(데이터1, 데이터2, ...);
+```
+
+<br>
+
+> Map
+
+키와 값을 한 쌍으로 가짐 → Map.Entry 타입 객체로 관리됨
+
+키 중복 불가 → Set 타입으로 관리됨
+
+값 중복 가능
+
+toString() 메서드가 오버라이딩 되어 있음
+
+HashMap, Properties 
+
+```java
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+//------------------------------------------------
+Map map = new HashMap();
+Map<String, String> map = new HashMap<String, String>(); // 제네릭 타입
+
+map.put(키, 값); // 추가, 존재하는 키 지정 → 값 덮어씀, 제거되는 데이터 리턴
+System.out.println(map.get(키)); // 키에 해당하는 값 리턴, 없을 시 null 리턴
+System.out.println(map.containsValue(값)); // 특정 값 탐색
+System.out.println(map.containsKey(키)); // 특정 키 탐색
+
+Set keySet = map.keySet();
+System.out.println(keySet); // 모든 키 리턴
+for(Object o : keySet) {
+    System.out.println(map.get(o));
+}
+
+List valueList = new ArrayList(map.values()); // 직접 다운 캐스팅 불가 → 파라미터로 전달
+System.out.println(valueList); // 모든 값 리턴
+
+Set entrySet = map.entrySet();
+System.out.println(entrySet); // 키=값 한쌍으로 갖는 객체 리턴
+```
+
+<br>
+
+> 스택 Stack
+
+TOP에서만 삽입과 삭제
+
+마지막에 추가된 요소가 가장 먼저 삭제됨
+
+First In Last Out(FILO), Last In First Out(LIFO)
+
+toString() 메서드가 오버라이딩 되어 있음
+
+```java
+import java.util.Stack;
+//------------------------------------------------
+Stack<String> stack = new Stack<String>(); // 제네릭
+
+stack.push(데이터); // 추가
+System.out.println(stack.peek()); // TOP 데이터 확인
+System.out.println(stack.pop()); // TOP 데이터 꺼내기(제거)
+// 더 이상 꺼낼 요소가 없을 때 예외 발생(EmptryStackException)
+```
+
+<br>
+
+> 큐 Queue
+
+한 쪽에서 삽입, 반대쪽에서 삭제
+
+먼저 추가된 요소가 가장 먼저 삭제됨
+
+First In First Out(FIFO),  Last In Last Out(LILO)
+
+Queue 인터페이스를 직접 다루지 않고 상속받아 구현한 LinkedList 클래스 사용
+
+LinkedList 클래스는 List 와 Queue 인터페이스를 모두 구현한 구현체
+
+```java
+import java.util.LinkedList;
+import java.util.Queue;
+//------------------------------------------------
+Queue<String> q = new LinkedList<String>(); // 제네릭
+
+q.offer(데이터); // 추가
+System.out.println(q.peek()); // 출구 데이터 확인
+System.out.println(q.poll()); // 출구 데이터 꺼내기(제거)
+```
+
+<br>
+
+---
+
+<br>
+
+> 제네릭을 사용한 클래스 정의
+
+클래스 정의 시 사용되어질 데이터타입을 미리 명시하지 않고 객체 생성 시 명시하여 사용하는 기법
+
+클래스 정의 시점에 클래스명 뒤에 <> 기호를 사용하여 가상의 자료형 명시
+
+가상의 자료형은 보통 1글자 영문 대문자 사용 (주로 E / T 사용)
+
+해당 클래스의 인스턴스 생성 시점에 가상의 자료형을 대신할 실제 자료형을 지정 
+
+→ 클래스 내의 가상의 자료형이 실제 자료형으로 대체됨
+
+인스턴스 생성 시점에서 어떤 자료형으로도 변형 가능
+
+```java
+// 제네릭을 사용한 클래스의 인스턴스 생성
+// 클래스명 뒤에 제네릭 타입을 참조 데이터타입으로 명시
+GenericClass<Integer> gc = new GenericClass<Integer>();
+GenericClass<Double> gc = new GenericClass<Double>();
+GenericClass<String> gc = new GenericClass<String>();
+GenericClass<Person> gc = new GenericClass<Person>();
+GenericClass gc5 = new GenericClass(); // Object
+//------------------------------------------------
+class GenericClass<T> {
+    T member; // 데이터타입 T → 인스턴스 생성 시점에 실제 자료형으로 대체됨
+    public T getMember() {
+        return member;
+    }
+    public void setMember(T member) {
+        this.member = member;
+    }
+}
+```
+
+제네릭 타입 사용 시 주의사항
+
+1. static 메서드 내에서 제네릭 타입 파라미터 사용 불가 
+
+   →  인스턴스 생성 시점에서 타입이 지정되므로 
+
+   static 메서드 내에서는 아직 가상의 데이터타입으로만 존재
+
+2. new 연산자 사용 시 제네릭 타입 파라미터 사용 불가
+3. instanceof 연산자 사용 시 제네릭 타입 파라미터 사용 불가
+
+```java
+class Class<P> {}
+interface Interface<Q> {}
+
+// 부모 타입에 제네릭 타입이 지정되어 있을 경우
+// 상속 시 부모 타입 파라미터를 서브클래스 타입 파라미터로 명시
+class SubClass<P, Q> extends Class<P> implements Interface<Q> {}
+```
+
+<br>
+
+---
+
+<br>
+
+> 예외 Exception
+
+개발자가 의도하지 않은 상황에서 발생하는 문제로 프로그램이 비정상적으로 종료됨
+
+예외가 발생한 위치부터 아래쪽의 코드들은 실행되지 못함
+
+예외 처리(Exception Handling)를 통해 비정상적인 종료를 막을 수 있음
+
+→ try~catch 문 사용, Exception 클래스 및 하위 클래스 사용
+
+try 블록에 예외가 발생할 것으로 예상되는 코드 기술
+
+예외 발생 시 JVM 에 의해 해당 예외 객체를 전달받음
+
+catch 블록 중 일치하는 타입에 대한 블록을 실행하여 예외 처리
+
+일치하는 catch 블록이 없을 경우 프로그램은 비정상 종료
+
+Compile Checked Exception 
+
+: 컴파일 시점에서 예외 발생 여부를 체크, IOException, SQLException
+
+Compile Unchecked Exception 
+
+: 실행 시점에서 예외 발생 여부를 알 수 있음
+
+```java
+try{
+	// 예외가 발생할 것으로 예상되는 코드
+    // 예외 발생 지점 아래의 코드들은 실행되지 못하고 catch 문으로 이동
+} catch(예외코드 e) {
+    e.printStackTrace(); // 예외 클래스, 발생 위치, 원인 출력
+    System.out.println(e.getMessage()); // 예외 발생 원인 문자열 리턴
+} catch(Exception e) {
+    // 각 예외에 따른 처리 방법을 구분할 수 없음
+	// 다른 예외클래스보다 아래
+} finally {
+	// 예외 발생 여부와 관계없이 무조건 수행
+    // return 문이 있더라도 돌아가기 전에 실행됨
+}
+```
+
+<br>
+
+>  예외 처리 위임
+
+메서드를 호출한 곳으로 예외 위임
+
+메서드 선언부 마지막에 **throws** 키워드
+
+예외를 위임할 클래스명을 기술 (여러개일 경우 `,`로 구분)
+
+예외 처리를 위임받은 메서드는 다시 예외 처리에 대한 책임이 발생 
+
+→ 직접 처리 / 위임
+
+마지막 단계의 메서드(main)에서는 try ~ catch 블록을 사용 → 예외 직접 처리
+
+```java
+public static void main(String[] args) {
+    // 예외 직접 처리
+    try {
+        method1();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+public static void method1() throws RuntimeException{
+    // 예외 클래스 모두 명시 또는 상위 타입으로 결합하여 명시
+	method2(); // 예외 → 위임
+}
+
+public static void method2() throws ArithmeticException, NullPointerException {
+    // 1. 예외가 발생한 곳에서 try~catch 직접 예외 처리
+    // 2. 메서드 호출한 곳으로 throws 예외 위임
+}
+```
+
+<br>
+
+> 사용자에 의한 예외 발생
+
+자바 기준 예외가 아닌 상황에서도 개발자의 의도대로 예외를 발생시키는 것
+
+throw 키워드를 사용하여 발생시킬 예외 클래스 객체를 지정
+
+예외 클래스의 인스턴스를 생성하여 강제로 예외 발생시킴
+
+별도의 변수 없이 임시 객체 형태로 사용하는 경우가 많음
+
+→ new 예외클래스명() 객체를 생성하여 전달
+
+Exception 클래스로 예외 처리 시 발생한 예외 파악이 어려움
+
+→ 사용자가 직접 예외 클래스를 작성, 예외 클래스(Exception)를 상속받아 정의
+
+→ 생성자를 정의하여 슈퍼클래스에 예외메세지만 초기화 
+
+```java
+public static void main(String[] args) {
+    try {
+		printScore(150);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+    
+    try {
+		userExceptionMethod(150);
+	} catch (InvalidScoreException e) {
+		e.printStackTrace();
+	}
+}
+//------------------------------------------------
+public static void printScore(int score) throws Exception {
+	//특정 조건 발생 시 강제로 예외 발생 
+	if(score < 0 || score > 100) {
+		throw new Exception("점수 입력 오류 - " + score);
+	}
+}
+
+public static void userExceptionMethod(int score) throws InvalidScoreException {
+	if(score < 0 || score > 100) {
+		// 사용자 정의 예외 클래스(InvalidScoreException) → 예외 발생
+		throw new InvalidScoreException("점수 입력 오류 - " + score);
+	}
+}
+//------------------------------------------------
+// 사용자 정의 예외 클래스
+class InvalidScoreException extends Exception {
+	// 생성자를 정의하여 예외 메세지를 슈퍼클래스의 생성자에 전달
+	public InvalidScoreException(String message) {
+		super(message);
+	}
+}
+```
+
+<br>
+
+---
+
+<br>
+
+> 쓰레드 Thread
+
+프로그램(Program) : 디스크에 설치되어 있는 소프트웨어
+
+프로세스(Process) : 설치된 프로그램을 실행하여 메모리에 로딩된 상태, 실행중인 프로그램
+
+멀티 태스킹(Multi Tasking) 
+
+: 프로세스가 여러개 일 때 해당 프로세스들이 동시에 수행되는 것
+
+  CPU 가 빠른 속도로 프로세스를 번갈아가면서 실행
+
+쓰레드(Thread) : 프로세스 내에서 작업의 최소 단위
+
+Single Thread : 동시에 하나의 작업 수행
+
+Multi Thread : 동시에 여러개의 작업 수행
+
+<br>
+
+> 멀티 쓰레딩 Multi Threading
+
+하나의 프로세스 내에서 두 가지 이상의 작업(Thread)를 동시에 처리
+
+CPU 가 빠른 속도로 여러 작업을 번갈아가면서 수행 → 동시에 처리되는 것처럼 느껴짐
+
+작업 순서는 고정이 아닌 변동 → 실행 결과가 달라질 수 있음
+
+구현 방법
+
+1. 멀티쓰레딩 코드가 포함될 서브클래스에서 **Thread 클래스 상속**
+
+2. Thread 클래스의 **run()** 메서드를 **오버라이딩**
+
+   멀티쓰레딩으로 처리할 코드 작성
+
+3. 멀티쓰레딩으로 구현된 클래스의 **인스턴스 생성**
+
+4. 생성된 인스턴스의 **start()** 메서드를 호출
+
+```java
+MyThread mt = new MyThread(); // 3. 인스턴스 생성
+mt.start(); // 4. start() 호출
+//------------------------------------------------
+// 1. Thread 클래스 상속
+class MyThread extends Thread {
+	// 2. run() 오버라이딩
+    @Override
+	public void run(){
+        // 멀티쓰레딩 코드
+    }
+}
+```
 
 <br>
 
