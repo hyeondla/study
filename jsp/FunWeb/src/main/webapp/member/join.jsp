@@ -7,6 +7,17 @@
 <title>Insert title here</title>
 <link href="../css/default.css" rel="stylesheet" type="text/css">
 <link href="../css/subpage.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+	function winopen() {
+		if(document.fr.id.value == "") {
+			alert("아이디를 입력하세요");
+			document.fr.id.focus();
+			return;
+		}
+		var id=document.fr.id.value;
+		document.open("winopen.jsp?id="+id,"","width=400,height=300");
+	}
+</script>
 </head>
 <body>
 <div id="wrap">
@@ -27,12 +38,12 @@
 	<!-- 본문 내용 -->
 	<article>
 		<h1>Join Us</h1>
-		<form action="joinPro.jsp" method="post" id="join">
+		<form action="joinPro.jsp" method="post" id="join" name="fr">
 			<fieldset>
 				<legend>Basic Info</legend>
 					<label>User Id</label>
 					<input type="text" name="id" class="id">
-					<input type="button" value="dup.check" class="dup"><br>
+					<input type="button" value="dup.check" class="dup" onclick="winopen()"><br>
 					
 					<label>Password</label>
 					<input type="password" name="pass"><br>

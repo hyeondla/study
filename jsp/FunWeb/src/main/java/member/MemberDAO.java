@@ -84,7 +84,7 @@ public class MemberDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		MemberBean mb = new MemberBean();
+		MemberBean mb = null;
 		try {
 			
 			con = getConnection();
@@ -96,6 +96,7 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
+				mb = new MemberBean();
 				mb.setId(rs.getString("id"));
 				mb.setPass(rs.getString("pass"));
 				mb.setName(rs.getString("name"));

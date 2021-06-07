@@ -1,4 +1,3 @@
-<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,41 +26,26 @@
 			</ul>
 	</nav>
 	<!-- 본문 내용 -->
+	<%
+	String id = (String)session.getAttribute("id");
+	if(id == null) {
+		response.sendRedirect("../member/login.jsp");
+	}
+	%>
 	<article>
-		<h1>Notice</h1>
+		<h1>Notice Write</h1>
+		<form action="writePro.jsp" method="post">
 		<table id="notice">
-			<tr><th class="tno">No.</th>
-			    <th class="ttitle">Title</th>
-			    <th class="twriter">Writer</th>
-			    <th class="tdate">Date</th>
-			    <th class="tread">Read</th></tr>
-			<tr><td>글번호</td>
-				<td class="left">제목</td>
-				<td>작성자</td>
-				<td>날짜</td>
-				<td>조회수</td></tr>
+			<tr><td class="twrite">글쓴이</td><td><input type="text" name="name" value="<%=id %>" readonly></td></tr>
+			<tr><td class="twrite">비밀번호</td><td><input type="password" name="pass"></td></tr>
+			<tr><td class="twrite">제목</td><td><input type="text" name="subject"></td></tr>
+			<tr><td class="twrite">내용</td><td><textarea rows="10" cols="20" name="content"></textarea></td></tr>
 		</table>
 		<div id="table_search">
-			<input type="text" name="search" class="input_box">
-			<input type="button" value="search" class="btn">
+			<input type="submit" value="글쓰기" class="btn">
 		</div>
-		<%
-		String id = (String)session.getAttribute("id");
-		if(id != null){
-			%>
-			<div id="table_search">
-				<input type="button" value="글쓰기" class="btn" onclick="location.href='write.jsp'">
-			</div>
-			<%
-		}
-		%>
+		</form>
 		<div class="clear"></div>
-		<div id="page_control">
-			<a href="#">Prev</a>
-			<a href="#">1</a>
-			<a href="#">2</a>
-			<a href="#">Next</a>
-		</div>
 	</article>
 	<div class="clear"></div>
 <jsp:include page="../inc/bottom.jsp"/>
