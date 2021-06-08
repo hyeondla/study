@@ -2033,17 +2033,17 @@ CPU 가 빠른 속도로 여러 작업을 번갈아가면서 수행 → 동시�
 
 작업 순서는 고정이 아닌 변동 → 실행 결과가 달라질 수 있음
 
-구현 방법
+구현 방법 ①
 
 1. 멀티쓰레딩 코드가 포함될 서브클래스에서 **Thread 클래스 상속**
 
-2. Thread 클래스의 **run()** 메서드를 **오버라이딩**
+2. Thread 클래스 **run()** 메서드 **오버라이딩**
 
    멀티쓰레딩으로 처리할 코드 작성
 
-3. 멀티쓰레딩으로 구현된 클래스의 **인스턴스 생성**
+3. 멀티쓰레딩으로 구현된 클래스 **인스턴스 생성**
 
-4. 생성된 인스턴스의 **start()** 메서드를 호출
+4. 생성된 인스턴스의 **start()** 메서드 호출
 
 ```java
 MyThread mt = new MyThread(); // 3. 인스턴스 생성
@@ -2059,8 +2059,128 @@ class MyThread extends Thread {
 }
 ```
 
+구현 방법 ②
+
+1. 멀티쓰레딩 코드가 포함될 서브클래스에서 **Runnable 인터페이스 구현**
+
+2. Runnable 인터페이스 **run()** 메서드 **오버라이딩**
+
+3. **Thread 클래스 생성자**에 **Runnable 구현체** 전달
+
+   → Runnable 구현체는 start() 메서드 직접 호출 불가
+
+4. 생성된 인스턴스의 **start()** 메서드 호출
+
+```java
+Thread t = new Thread(new MyThread()); // 3. Thread 인스턴스 생성
+t.start(); // 4. start() 호출
+//------------------------------------------------
+// 1. Runnable 인터페이스 구현
+class MyThread implements Runnable {
+    // 2. run() 오버라이딩
+    @Override
+    public void run() {
+        // 멀티쓰레딩 코드
+    }
+}
+```
+
+구현방법 ③
+
+1. **Thread 클래스 생성자**에 **Runnable 임시 객체** 전달
+2. Runnable 인터페이스 **run()** 메서드 **오버라이딩**
+3. **start()** 메서드 호출
+
+```java
+Thread t = new Thread(new Runnable(){
+    @Override
+    public void run(){
+        // 멀티쓰레딩 코드
+    }
+});
+t.start();
+//------------------------------------------------
+new Thread(new Runnable(){
+    @Override
+    public void run(){
+        // 멀티쓰레딩 코드
+    }
+}).start();
+```
+
 <br>
 
+> 쓰레드 우선순위
+
+스케쥴러가 어떤 쓰레드를 실행하는데 있어서 우선순위에 따라 실행
+
+절대적 X, 확률적으로 실행 비중을 높여줌
+
+**Thread.getPriority()** : 우선순위 조회
+
+**Thread.setPriority()** : 우선순위 설정
+
+우선순위 1 ~ 10 범위 정수 사용
+
+Thread 클래스 상수
+
+- Thread.**MAX_PRIORITY** : 10 (높음)
+- Thread.NORM_PRIORITY : 5 (보통), 기본값
+- Thread.**MIN_PRIORITY** : 1 (낮음)
+
+<br>
+
+> 쓰레드 딜레이
+
+**Thread.sleep()** 
+
+일시 정지 상태, Waiting pool 로 이동
+
+해당 시간이 만료되면 다시 실행대기 상태로 변경됨
+
+타이머 동작 중 interrupt() 메서드가 호출 → 강제로 깨움
+
+**try~catch** 블록 처리 필수
+
+- 특정 쓰레드의 실행 시간에 대한 간격을 설정
+- 우선순위에 따라 실행되지 못하는 쓰레드의 실행 권한을 부여하기 위해 특정 쓰레드들을 잠시 정지
+
+쓰레드 상태 저장 및 자원 교환에 필요한 시간이 추가
+
+→ 지정된 시간보다 약간의 딜레이가 포함
+
+```java
+try {
+	Thread.sleep(밀리초);
+} catch (InterruptedException e) {
+	// interrupt() 메서드가 호출될 때 실행할 작업
+}
+
+```
+
+<br>
+
+> 쓰레드 동기화
+
+복수개의 쓰레드에서 동일한 객체 데이터에 접근
+
+→ 각 쓰레드에서 사용되는 데이터의 일관성이 깨질 수 있음
+
+공유 데이터(객체)에 대한 일관성 문제를 해결
+
+메서드 또는 특정 코드 블럭에 **synchronized** 키워드를 지정
+
+```java
+[제한자] synchronized 리턴타입 메서드명() {}
+```
+
+<br>
+
+----
+
+<br>
+
+> 중첩클래스 
 
 
 
@@ -2068,12 +2188,15 @@ class MyThread extends Thread {
 
 
 
+<br>
 
 ---
 
 <br>
 
 > JDBC
+
+mysql-connector-java-5.1.49.jar
 
 1. JDBC 드라이버 로드
 
@@ -2151,4 +2274,6 @@ public class Ex {
 ```
 
 <br>
+
+
 
