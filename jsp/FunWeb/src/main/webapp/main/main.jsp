@@ -1,3 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="board.BoardBean"%>
+<%@page import="java.util.List"%>
+<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,11 +52,20 @@
 		<div id="news_notice">
 			<h3 class="brown">News &amp; Notice</h3>
 			<table>
-				<tr><td class="contxt"><a href="#">제목</a></td><td>날짜</td></tr>
-				<tr><td class="contxt"><a href="#">제목</a></td><td>날짜</td></tr>
-				<tr><td class="contxt"><a href="#">제목</a></td><td>날짜</td></tr>
-				<tr><td class="contxt"><a href="#">제목</a></td><td>날짜</td></tr>
-				<tr><td class="contxt"><a href="#">제목</a></td><td>날짜</td></tr>
+			<%
+			int pageSize = 5;
+			int startRow = 1;
+			BoardDAO bdao = new BoardDAO();
+			List<BoardBean> boardList = bdao.getBoardList(startRow, pageSize);
+			
+			for(int i=0; i<boardList.size(); i++){
+				BoardBean bb = boardList.get(i);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+				%>
+				<tr onclick="location.href='../center/content.jsp?num=<%=bb.getNum() %>'"><td class="contxt"><a href="#"><%=bb.getSubject() %></a></td><td><%=sdf.format(bb.getDate()) %></td></tr>
+				<%
+			}
+			%>
 			</table>
 		</div>
 	</article>

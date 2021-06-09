@@ -131,12 +131,11 @@ form#join #buttons .cancel{
 	background-position: center center;
 }
 
-#----------------------------------------------------------------------
+/* ---------------------------------------------------------------------- */
 
 article table#notice{
 	width: 670px;
 	border-collapse: collapse;
-	
 }
 article table#notice th{
 	height: 20px;
@@ -227,7 +226,7 @@ article table#notice tr:hover{
 	cursor: hand;
 }
 
-#----------------------------------------------------------------------
+/* ---------------------------------------------------------------------- */
 
 article p{
 	padding-left: 10px;

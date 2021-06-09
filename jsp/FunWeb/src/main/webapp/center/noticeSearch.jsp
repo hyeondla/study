@@ -31,6 +31,9 @@
 	</nav>
 	<!-- 본문 내용 -->
 	<% 
+	request.setCharacterEncoding("utf-8");
+	
+	String search = request.getParameter("search");
 	int pageSize = 15; // 한 화면에 보여줄 글 개수
 	
 	String pageNum = request.getParameter("pageNum"); // 페이지 번호
@@ -43,11 +46,11 @@
 	int endRow = startRow + pageSize - 1; // 끝 번호
 	
 	BoardDAO bdao = new BoardDAO();
-	List<BoardBean> boardList = bdao.getBoardList(startRow, pageSize);
+	List<BoardBean> boardList = bdao.getBoardList(startRow, pageSize, search);
 	
 	%>
 	<article>
-		<h1>Notice</h1>
+		<h1>Notice Search</h1>
 		<table id="notice">
 			<tr><th class="tno">No.</th>
 			    <th class="ttitle">Title</th>
@@ -86,23 +89,23 @@
 		%>
 		<div class="clear"></div>
 		<div id="page_control">
-		<% 
+			<% 
 		int pageBlock = 10; //페이지 수
 		int startPage = (currentPage-1) / pageBlock * pageBlock + 1;
 		int endPage = startPage + pageBlock - 1;
-		int count = bdao.getBoardCount();
+		int count = bdao.getBoardCount(search);
 		int pageCount = count / pageSize + (count%pageSize==0 ? 0 : 1);
 		if(endPage > pageCount) {
 			endPage = pageCount; 
 		}
 		if(startPage > pageBlock) {
-			%><a href="notice.jsp?pageNum=<%=startPage-pageBlock %>">Prev</a><%
+			%><a href="noticeSearch.jsp?pageNum=<%=startPage-pageBlock %>&search=<%=search %>">Prev</a><%
 		}
 		for(int i=startPage; i<=endPage; i++) {
-			%><a href="notice.jsp?pageNum=<%=i%>"><%=i %></a><%
+			%><a href="noticeSearch.jsp?pageNum=<%=i%>&search=<%=search %>"><%=i %></a><%
 		}
 		if(endPage < pageCount) {
-			%><a href="notice.jsp?pageNum=<%=endPage+pageBlock %>">Next</a><%
+			%><a href="noticeSearch.jsp?pageNum=<%=endPage+pageBlock %>&search=<%=search %>">Next</a><%
 		}
 		%>
 		</div>
