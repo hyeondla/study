@@ -698,9 +698,55 @@ pstmt.executeUpdate();
 
 <br>
 
+> 파일 첨부
+
+서버 폴더에 파일 저장, DB에 파일 이름 저장
+
+외부 API (COS 라이브러리) 사용
+
+main → webapp → WEB-INF → lib → **cos.jar**
+
+main → webapp → 업로드용 폴더 생성(upload)
+
+D:\워크스페이스\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\프로젝트\업로드용폴더
+
+```sql
+CREATE TABLE 테이블명(
+	...
+	file varchar(파일명최대길이)
+);
+```
+
+```jsp
+<form action="xxxPro.jsp" method="post" enctype="multipart/form-data">
+	...
+    <input type="file " name="file">
+    ...
+</form>
+```
+
+```jsp
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<!-- ---------------------------------------------- -->
+<body>
+<%
+String uploadPath = request.getRealPath("/upload"); // 물리적 경로
+System.out.println(uploadPath); // 콘솔에 경로 출력
+int maxSize = 10*1024*1024; // 10MB
+    
+// MultipartRequest(request객체, 웹서버 폴더 물리적 경로, 업로드 최대 파일크기, 인코딩, 파일명 중복 처리)
+MultipartRequest multi = new MultipartRequest(request, uploadPath, maxSize, "utf-8", new DefaultFileRenamePolicy());
+String name = multi.getParameter("name");
+String file = multi.getFilesystemName("file");
+
+%>
+</body>
+```
 
 
 
+<br>
 
 ---
 
@@ -1105,4 +1151,10 @@ body{
     clear: both;
 }
 ```
+
+
+
+---
+
+<br>
 

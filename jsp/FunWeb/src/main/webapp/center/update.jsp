@@ -43,7 +43,6 @@
 		<input type="hidden" name="num" value="<%=num %>">
 		<table id="notice">
 			<tr><td class="twrite">글쓴이</td><td><input type="text" name="name" value="<%=id %>" readonly></td></tr>
-			<tr><td class="twrite">비밀번호</td><td><input type="password" name="pass"></td></tr>
 			<tr><td class="twrite">제목</td><td><input type="text" name="subject" value="<%=bb.getSubject() %>"></td></tr>
 			<tr><td class="twrite">내용</td><td><textarea rows="10" cols="20" name="content"><%=bb.getContent() %></textarea></td></tr>
 		</table>

@@ -31,6 +31,7 @@
 	<%
 	int num = Integer.parseInt(request.getParameter("num"));
 	BoardDAO bdao = new BoardDAO();
+	bdao.updateReadcount(num);
 	BoardBean bb = bdao.getBoard(num);
 	%>
 	<article>
@@ -50,7 +51,7 @@
 			if(id.equals(bb.getName())){
 				%>
 				<input type="button" value="글수정" onClick="location.href='update.jsp?num=<%=bb.getNum() %>'" class="btn">
-				<input type="button" value="글삭제" onClick="location.href='delete.jsp?num=<%=bb.getNum() %>'" class="btn">
+				<input type="button" value="글삭제" onClick="location.href='deletePro.jsp?num=<%=bb.getNum() %>'" class="btn">
 				<%
 			}
 		}%>
