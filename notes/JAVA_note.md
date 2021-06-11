@@ -2182,11 +2182,83 @@ try {
 
 > 중첩클래스 
 
+클래스 내에서 정의한 클래스
 
+보통 자신의 클래스 내에서만 접근 가능하도록 함
 
+외부클래스(Outer class), 내부클래스(Inner class)로 구분됨
 
+클래스 정의 위치에 따라 구분
 
+- 인스턴스 멤버(내부) 클래스
 
+  멤버변수 및 메서드와 동일한 레벨에 정의한 클래스
+
+  static 키워드를 지정하지 않은 클래스
+
+  반드시 외부클래스 인스턴스 생성 후 접근 가능
+
+  **외부클래스명.내부클래스명 변수이름 = 외부클래스참조변수명.new 내부클래스명();** 
+
+- 정적 멤버(내부) 클래스
+
+  멤버변수 및 메서드와 동일한 레벨에 정의한 클래스
+
+  static 키워드를 지정한 클래스
+
+  외부클래스명만으로 접근 가능
+
+  **외부클래스명.내부클래스명 변수이름 = new 외부클래스명.내부클래스명();**
+
+- 로컬 멤버(내부) 클래스
+
+  클래스 내의 메서드 내에서 정의한 클래스, 특정 메서드에서만 사용 가능
+
+  접근제한자 사용 불가
+
+```java
+class Outer { // 외부클래스
+    private 데이터타입 변수명 = 값; // 인스턴스 멤버변수
+    static 데이터타입 변수명 = 값; // 정적 멤버변수
+    
+    public void method() { // 인스턴스 멤버메서드
+    	// 로컬 내부클래스
+        class LocalInner {
+            데이터타입 변수명 = 값;
+            public LocalInner() {}
+        }
+        LocalInner localInner = new LocalInner(); // 로컬 내부클래스 인스턴스 생성
+    }
+    
+    public static void method() { // 정적 멤버메서드
+        // 인스턴스 멤버에 접근 불가
+    } 
+    
+    // 인스턴스 내부클래스
+    class Inner { 
+        // 외부클래스 멤버에 접근 가능
+        public void innerMethod() {
+            // 외부클래스 멤버에 접근 가능
+        }
+    }
+    
+    // 정적멤버 내부클래스
+   	static class StaticInner {
+        // 외부클래스 인스턴스 멤버에 접근 불가
+        static 데이터타입 변수명 = 값;
+        public void innerMethod() {}
+        public static void innerStaticMethod() {}
+    }
+}
+
+//-------------------------------------------------------------
+
+Outer outer = new Outer();
+Outer.Inner inner = outer.new Inner(); // 내부클래스 인스턴스 생성
+inner.innerMethod(); 
+
+Outer.StaticInner staticInner = new Outer.StaticInner(); // 정적 내부클래스 인스턴스 생성
+```
 
 <br>
 
