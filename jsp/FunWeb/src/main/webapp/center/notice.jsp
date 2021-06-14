@@ -23,9 +23,9 @@
 	<!-- 왼쪽 메뉴 -->
 	<nav id="sub_menu">
 			<ul>
-				<li><a href="#">Notice</a></li>
+				<li><a href="../center/notice.jsp">Notice</a></li>
 				<li><a href="#">Public News</a></li>
-				<li><a href="#">Driver Download</a></li>
+				<li><a href="../fcenter/fnotice.jsp">Driver Download</a></li>
 				<li><a href="#">Service Policy</a></li>
 			</ul>
 	</nav>

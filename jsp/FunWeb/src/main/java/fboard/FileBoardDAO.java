@@ -255,7 +255,7 @@ public class FileBoardDAO {
 		return boardList;
 	}
 	
-public List<FileBoardBean> fgetBoardList() {
+	public List<FileBoardBean> fgetBoardList() {
 		
 		List<FileBoardBean> boardList = new ArrayList<FileBoardBean>();
 		Connection con = null;
@@ -327,4 +327,35 @@ public List<FileBoardBean> fgetBoardList() {
 		return count;
 	}
 	
+	public int fgetBoardCount() {
+		
+		int count = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs  = null;
+		
+		try {
+			con = getConnection();
+			String sql = "select count(*) from fboard"; 
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count(*)");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(pstmt != null) {
+				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(con != null) {
+				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+		}
+		return count;
+	}
+
 }

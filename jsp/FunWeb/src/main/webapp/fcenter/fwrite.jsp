@@ -33,12 +33,13 @@
 	}
 	%>
 	<article>
-		<h1>Notice Write</h1>
-		<form action="writePro.jsp" method="post">
+		<h1>File Write</h1>
+		<form action="fwritePro.jsp" method="post" enctype="multipart/form-data">
 		<table id="notice">
 			<tr><td class="twrite">글쓴이</td><td><input type="text" name="name" value="<%=id %>" readonly></td></tr>
 			<tr><td class="twrite">비밀번호</td><td><input type="password" name="pass"></td></tr>
 			<tr><td class="twrite">제목</td><td><input type="text" name="subject"></td></tr>
+			<tr><td class="twrite">파일</td><td><input type="file" name="file"></td></tr>
 			<tr><td class="twrite">내용</td><td><textarea rows="10" cols="20" name="content"></textarea></td></tr>
 		</table>
 		<div id="table_search">

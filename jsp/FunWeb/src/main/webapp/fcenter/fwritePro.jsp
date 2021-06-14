@@ -13,11 +13,7 @@
 </head>
 <body>
 <%
-// 물리적 경로
-String uploadPath = request.getRealPath("/upload");
-System.out.println(uploadPath);
-
-// 파일 최대크기
+String uploadPath = request.getRealPath("/upload"); // 물리적 경로
 int maxSize = 10*1024*1024; // 10MB
 
 MultipartRequest multi = new MultipartRequest(request, uploadPath, maxSize, "utf-8", new DefaultFileRenamePolicy());
@@ -26,9 +22,7 @@ String name = multi.getParameter("name");
 String pass = multi.getParameter("pass");
 String subject = multi.getParameter("subject");
 String content = multi.getParameter("content");
-int readcount=0;
 Timestamp date = new Timestamp(System.currentTimeMillis());
-
 String file = multi.getFilesystemName("file");
 
 FileBoardBean bb = new FileBoardBean();
@@ -36,14 +30,16 @@ bb.setName(name);
 bb.setPass(pass);
 bb.setSubject(subject);
 bb.setContent(content);
-bb.setReadcount(readcount);
 bb.setDate(date);
+bb.setReadcount(0);
 bb.setFile(file);
 
 FileBoardDAO bdao = new FileBoardDAO();
 bdao.finsertBoard(bb);
-
-response.sendRedirect("flist.jsp");
 %>
+<script type="text/javascript">
+alert("글이 등록되었습니다");
+location.href = "fnotice.jsp";
+</script>
 </body>
 </html>

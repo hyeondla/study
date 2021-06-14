@@ -738,13 +738,48 @@ int maxSize = 10*1024*1024; // 10MB
 // MultipartRequest(request객체, 웹서버 폴더 물리적 경로, 업로드 최대 파일크기, 인코딩, 파일명 중복 처리)
 MultipartRequest multi = new MultipartRequest(request, uploadPath, maxSize, "utf-8", new DefaultFileRenamePolicy());
 String name = multi.getParameter("name");
+...
 String file = multi.getFilesystemName("file");
-
 %>
 </body>
 ```
 
+```java
+public class FileBoardBean {
+    ...
+	private String file;
+    
+    ...
+    public String getFile() {
+		return file;
+	}
+	public void setFile(String file) {
+		this.file = file;
+	}
+}
+```
 
+```jsp
+<!-- 하이퍼링크 / 클릭시 다운로드 -->
+<a href="../upload/<%=bb.getFile() %>" download><%=bb.getFile() %></a>
+<input type="text" name="file"><%=bb.getFile() %>
+<!-- 이미지 출력 -->
+<img src="../upload/<%=bb.getFile() %>">
+```
+
+<br>
+
+> 파일 첨부 수정
+
+```java
+<input type="file" name="file"><%=bb.getFile() %>
+<input type="hidden" name="oldfile" value="<%=bb.getFile() %>">
+//---------------------------------------------------------------
+String file = multi.getFilesystemName("file");
+if(file==null) { // 수정할 파일 없음 -> 기존 파일이름 유지
+	file = multi.getParameter("oldfile"); // 히든 -> getParameter
+}
+```
 
 <br>
 

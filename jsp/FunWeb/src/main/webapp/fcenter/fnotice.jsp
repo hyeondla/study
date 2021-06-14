@@ -1,7 +1,7 @@
+<%@page import="fboard.FileBoardBean"%>
+<%@page import="fboard.FileBoardDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="board.BoardBean"%>
 <%@page import="java.util.List"%>
-<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,9 +31,6 @@
 	</nav>
 	<!-- 본문 내용 -->
 	<% 
-	request.setCharacterEncoding("utf-8");
-	
-	String search = request.getParameter("search");
 	int pageSize = 15; // 한 화면에 보여줄 글 개수
 	
 	String pageNum = request.getParameter("pageNum"); // 페이지 번호
@@ -45,12 +42,12 @@
 	int startRow = (currentPage-1) * pageSize + 1; // 시작 번호
 	int endRow = startRow + pageSize - 1; // 끝 번호
 	
-	BoardDAO bdao = new BoardDAO();
-	List<BoardBean> boardList = bdao.getBoardList(startRow, pageSize, search);
+	FileBoardDAO bdao = new FileBoardDAO();
+	List<FileBoardBean> boardList = bdao.fgetBoardList(startRow, pageSize);
 	
 	%>
 	<article>
-		<h1>Notice Search</h1>
+		<h1>File Notice</h1>
 		<table id="notice">
 			<tr><th class="tno">No.</th>
 			    <th class="ttitle">Title</th>
@@ -59,10 +56,10 @@
 			    <th class="tread">Read</th></tr>
 			<% 
 			for(int i=0; i<boardList.size(); i++){
-				BoardBean bb = boardList.get(i);
+				FileBoardBean bb = boardList.get(i);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd"); // 날짜 포맷 
 				%>
-			<tr onclick="location.href='content.jsp?num=<%=bb.getNum() %>'"><td><%=bb.getNum() %></td>
+			<tr onclick="location.href='fcontent.jsp?num=<%=bb.getNum() %>'"><td><%=bb.getNum() %></td>
 				<td class="left"><%=bb.getSubject() %></td>
 				<td><%=bb.getName() %></td>
 				<td><%=sdf.format(bb.getDate()) %></td>
@@ -72,7 +69,7 @@
 			%>
 		</table>
 		<div id="table_search">
-			<form action="noticeSearch.jsp" method="post">
+			<form action="fnoticeSearch.jsp" method="post">
 				<input type="text" name="search" class="input_box">
 				<input type="submit" value="search" class="btn">
 			</form>
@@ -82,30 +79,30 @@
 		if(id != null){
 			%>
 			<div id="table_search">
-				<input type="button" value="글쓰기" class="btn" onclick="location.href='write.jsp'">
+				<input type="button" value="글쓰기" class="btn" onclick="location.href='fwrite.jsp'">
 			</div>
 			<%
 		}
 		%>
 		<div class="clear"></div>
 		<div id="page_control">
-			<% 
+		<% 
 		int pageBlock = 10; //페이지 수
 		int startPage = (currentPage-1) / pageBlock * pageBlock + 1;
 		int endPage = startPage + pageBlock - 1;
-		int count = bdao.getBoardCount(search);
+		int count = bdao.fgetBoardCount();
 		int pageCount = count / pageSize + (count%pageSize==0 ? 0 : 1);
 		if(endPage > pageCount) {
 			endPage = pageCount; 
 		}
 		if(startPage > pageBlock) {
-			%><a href="noticeSearch.jsp?pageNum=<%=startPage-pageBlock %>&search=<%=search %>">Prev</a><%
+			%><a href="fnotice.jsp?pageNum=<%=startPage-pageBlock %>">Prev</a><%
 		}
 		for(int i=startPage; i<=endPage; i++) {
-			%><a href="noticeSearch.jsp?pageNum=<%=i%>&search=<%=search %>"><%=i %></a><%
+			%><a href="fnotice.jsp?pageNum=<%=i%>"><%=i %></a><%
 		}
 		if(endPage < pageCount) {
-			%><a href="noticeSearch.jsp?pageNum=<%=endPage+pageBlock %>&search=<%=search %>">Next</a><%
+			%><a href="fnotice.jsp?pageNum=<%=endPage+pageBlock %>">Next</a><%
 		}
 		%>
 		</div>
