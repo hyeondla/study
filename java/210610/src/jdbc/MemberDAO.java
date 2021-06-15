@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class MemberDAO {
@@ -22,7 +23,6 @@ public class MemberDAO {
 		String password = "";
 		
 		try {
-			
 			Properties props = new Properties();
 			props.load(new FileReader("D:\\user_info.properties"));
 			driver = props.getProperty("driver");
@@ -34,7 +34,6 @@ public class MemberDAO {
 			System.out.println("url : " + url);
 			System.out.println("아이디 : " + user);
 			System.out.println("패스워드 : " + password);
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -72,7 +71,6 @@ public class MemberDAO {
 	
 	
 	public int insert(MemberDTO dto) {
-		
 		int insertCount = 0;
 
 		Connection con = getConnection();
@@ -96,19 +94,80 @@ public class MemberDAO {
 		}
 		
 		return insertCount;
-		
 	}
 	
-	public void update() {
-		
+	public int update(String name, String jumin, int age) {
+		int updateCount = 0;
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "UPDATE member SET age=? WHERE name=? AND jumin=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, age);
+			pstmt.setString(2, name);
+			pstmt.setString(3, jumin);
+			updateCount = pstmt.executeUpdate();
+			System.out.println("UPDATE 작업 성공 - " + updateCount + "개");
+		} catch (SQLException e) {
+			System.out.println("SQL 구문 오류 - " + e.getMessage());
+		} finally {
+			close(pstmt);
+			close(con);
+		}
+		return updateCount;
 	}
 	
-	public void delete() {
-		
+	public int delete(String name, int age) {
+		int deleteCount = 0;
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "DELETE FROM member WHERE name=? AND age>=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setInt(2, age);
+			deleteCount = pstmt.executeUpdate();
+			System.out.println("DELETE 작업 성공 - " + deleteCount + "개");
+		} catch (SQLException e) {
+			System.out.println("SQL 구문 오류 - " + e.getMessage());
+		} finally {
+			close(pstmt);
+			close(con);
+		}
+		return deleteCount;
 	}
 	
-	public void select() {
+	public ArrayList<MemberDTO> select() {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+			
+		ArrayList<MemberDTO> memberList = new ArrayList<MemberDTO>();
+		try {
+			String sql = "SELECT * FROM member";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int idx = rs.getInt("idx");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				String gender = rs.getString("gender");
+				String jumin = rs.getString("jumin");
+				
+				MemberDTO memberDTO = new MemberDTO(idx, name, age, gender, jumin);
+				
+				memberList.add(memberDTO);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 구문 오류 - " + e.getMessage());
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(con);
+		}
 		
+		return memberList;
 	}
 	
 }

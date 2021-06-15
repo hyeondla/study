@@ -59,4 +59,9 @@ public class MemberDTO {
 		this.jumin = jumin;
 	}
 
+	@Override
+	public String toString() {
+		return "MemberDTO [idx=" + idx + ", name=" + name + ", age=" + age + ", gender=" + gender + ", jumin=" + jumin + "]";
+	}
+	
 }
