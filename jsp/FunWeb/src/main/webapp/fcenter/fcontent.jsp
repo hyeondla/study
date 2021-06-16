@@ -25,6 +25,7 @@
 				<li><a href="#">Public News</a></li>
 				<li><a href="../fcenter/fnotice.jsp">Driver Download</a></li>
 				<li><a href="#">Service Policy</a></li>
+				<li><a href="../center/mail.jsp">Q&amp;A</a></li>
 			</ul>
 	</nav>
 	<!-- 본문 내용 -->
@@ -33,6 +34,11 @@
 	FileBoardDAO bdao = new FileBoardDAO();
 	bdao.fupdateReadcount(num);
 	FileBoardBean bb = bdao.fgetBoard(num);
+	
+	String content = bb.getContent();
+	if(content != null) {
+		content = content.replace("\r\n","<br>");
+	}
 	%>
 	<article>
 		<h1>File Content</h1>
@@ -43,7 +49,7 @@
 				<td>조회수</td><td><%=bb.getReadcount() %></td></tr>
 			<tr><td>제목</td><td colspan="3"><%=bb.getSubject() %></td></tr>
 			<tr><td>파일</td><td colspan="3"><a href="../upload/<%=bb.getFile() %>" download><%=bb.getFile() %></a></td></tr>
-			<tr><td>내용</td><td colspan="3"><img src="../upload/<%=bb.getFile() %>" width=500px><br><%=bb.getContent() %></td></tr>
+			<tr><td>내용</td><td colspan="3"><img src="../upload/<%=bb.getFile() %>" width=500px><br><%=content %></td></tr>
 		</table>
 		<div id="table_search">
 		<%

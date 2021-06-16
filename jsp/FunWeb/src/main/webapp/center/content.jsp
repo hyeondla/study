@@ -25,6 +25,7 @@
 				<li><a href="#">Public News</a></li>
 				<li><a href="../fcenter/fnotice.jsp">Driver Download</a></li>
 				<li><a href="#">Service Policy</a></li>
+				<li><a href="../center/mail.jsp">Q&amp;A</a></li>
 			</ul>
 	</nav>
 	<!-- 본문 내용 -->
@@ -33,16 +34,20 @@
 	BoardDAO bdao = new BoardDAO();
 	bdao.updateReadcount(num);
 	BoardBean bb = bdao.getBoard(num);
+	String content = bb.getContent();
+	if(content != null) {
+		content = content.replace("\r\n","<br>");
+	}
 	%>
 	<article>
-		<h1>Content</h1>
+		<h1>Notice Content</h1>
 		<table id="notice">
 			<tr><td>글번호</td><td><%=bb.getNum() %></td>
 				<td>글쓴이</td><td><%=bb.getName() %></td></tr>
 			<tr><td>작성날짜</td><td><%=bb.getDate() %></td>
 				<td>조회수</td><td><%=bb.getReadcount() %></td></tr>
 			<tr><td>제목</td><td colspan="3"><%=bb.getSubject() %></td></tr>
-			<tr><td>내용</td><td colspan="3"><%=bb.getContent() %></td></tr>
+			<tr><td>내용</td><td colspan="3"><%=content %></td></tr>
 		</table>
 		<div id="table_search">
 		<%

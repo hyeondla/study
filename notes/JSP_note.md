@@ -698,6 +698,16 @@ pstmt.executeUpdate();
 
 <br>
 
+>  글 내용 줄바꿈 적용
+
+```java
+if(content != null) {
+	content = content.replace("\r\n","<br>");
+}
+```
+
+<br>
+
 > 파일 첨부
 
 서버 폴더에 파일 저장, DB에 파일 이름 저장
@@ -785,7 +795,89 @@ if(file==null) { // 수정할 파일 없음 -> 기존 파일이름 유지
 
 ---
 
+<br>
 
+> 메일 보내기
+
+main → webapp → WEB-INF → lib → **mail-1.4.7.jar**
+
+main → webapp → WEB-INF → lib → **activation.jar**
+
+```java
+// GoogleAuthentication.java
+
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+
+public class GoogleAuthentication extends Authenticator {
+	
+	PasswordAuthentication passAuth;
+	
+	public GoogleAuthentication() { // 구글 인증
+		passAuth = new PasswordAuthentication("아이디", "앱 비밀번호");
+	}
+	
+	public PasswordAuthentication getPasswordAuthentication() {
+		return passAuth;
+	}
+	
+}
+```
+
+```jsp
+<%
+request.setCharacterEncoding("utf-8");
+// 폼에서 받아온 정보
+String sender = request.getParameter("sender"); // 발송자 메일주소
+String receiver = request.getParameter("receiver"); // 수신자 메일주소
+String subject = request.getParameter("subject"); // 제목
+String content = request.getParameter("content"); // 내용
+
+try {
+	// Properties 객체에 서버 정보 저장
+	Properties properties = System.getProperties();
+    // Starttls Command 사용 설정
+	properties.put("mail.smtp.starttls.enable", "true");
+	// SMTP 서버 지정
+	properties.put("mail.smtp.host", "smtp.gmail.com");
+	// 사용자 인증
+	properties.put("mail.smtp.auth", "true");
+	// 서버 포트 지정
+	properties.put("mail.smtp.port", "587");
+	
+	// 인증정보 생성
+	Authenticator auth = new GoogleAuthentication();
+	// Session 객체 생성 -> 메일 전송 단위
+	Session s = Session.getDefaultInstance(properties, auth);
+	// 전송할 Message 객체 생성 
+	Message message = new MimeMessage(s);
+	
+	// 송신 주소 생성
+	Address sender_address = new InternetAddress(sender);
+    // 수신 주소 생성
+	Address receiver_address = new InternetAddress(receiver);
+    // 메일 전송 값 설정
+	message.setHeader("content-type", "text/html;charset=UTF-8");
+	message.setFrom(sender_address);
+	message.addRecipient(Message.RecipientType.TO, receiver_address);
+	message.setSubject(subject);
+	message.setContent(content, "text/html;charset=UTF-8");
+	message.setSentDate(new Date());
+	
+	// 메일 전송
+	Transport.send(message);
+} catch(Exception e) {
+	out.println("SMTP 서버 잘못 설정 / 서비스 문제 발생");
+	e.printStackTrace();
+}
+%>
+```
+
+<br>
+
+---
+
+<br>
 
 > main → webapp → WEB-INF → lib → **mysql-connector-java-5.1.49.jar**
 

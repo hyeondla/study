@@ -1,3 +1,9 @@
+<%@page import="member.MemberBean"%>
+<%@page import="member.MemberDAO"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="board.BoardBean"%>
+<%@page import="java.util.List"%>
+<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,24 +32,27 @@
 				<li><a href="../center/mail.jsp">Q&amp;A</a></li>
 			</ul>
 	</nav>
-	<!-- 본문 내용 -->
+	<!--  본문 내용 -->
 	<%
 	String id = (String)session.getAttribute("id");
 	if(id == null) {
 		response.sendRedirect("../member/login.jsp");
 	}
+	
+	MemberDAO mdao = new MemberDAO();
+	MemberBean mb = mdao.getMember(id);
 	%>
 	<article>
-		<h1>Notice Write</h1>
-		<form action="writePro.jsp" method="post">
+		<h1>Q&amp;A</h1>
+		<form action="mailPro.jsp" method="post">
 		<table id="notice">
-			<tr><td class="twrite">글쓴이</td><td><input type="text" name="name" value="<%=id %>" readonly></td></tr>
-			<tr><td class="twrite">비밀번호</td><td><input type="password" name="pass"></td></tr>
+			<tr><td class="twrite">송신자</td><td><input type="text" name="sender" value="<%=mb.getEmail() %>" ></td></tr>
+			<tr><td class="twrite">수신자</td><td><input type="text" name="receiver" value="admin@funweb.com"></td></tr>
 			<tr><td class="twrite">제목</td><td><input type="text" name="subject"></td></tr>
 			<tr><td class="twrite">내용</td><td><textarea rows="10" cols="20" name="content"></textarea></td></tr>
 		</table>
 		<div id="table_search">
-			<input type="submit" value="글쓰기" class="btn">
+			<input type="submit" value="메일 전송" class="btn">
 		</div>
 		</form>
 		<div class="clear"></div>

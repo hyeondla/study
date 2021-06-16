@@ -25,6 +25,7 @@
 				<li><a href="#">Public News</a></li>
 				<li><a href="../fcenter/fnotice.jsp">Driver Download</a></li>
 				<li><a href="#">Service Policy</a></li>
+				<li><a href="../center/mail.jsp">Q&amp;A</a></li>
 			</ul>
 	</nav>
 	<!-- 본문 내용 -->

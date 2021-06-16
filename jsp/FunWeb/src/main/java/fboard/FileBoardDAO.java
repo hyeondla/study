@@ -11,6 +11,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import board.BoardBean;
+
 public class FileBoardDAO {
 	
 	private Connection getConnection() throws Exception {
@@ -255,6 +257,50 @@ public class FileBoardDAO {
 		return boardList;
 	}
 	
+	public List<FileBoardBean> fgetBoardList(int startRow, int pageSize, String search) {
+		
+		List<FileBoardBean> boardList = new ArrayList<FileBoardBean>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs  = null;
+		
+		try {
+			con = getConnection();
+			String sql = "select * from fboard where subject like ? order by num desc limit ?, ?"; 
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setInt(2, startRow-1);
+			pstmt.setInt(3, pageSize);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				FileBoardBean bb = new FileBoardBean();
+				bb.setNum(rs.getInt("num"));
+				bb.setName(rs.getString("name"));
+				bb.setPass(rs.getString("pass"));
+				bb.setSubject(rs.getString("subject"));
+				bb.setContent(rs.getString("content"));
+				bb.setReadcount(rs.getInt("readcount"));
+				bb.setDate(rs.getTimestamp("date"));
+				
+				boardList.add(bb);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(pstmt != null) {
+				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(con != null) {
+				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+		}
+		return boardList;
+	}
+	
 	public List<FileBoardBean> fgetBoardList() {
 		
 		List<FileBoardBean> boardList = new ArrayList<FileBoardBean>();
@@ -357,5 +403,36 @@ public class FileBoardDAO {
 		}
 		return count;
 	}
-
+	
+	public int fgetBoardCount(String search) {
+		
+		int count = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs  = null;
+		
+		try {
+			con = getConnection();
+			String sql = "select count(*) from fboard where subject like ?"; 
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count(*)");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(pstmt != null) {
+				try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+			if(con != null) {
+				try { con.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+			}
+		}
+		return count;
+	}
 }
