@@ -1296,6 +1296,8 @@ Object 클래스의 모든 멤버는 다른 클래스에서 사용/오버라이�
    Heap 공간에 문자열 객체를 생성
 
    동일한 문자열을 가진 객체가 존재하더라도 새로 생성
+   
+   **char[]  배열을 파라미터로 전달**하면 **하나의 문자열로 결합**됨
 
 문자열 생성 시 String 클래스 내부적으로 char[]로 관리됨
 
@@ -1330,6 +1332,7 @@ String str = String.format("이름 : %s 나이 : %d 키 : %f \n", name, age, hei
 
 char[] chArr = s.toCharArray(); // 문자열 → char[] 배열 리턴
 System.out.println(Arrays.toString(chArr)); // 배열 내 모든 데이터를 문자열로 결합하여 리턴
+System.out.println(new String(chArr)); // 문자열 리턴
 ```
 
 <br>
@@ -1444,6 +1447,40 @@ System.out.println((int)(Math.random() * 20) + 1 ); // 1 <= x <= 20
 3. 처음 곱한 값으로 다시 나눔
 
    소수점 표현을 위해 double 타입 실수로 나누어야 함
+
+<br>
+
+> BigInteger 클래스
+
+아주 큰 정수를 관리
+
+일반 산술연산자로는 연산이 불가능 → 메서드로 연산 수행
+
+BigInteger 객체 생성자에 문자열의 숫자데이터 전달
+
+```java
+BigInteger bi = new BigInteger("123456789012345678901234567890");
+BigInteger bi2 = new BigInteger("99999");
+
+System.out.println(bi.add(bi2)); // 덧셈
+System.out.println(bi.subtract(bi2)); // 뺄셈
+System.out.println(bi.multiply(bi2)); // 곱셈
+System.out.println(bi.divide(bi2)); // 나눗셈
+```
+
+<br>
+
+>BigDecimal 클래스
+
+정확한 실수를 관리
+
+근사치 표현에 따른 문제점 해결, 반드시 문자열로 전달해야 함
+
+```java
+BigDecimal bd1 = new BigDecimal("2.0");
+BigDecimal bd2 = new BigDecimal("1.1");
+System.out.println(bd1.subtract(bd2)); // 0.9
+```
 
 <br>
 
