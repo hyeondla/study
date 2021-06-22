@@ -250,7 +250,7 @@ public void showFrame() {
 		public void windowClosing(WindowEvent e) {}
 	};
 	
-    addWindowListener(windowAdapter);
+    addWindowListener(adapter);
 	...
 }
 
@@ -547,4 +547,100 @@ JButton btn2 = new JButton("버튼2");
 p2.add(btn2);
 tabbedPane.add(p2, "탭2");
 ```
+
+<br>
+
+> 체크박스 - JCheckBox
+
+생성자에 표시할 텍스트와 체크 여부 전달 가능
+
+```java
+JCheckBox cb = new JCheckBox("체크박스", true); // true → 체크
+JCheckBox cb = new JCheckBox("체크박스", false); // false → 미체크(기본값) 
+//-------------------------------------------------------------------
+ActionListener cbListener = new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // ActionEvent e 변수에 JCheckBox 객체가 업캐스팅되어 전달됨
+        // 업캐스팅 시 참조영역 축소로 체크박스 기능 사용 불가
+        // → JCheckBox 타입으로 다운캐스팅 필요
+        JCheckBox cb = (JCheckBox)e.getSource();
+        
+        System.out.println(cb.getText()); // 체크박스의 텍스트 리턴
+        System.out.println(cb.isSelected()); // 선택시 true, 해제시 false 리턴
+        
+        cb.setSelected(true); // 체크 설정
+        cb.setSelected(false); // 체크 설정 해제
+	}
+};
+```
+
+<br>
+
+> 라디오버튼 - JRadioButton
+
+체크박스와 동일한 형태로 동작하므로 다중 선택됨
+
+단일 선택 → 그룹화 필요 → **ButtonGroup** 객체 생성 → JRadioButton 객체 추가 
+
+```java
+JRadioButton rb = new JRadioButton("라디오버튼", true); // true → 체크
+JRadioButton rb = new JRadioButton("라디오버튼", false); // false → 미체크(기본값)
+
+// 라디오버튼 그룹화
+ButtonGroup rbGroup = new ButtonGroup();
+rbGroup.add(rb1);
+rbGroup.add(rb2);
+//-------------------------------------------------------------------
+ActionListener rbListener = new ActionListener() {
+	@Override
+    public void actionPerformed(ActionEvent e) {
+        JRadioButton rb = (JRadioButton)e.getSource();
+        
+        System.out.println(cb.getText());
+        System.out.println(cb.isSelected());
+        
+        rb.setSelected(true); // 체크 
+        rbGroup.clearSelection(); // 체크 해제  
+    }
+};
+```
+
+<br>
+
+> 콤보박스 - JComboBox
+
+특정 목록을 선택할 수 있는 풀다운 메뉴 컴포넌트
+
+목록으로 표시할 데이터를 배열이나 컬렉션 객체로 생성 후 **DefaultComboBoxModel** 객체로 관리
+
+```java
+JComboBox<String> comboBox = new JComboBox<String>();
+add(comboBox);
+
+// 1) 배열 사용 → 데이터 추가
+String[] items = {"나타낼", "항목의", "배열"}; // 데이터 배열 생성
+
+DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<String>(items); // 배열 전달
+comboBox.setModel(comboBoxModel);
+
+comboBox.setModel(new DefaultComboBoxModel<String>(items));
+
+// 2) Vector 객체 사용 → 데이터 추가
+Vector<String> items = new Vector<String>();
+items.add("데이터");
+items.add("추가");
+
+comboBox.setModel(new DefaultComboBoxModel<String>(items));
+//-------------------------------------------------------
+comboBox.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println(comboBox.getSelectedIndex()); // 선택된 항목 인덱스 리턴
+        System.out.println(comboBox.getSelectedItem()); // 선택된 항목 데이터 리턴
+    }
+});
+```
+
+<br>
 
