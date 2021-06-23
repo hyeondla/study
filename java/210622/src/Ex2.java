@@ -4,12 +4,17 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Ex2 extends JFrame {
 
 	JComboBox<String> comboBox;
+	JTextField tfItem;
 	
 	public Ex2() {
 		showFrame();
@@ -37,7 +42,7 @@ public class Ex2 extends JFrame {
 		items2.add("Oracle");
 		
 		comboBox.setModel(new DefaultComboBoxModel<String>(items));
-		
+		/*
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -50,6 +55,49 @@ public class Ex2 extends JFrame {
 				}
 			}
 		});
+		*/
+		JPanel pNorth = new JPanel();
+		add(pNorth, BorderLayout.NORTH);
+		
+		tfItem = new JTextField(15);
+		pNorth.add(tfItem);
+		
+		JButton btnAdd = new JButton("추가");
+		pNorth.add(btnAdd);
+		
+		btnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String item = tfItem.getText();
+				if(tfItem.getText().length() == 0) {
+					JOptionPane.showMessageDialog(comboBox, "텍스트 입력 필수", "오류", JOptionPane.ERROR_MESSAGE);
+					tfItem.requestFocus();
+					return;
+				}
+//				System.out.println(tfItem.getText());
+				DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) comboBox.getModel();
+				model.addElement(item);
+
+				tfItem.setText("");
+			}
+		});
+		
+		JButton btnSelect = new JButton("조회");
+		add(btnSelect, BorderLayout.SOUTH);
+		
+		btnSelect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(comboBox.getSelectedIndex()!=0) {
+					System.out.println("선택된 항목 : " + comboBox.getSelectedItem());
+				} else {
+					JOptionPane.showMessageDialog(comboBox, "항목 선택 필수", "오류", JOptionPane.ERROR_MESSAGE);
+					comboBox.requestFocus();
+				}
+				
+			}
+		});
+		
 		
 		setVisible(true);
 	}

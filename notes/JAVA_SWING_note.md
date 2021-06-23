@@ -640,7 +640,77 @@ comboBox.addActionListener(new ActionListener() {
         System.out.println(comboBox.getSelectedItem()); // 선택된 항목 데이터 리턴
     }
 });
+//--------------------------------------------------------
+// 텍스트필드에 입력된 값 → 콤보박스에 추가
+btnAdd.addActionListener(new ActionListener() {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String item = tfItem.getText(); // 입력값 
+        // JComboBox 객체로부터 DefaultComboBoxModel 객체 가져오기 → getModel()
+        // 다운캐스팅 필요
+		DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) comboBox.getModel();
+		// 모델 객체의 addElement() → 추가할 항목 파라미터로 전달
+        model.addElement(item);
+	}
+});
 ```
+
+<br>
+
+> 팝업창
+
+```java
+JOptionPane.showMessageDialog(컴포넌트, "오류 메시지", "팝업창 이름", JOptionPane.ERROR_MESSAGE);
+```
+
+<br>
+
+> 다이얼로그(대화상자) - JOptionPane
+
+사용자와 상호작용을 수행하는 창
+
+별도의 프레임 없이도 단독 동작 가능
+
+**JOptionPane.show**XXX**dialog()** : 창 생성
+
+- **Message** : 사용자에게 알림메시지 표시
+
+  - Component parentComponent : 표시할 부모 객체, 다이얼로그를 위치시킬 객체 지정
+  - Object message : 표시할 메시지
+  - String title : 제목표시줄 내용
+  - int messageType : 메시지 유형(아이콘 지정) → 상수 사용
+    - JOptionPane.ERROR_MESSAGE : 빨간색 X
+    - JOptionPane.INFORMATION_MESSAGE : 파란색 !
+    - JOptionPane.WARNING_MESSAGE : 노란색 !
+    - JOptionPane.PLAIN_MESSAGE : 아이콘 없음
+    - JOptionPane.QUESTION_MESSAGE : 초록색 ?
+  - Icon icon : 아이콘
+
+  ```java
+  JOptionPane.showMessageDialog(parentComponent, "message", "title", messageType, icon);
+  ```
+
+- **Confirm** : 확인 응답 받기, **리턴타입 int** → 상수값(**JOptionPane.**XXX**_OPTION**)으로 비교 
+
+  - int optionType
+    - JOptionPane.YES_NO_OPTION : 예(Y), 아니오(N)
+    - JOptionPane.OK_CANCEL_OPTION : 확인, 취소
+
+  ```java
+  int selectedValue = JOptionPane.showConfirmDialog(parentComponent, "message", "title", optionType);
+  
+  if(selectedVale == JOptionPane.YES_OPTION) { // 예(Y) == 확인 (같은 상수값)
+      System.exit(0); // 종료
+  }
+  if(selectedValue == JOptionPane.NO_OPTION) {} // 아니오(N)
+  if(selectedValue == JOptionPane.CANCEL_OPTION) {} // 취소
+  ```
+
+- **Input** : 텍스트박스 → 사용자로부터 입력 받음, 리턴타입 String
+
+  ```java
+  String inputData = JOptionPane.showInputDialog(parentComponent, "message");
+  ```
 
 <br>
 
