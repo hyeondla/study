@@ -140,6 +140,7 @@ add(btn, BorderLayout.SOUTH);
 
 - **프레임**(윈도우)의 동작을 처리하는 리스너 : **WindowListener** 인터페이스
 - **버튼**의 동작을 처리하는 리스너 : **ActionListener** 인터페이스
+- **키**의 동작을 처리하는 리스너 : **KeyListener** 인터페이스
 
 ```java
 // WindowListener 인터페이스를 구현하는 구현체 클래스 정의
@@ -711,6 +712,20 @@ JOptionPane.showMessageDialog(컴포넌트, "오류 메시지", "팝업창 이�
   ```java
   String inputData = JOptionPane.showInputDialog(parentComponent, "message");
   ```
+
+<br>
+
+> 키 입력 감지
+
+```java
+tf.addKeyListener(new KeyApater()) {
+    @Override
+	public void keyReleased(KeyEvent e) { // 키를 눌렀다 뗄 때 동작
+		System.out.println(e.getKeyChar()); // 눌러진 키의 문자 리턴 (대소문자 구별)
+        System.out.println(e.getKeyCode()); // 눌러진 키의 아스키코드 리턴 (대소문자 구별X)
+	}
+}
+```
 
 <br>
 
