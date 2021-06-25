@@ -2388,5 +2388,25 @@ public class Ex {
 
 <br>
 
+> 사용자 정의 예외클래스
 
+예외클래스 상속 → **extends Exception**
+
+Generate Constructors from Superclass → **Exception(String)** 체크 → 생성
+
+```java
+public class LoginFailedException extends Exception {
+    public LoginFailedException(String arg0) {
+		super(arg0);
+    }
+}
+//---------------------------------------------------------------
+// 메서드
+public xxx xxx() throws LoginFailedException {
+    ...
+    // 예외가 발생하는 곳에 작성
+	throw new LoginFailedException("메시지");
+    ...
+}
+```
 

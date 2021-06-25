@@ -729,3 +729,35 @@ tf.addKeyListener(new KeyApater()) {
 
 <br>
 
+> 테이블 - JTable
+
+```java
+JTable table = new JTable();
+JScrollPane scrollPane = new JScrollPane(table);
+
+// 열이름 데이터 → String[], Vector 객체에 저장
+String[] columnNames ={"열이름1","열이름2","열이름3"};
+
+// 열이름 표시 → DefaultTableModele 객체 생성
+// // rowCount → 데이터를 표시할 열 위치
+DefaultTableModel tableModel = new DefaultTableModel();
+DefaultTableModel tableModel = new DefaultTableModel(Object[] columnNames, int rowCount);
+DefaultTableModel tableModel = new DefaultTableModel(Vector columnNames, int rowCount);
+
+// setModel()에 DefaultTableModel 객체 전달 → 표시
+table.setModel(tableModel);
+
+//------------------------------------------------------------------
+
+Vector<Vector> memberList = dao.select(); // DB로부터 받아온 데이터 리스트
+
+DefaultTableModel tableModel = (DefaultTableModel) table.getModel(); // 다운캐스팅
+
+for(Vector member : memberList) {
+    // DefaultTableModel 객체 addRow()
+    // 파라미터로 1개 레코드가 저장된 Vector 객체 전달
+    tableModel.addRow(member);
+}
+```
+
+<br>
