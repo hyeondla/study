@@ -758,6 +758,27 @@ for(Vector member : memberList) {
     // 파라미터로 1개 레코드가 저장된 Vector 객체 전달
     tableModel.addRow(member);
 }
+
+//------------------------------------------------------------------
+
+// DefaultTableCellRenderer 객체 생성
+DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+
+// setHorizontalAlignment() 메서드 호출 → 정렬 방식 지정
+cellRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER); // 수평 정렬
+
+// JTable 객체의 getcolumnModel() 메서드 호출
+TableColumnModel columnModel = table.getColumnModel();
+
+// getColumn() 메서드 → 정렬할 셀 지정
+// setCellRenderer() 메서드 호출 → 정렬 방식 객체 전달
+columnModel.getColumn(0).setCellRenderer(cellRenderer);
+
+// JTable 객체의 setAutoResizeMode() 메서드 호출 → 자동 조절 끄기
+table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+
 ```
 
 <br>
+
