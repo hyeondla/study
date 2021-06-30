@@ -51,7 +51,11 @@ $(document).ready(function(){
 
 <br>
 
-> css (https://api.jquery.com/css/)
+https://api.jquery.com/
+
+<br>
+
+> css 
 
 ```javascript
 $(document).ready(function(){
@@ -92,7 +96,7 @@ $(document).ready(function(){
 
 <br>
 
-> attr (https://api.jquery.com/attr/)
+> attr
 
 ```javascript
 $(document).ready(function(){
@@ -120,7 +124,7 @@ $(document).ready(function(){
 
 <br>
 
-> html (https://api.jquery.com/html/)
+> html 
 
 ```javascript
 $(document).ready(function(){
@@ -141,7 +145,7 @@ $(document).ready(function(){
 
 <br>
 
-> append (https://api.jquery.com/append/)
+> append 
 
 ```javascript
 $(document).ready(function(){
@@ -155,7 +159,7 @@ $(document).ready(function(){
 
 <br>
 
-> each (https://api.jquery.com/each/)
+> each 
 
 ```javascript
 $(document).ready(function() {
@@ -175,6 +179,87 @@ $(document).ready(function() {
         // 테이블에 열 추가
         $('table').append("<tr><td>"+item.num+"</td><td>"+item.subject+"</td></tr>");
     });
+    
+});
+```
+
+<br>
+
+> bind 
+
+```javascript
+$('h1').bind('click',function(){
+	$(this).html('클릭시 내용변경');
+});
+```
+
+<br>
+
+> click
+
+```javascript
+$('h2').click(function() {
+	$(this).html('클릭시 내용변경');
+ 	$(this).unbind(); // 이벤트 해제 => 총 한번만 실행
+});
+```
+
+<br>
+
+> mouseover, mouseout
+
+```javascript
+$('#img1').mouseover(function() { 
+	$(this).attr('src','4.jpg');
+}).mouseout(function() {
+	$(this).attr('src','3.jpg');
+})
+```
+
+<br>
+
+> toggle
+
+```javascript
+$('h1').click(function() {
+    $(this).next().toggle();
+	$(this).next().toggle('slow');
+    $(this).next().toggle('slow',function(){
+        alert("내용");
+    });
+});
+```
+
+<br>
+
+> submit 
+
+```javascript
+$('#fr').submit(function(){ // 폼 id="fr"
+    
+    if($('#id').val()==""){
+		alert("아이디를 입력하세요");
+		$('#id').focus();
+		return false;
+    }
+    
+	if($('#pass').val()==""){
+		alert("비밀번호를 입력하세요");
+		$('#pass').focus();
+		return false;
+	}
+    
+    // input type="radio" → 옵션에 id
+	if($('#gender1').is(":checked")==false && $('#gender2').is(":checked")==false){
+		alert("성별을 체크하세요");
+		return false;
+	}
+    
+    // select id="age"
+    if($('#age').val()==""){
+		alert("연령을 선택하세요");
+		return false;
+	}
     
 });
 ```

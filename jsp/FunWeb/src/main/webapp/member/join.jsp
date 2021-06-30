@@ -7,16 +7,37 @@
 <title>Insert title here</title>
 <link href="../css/default.css" rel="stylesheet" type="text/css">
 <link href="../css/subpage.css" rel="stylesheet" type="text/css">
+<script src="../script/jquery-3.6.0.js"></script>
 <script type="text/javascript">
-	function winopen() {
-		if(document.fr.id.value == "") {
+$(document).ready(function() {
+	
+	$('#join').submit(function() {
+		if($('#id').val()==""){
 			alert("아이디를 입력하세요");
-			document.fr.id.focus();
-			return;
+			$('#id').focus();
+			return false;
+	    }
+		
+		if($('#pass').val()==""){
+			alert("비밀번호를 입력하세요");
+			$('#pass').focus();
+			return false;
 		}
-		var id=document.fr.id.value;
-		document.open("winopen.jsp?id="+id,"","width=400,height=300");
-	}
+		
+		if($('#name').val()==""){
+			alert("이름을 입력하세요");
+			$('#name').focus();
+			return false;
+		}
+		
+		if($('#email').val()==""){
+			alert("이메일을 입력하세요");
+			$('#email').focus();
+			return false;
+		}
+	});
+	
+});
 </script>
 </head>
 <body>
@@ -42,19 +63,19 @@
 			<fieldset>
 				<legend>Basic Info</legend>
 					<label>User Id</label>
-					<input type="text" name="id" class="id">
+					<input type="text" name="id" class="id" id="id">
 					<input type="button" value="dup.check" class="dup" onclick="winopen()"><br>
 					
 					<label>Password</label>
-					<input type="password" name="pass"><br>
+					<input type="password" name="pass" id="pass"><br>
 					<label>Retype Password</label>
 					<input type="password" name="pass2"><br>
 					
 					<label>Name</label>
-					<input type="text" name="name"><br>
+					<input type="text" name="name" id="name"><br>
 					
 					<label>E-Mail</label>
-					<input type="email" name="email"><br>
+					<input type="email" name="email" id="email"><br>
 					<label>Retype E-Mail</label>
 					<input type="email" name="email2"><br>
  			</fieldset>
