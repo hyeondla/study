@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Test2</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 서블릿 클래스 등록 -->
+  <servlet>
+  	<servlet-name>MyTestServlet</servlet-name>
+  	<servlet-class>TestServlet</servlet-class>
+  </servlet>
+  <!-- 서블릿 클래스와 URL 매핑 -->
+  <servlet-mapping>
+  	<servlet-name>MyTestServlet</servlet-name>
+  	<url-pattern>/Test</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>MyTestServlet2</servlet-name>
+  	<servlet-class>TestServlet2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MyTestServlet2</servlet-name>
+  	<url-pattern>/Test2.test</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>MyPostServlet</servlet-name>
+  	<servlet-class>pack1.DoGetPostMethod</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MyPostServlet</servlet-name>
+  	<url-pattern>/GetPost.do</url-pattern>
+  </servlet-mapping>
+  
+  
+</web-app>

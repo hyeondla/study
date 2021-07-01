@@ -856,19 +856,20 @@ CREATE TABLE dept80
   ALTER TABLE 테이블명 DROP COLUMN 컬럼명;
   ```
 
-- 제약조건 추가
+- **ADD CONSTRAINT** : 제약조건 추가
 
   ```sql
   ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건;
+  ALTER TABLE emp ADD CONSTRAINT emp_eid_pk PRIMARY KEY (employee_id);
   ```
 
-- 제약조건 제거
+- **DROP CONSTRAINT** : 제약조건 제거
 
   ```sql
   ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명;
   ```
 
-- 제약조건 일시적 제어
+- **DISABLE/ENABLE CONSTRAINT** : 제약조건 일시적 제어
 
   ```sql
   ALTER TABLE 테이블명 DISABLE CONSTRAINT 제약조건명;
@@ -891,7 +892,7 @@ DROP TABLE 테이블명 PURGE;
 
 > 테이블 복구
 
-실수로 삭제한 경우 recyclebin에서 복구 가능
+실수로 삭제한 경우 **recyclebin**에서 복구 가능
 
 ```sql
 -- 삭제 테이블 조회
@@ -910,13 +911,13 @@ FROM tab;
 
 > 테이블 절단 TRUNCATE
 
-테이블의 저장공간을 잘라서 반납 → 데이터 입력 불가능
+테이블의 저장공간을 잘라서 반납 → 새로운 데이터 입력 불가능
 
 <br>
 
 > 뷰 View
 
-테이블의 데이터를 사용해서 연산한 결과를 출력하는 가상 테이블
+테이블의 데이터를 사용해서 연산한 결과를 출력하는 **가상 테이블**
 
 물리적 데이터 보관 X, 기반이 되는(basetable) 테이블의 데이터를 가져옴
 
@@ -930,7 +931,7 @@ complex view : 베이스 테이블이 여러개인 뷰
 
 서브쿼리의 출력 결과, 뷰를 구성하는 서브쿼리는 data dictionary에 저장되어 있음
 
-서브쿼리에 표현식 함수 → 컬럼 alias 사용해야 함
+서브쿼리에 표현식 함수 → **컬럼 alias 사용**해야 함
 
 옵션 
 
@@ -955,23 +956,23 @@ AS 서브쿼리;
 
 옵션 : 시작값 제외 나머지 옵션은 변경 가능
 
-- INCREMENT BY n : 증감 간격 설정 (기본값 1)
+- **INCREMENT BY** n : 증감 간격 설정 (기본값 1)
 
-- START WITH n : 시작값 설정 (기본값 1)
+- **START WITH** n : 시작값 설정 (기본값 1)
 
-- MAXVALUE n | NOMAXVALUE 
+- **MAXVALUE** n | **NOMAXVALUE** 
 
   증가 시퀀스에서 최대값 설정 | 최대값 없음 (데이터 타입 최대값 적용)
 
-- MINVALUE n | NOMINVALUE 
+- **MINVALUE** n | **NOMINVALUE** 
 
   감소 시퀀스에서 최소값 설정 | 최소값 없음 (데이터 타입 최소값 적용)
 
-- CYCLE | NOCYCLE
+- **CYCLE** | **NOCYCLE**
 
   한계값 도달 시 초기화 | 한계값 도달 시 멈춤
 
-- CACHE n | NOCACHE
+- **CACHE** n | **NOCACHE**
 
   예비 값 생성 | 예비 값 생성 X 
 
@@ -1005,3 +1006,14 @@ Oracle 서버에서 포인터를 사용하여 행의 검색 속도를 높임
 
 <br>
 
+> 데이터베이스 환경 변수 (리눅스)
+
+**.bash_profile** : 계정 환경 변수가 저장되는 파일
+
+**ORACLE_BASE** : 오라클 데이터베이스 관련 파일이 위치하는 경로를 가리키는 환경변수
+
+**ORACLE_HOME** : 데이터베이스 생성되는 경로를 가리키는 환경변수, ORACLE_BASE의 하위 경로에 위치
+
+**ORACLE_SID** : 접속할 데이터베이스의 SID값
+
+<br>
