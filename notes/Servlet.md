@@ -71,8 +71,27 @@ servlet 태그와 servlet-mapping 태그를 사용 →  URL 과 서블릿 주소
 
 @webServlet("***.**xx") → .xx로 끝나는 URL을 모두 매핑, 다중매핑
 
+**request.getRequestURL()**
+
+주소창에서 요청된 주소 "프로토콜://주소:포트번호/프로젝트명/서블릿주소" 리턴
+
+리턴타입 StringBuffer → 문자열 변환 toString() 메서드 필요
+
+**request.getRequestURI()**
+
+요청된 주소 중에서 "/프로젝트명/서블릿주소"  리턴
+
+**request.getContextPath()**
+
+요청된 주소 중에서 "/프로젝트명" 리턴
+
+**request.getServletPath()**
+
+요청된 주소 중에서 "/서블릿주소" 리턴
+
 ```java
 @WebServlet("/URL패턴")
+@WebServlet("*.XXX")
 public class 클래스명 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doProcess(request, response); // 호출 필수
@@ -81,9 +100,58 @@ public class 클래스명 extends HttpServlet {
         doProcess(request, response); // 호출 필수
     }
 	// GET,POST 방식 요청을 모두 처리하기 위한 메서드 (공통 작업)
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String requestURL = request.getRequestURL().toString();
+        String requestURI = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        // 서블릿 주소 추출 
+        String command = requestURI.substring(contextPath.length()); 
+        String command = request.getServletPath();
+        
+        // 페이지 이동
+        response.sendRedirect("result.jsp");
+    }
+}
+```
+
+```java
+protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	String command = request.getServletPath(); // 서블릿 주소
+	
+	if(command.equals("/loginForm.me")) {
+		response.sendRedirect("loginForm.jsp");
+	} else if(command.equals("/loginPro.me")) {
+		String id = request.getParameter("id");
+		String password = request.getParameter("password");	
+		MemberLoginPro pro = new MemberLoginPro();
+		String path = pro.login(id, password);
+		response.sendRedirect(path);
+	} else if(command.equals("/logout.me")) {
+		MemberLogoutPro pro = new MemberLogoutPro();
+		String path = pro.logout();
+		response.sendRedirect(path);
+	} 
 }
 ```
 
 <br>
 
+---
+
+<br>
+
+> 톰캣 서버 포트 바꾸기
+
+Servers 뷰 → 서버 더블클릭 → Ports → HTTP/1.1 → 포트변경(8088) → 저장
+
+<br>
+
+> Servlet 생성
+
+src/main/java 우클릭 → New → Servlet 
+
+→ Class name : 입력 (HttpServlet 자동 상속) → Next
+
+→ URL mappings: 입력 → Finish
+
+<br>

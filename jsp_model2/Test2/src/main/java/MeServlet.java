@@ -23,9 +23,28 @@ public class MeServlet extends HttpServlet {
 	}
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("GET/POST");
+//		System.out.println("GET/POST");
+		String requestURL = request.getRequestURL().toString();
+		System.out.println("reqeustURL : " + requestURL);
 		
-		System.out.println("reqeustURL : " + request.getRequestURL());
+		// "/프로젝트명/서블릿주소" 추출
+		String requestURI = request.getRequestURI();
+		System.out.println("reqeustURI : " + requestURI);
+		
+		// "/프로젝트명" 추출
+		String contextPath = request.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+		
+		// "requestURI - contextPath = 서블릿주소"
+		String command = requestURI.substring(contextPath.length());
+		System.out.println("command : " + command);
+		
+		//----------------------------------------------------------
+		
+		String command2 = request.getServletPath();
+		System.out.println("command2 : " + command2);
+		
+		
 	}
 
 }
