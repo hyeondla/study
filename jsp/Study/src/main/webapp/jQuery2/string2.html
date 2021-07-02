@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../script/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+// 	$.ajax('string2.jsp',{
+// 		data:{id:'kim', pass:'1234'},
+// 		success:function(rdata){
+// 			$('body').append(rdata);
+// 		}
+// 	});
+	
+	$('#btn').click(function() {
+		$.ajax('string2.jsp',{
+			data:{id:$('#id').val()},
+			success:function(rdata){
+				$('#dup').html(rdata);
+			}
+		});
+	});
+	
+});
+</script>
+</head>
+<body>
+<h1>string2.html</h1>
+<input type="text" name="id" id="id">
+<input type="button" value="버튼" id="btn">
+<div id="dup"></div>
+</body>
+</html>

@@ -17,25 +17,33 @@ $(document).ready(function() {
 			$('#id').focus();
 			return false;
 	    }
-		
 		if($('#pass').val()==""){
 			alert("비밀번호를 입력하세요");
 			$('#pass').focus();
 			return false;
 		}
-		
 		if($('#name').val()==""){
 			alert("이름을 입력하세요");
 			$('#name').focus();
 			return false;
 		}
-		
 		if($('#email').val()==""){
 			alert("이메일을 입력하세요");
 			$('#email').focus();
 			return false;
 		}
 	});
+	
+	$('#btn').click(function() {
+		$.ajax('idCheck.jsp',{
+			data:{id:$('#id').val()},
+			success:function(rdata){
+				$('#dup').html(rdata);
+			}
+		});
+	});
+	
+	
 	
 });
 </script>
@@ -64,7 +72,10 @@ $(document).ready(function() {
 				<legend>Basic Info</legend>
 					<label>User Id</label>
 					<input type="text" name="id" class="id" id="id">
-					<input type="button" value="dup.check" class="dup" onclick="winopen()"><br>
+					<input type="button" value="dup.check" class="dup" id="btn">
+<!-- 					<div id="dup"></div> -->
+					<span id="dup"></span>
+					<br>
 					
 					<label>Password</label>
 					<input type="password" name="pass" id="pass"><br>

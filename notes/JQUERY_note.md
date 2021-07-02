@@ -265,3 +265,81 @@ $('#fr').submit(function(){ // 폼 id="fr"
 ```
 
 <br>
+
+> innerfade.js
+
+```jsp
+<head>
+<script src="../script/jquery-3.6.0.js"></script>
+<script src="../script/jquery.innerfade.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#inner_fade').innerfade({
+		animationtype:'fade',
+		speed:750,
+		timeout:2000,
+		type:'random',
+		containerheight:'350px'
+	});
+});
+</script>
+</head>
+<body>
+<ul id="inner_fade">
+    <li><img src="3.jpg"></li>
+    <li><img src="4.jpg"></li>
+    <li><img src="5.jpg"></li>
+</ul>
+</body>
+```
+
+<br>
+
+> AJAX 비동기방식
+
+```javascript
+$('#btn').click(function() {
+	$.ajax('string.jsp',{ // 이동할 페이지
+		data:{id:$('#id').val()}, // 데이터 넘기기
+		success:function(rdata){ // rdata : 이동한 페이지로부터 받아올 데이터
+			$('#dup').html(rdata); // 출력
+		}
+	});
+});
+```
+
+<br>
+
+> XML
+
+```jsp
+<%@ page language="java" contentType="text/xml; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<member>
+<person><id>id1</id><pass>pw1</pass><name>이름1</name></person>
+<person><id>id2</id><pass>pw2</pass><name>이름2</name></person>
+<person><id>id3</id><pass>pw3</pass><name>이름3</name></person>
+</member>
+```
+
+```javascript
+$(document).ready(function() {
+	$('#btn').click(function() {
+		$.ajax('xml.jsp',{
+			success:function(rdata){
+				// find() : 태그 찾기
+				$(rdata).find('person').each(function(){ // each() : 반복
+					var id = $(this).find('id').text(); // text() : 글자 가져오기
+					var pass = $(this).find('pass').text();	
+					var name = $(this).find('name').text();
+					$('table').append('<tr><td>'+id+'</td><td>'+pass+'</td><td>'+name+'</td></tr>'); // 출력
+				});
+			}
+		})
+		$(this).unbind();
+	});
+});
+```
+
+
+

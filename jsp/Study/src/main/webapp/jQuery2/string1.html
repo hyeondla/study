@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../script/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$.ajax('string1.jsp',{
+		success:function(rdata){
+			$('body').append(rdata);
+		}
+	});
+	
+	$('#btn').click(function() {
+		$.ajax('string1.jsp',{
+			success:function(rdata){
+				$('table').append("<tr><td>"+rdata+"</td></tr>");
+			}
+		});
+		$(this).unbind();
+	});
+	
+});
+</script>
+</head>
+<body>
+<h1>string1.html</h1>
+<input type="button" value="버튼" id="btn">
+<table border="">
+<tr><td>내용</td></tr>
+</table>
+</body>
+</html>

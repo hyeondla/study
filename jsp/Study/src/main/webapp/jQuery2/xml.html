@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../script/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+// 	$.ajax('xml.jsp',{
+// 		success:function(rdata){
+// 			// find() : 태그 찾기
+// 			$(rdata).find('person').each(function(){ // each() : 반복
+// 				var id = $(this).find('id').text(); // text() : 글자 가져오기
+// 				var pass = $(this).find('pass').text();	
+// 				var name = $(this).find('name').text();
+// 				$('body').append(id + ' ' + pass + ' ' + name + '<br>'); // 출력
+// 			});
+// 		}
+// 	});
+	
+	$('#btn').click(function() {
+		$.ajax('xml.jsp',{
+			success:function(rdata){
+				// find() : 태그 찾기
+				$(rdata).find('person').each(function(){ // each() : 반복
+					var id = $(this).find('id').text(); // text() : 글자 가져오기
+					var pass = $(this).find('pass').text();	
+					var name = $(this).find('name').text();
+					$('table').append('<tr><td>'+id+'</td><td>'+pass+'</td><td>'+name+'</td></tr>'); // 출력
+				});
+			}
+		})
+		$(this).unbind();
+	});
+	
+	
+});
+</script>
+</head>
+<body>
+<table border="1">
+<tr><td>아이디</td><td>비밀번호</td><td>이름</td></tr>
+</table>
+<input type="button" value="버튼" id="btn">
+</body>
+</html>
