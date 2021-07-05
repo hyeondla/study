@@ -944,8 +944,12 @@ complex view : 베이스 테이블이 여러개인 뷰
 - FORCE | <u>NOFORCE</u> 
 
 ```sql
+-- 뷰 생성 [수정]
 CREATE [OR REPLACE] [FORCE|NOFORCE] VIEW 뷰이름 [(alias[, alias]...)] 
 AS 서브쿼리;
+
+-- 뷰 삭제
+DROP VIEW 뷰이름;
 ```
 
 <img src="./img/sql072.PNG"><br>
@@ -977,7 +981,14 @@ AS 서브쿼리;
   예비 값 생성 | 예비 값 생성 X 
 
 ```sql
-CREATE SEQUENCE 시퀀스명 옵션1 옵션2 옵션…;
+-- 시퀀스 생성
+CREATE SEQUENCE 시퀀스명 
+	[INCREMENT BY n]
+	[START WITH n]
+	[{MAXVALUE n | NOMAXVALUE}]
+	[{MINVALUE n | NOMINVALUE}]
+	[{CYCLE | NOCYCLE}]
+	[{CACHE n | NOCACHE}];
 
 -- 다음 시퀀스값 반환
 SELECT 시퀀스명.NEXTVAL
@@ -986,6 +997,15 @@ FROM 테이블명;
 -- 현재(마지막) 시퀀스값 반환
 SELECT 시퀀스명.CURRVAL
 FROM 테이블명;
+
+-- 시퀀스 수정
+ALTER SEQUENCE 시퀀스명
+	옵션1
+	옵션2
+	...;
+	
+-- 시퀀스 삭제
+DROP SEQUENCE 시퀀스명;
 ```
 
 <br>
@@ -993,6 +1013,8 @@ FROM 테이블명;
 > 인덱스 INDEX
 
 Oracle 서버에서 포인터를 사용하여 행의 검색 속도를 높임
+
+Primary key, Unique 제약조건 컬럼에 자동 생성됨
 
 <br>
 
@@ -1017,3 +1039,192 @@ Oracle 서버에서 포인터를 사용하여 행의 검색 속도를 높임
 **ORACLE_SID** : 접속할 데이터베이스의 SID값
 
 <br>
+
+> 파라미터 파일
+
+인스턴스는 휘발성의 특징을 가지는 메모리 영역에 생성되므로 데이터베이스 시작 시 마다 새롭게 생성됨
+
+이 때 인스턴스의 설정값을 보관하는 파일
+
+```sql
+-- 파라미터 파일 위치
+$ echo $ORACLE_HOME
+$ cd $ORACLE_HOME/dbs
+
+-- 파라미터 파일 항목 조회
+show parameter 항목명
+
+-- 파라미터 파일 항목 변경
+Alter SYSTEM SET db_cache_size = 512M [scope = spfile];
+```
+
+**scope** : 설정값을 반영할 시점 지정, 생략가능
+
+- **spfile** : 설정값을 spfile에만 저장, 현재 인스턴스에는 설정값이 적용되지 않음
+- **memory** : 현재 인스턴스에만 설정값을 반영, 다음 DB 시작시에는 설정이 적용되지 않음.
+- **both(d)** : 현재 인스턴스와 spfile에 설정값을 적용함, 영구 적용, 기본값
+
+<br>
+
+> 데이터베이스 시작
+
+<img src="./img/sql073.PNG"><br>
+
+데이터베이스에서 이전 단계로 내려가는것은 불가능
+
+이전 단계로 가려면 데이터베이스 종료 후 다시 시작
+
+<br>
+
+> 데이터베이스 종료
+
+<img src="./img/sql074.PNG"><br>
+
+정상 종료 : Immediate, Transactional, Normal
+
+비정상 종료 : Abort → 데이터 손실 발생, 인스턴스 리커버리 과정 수행됨
+
+```sql
+shutdown
+shutdown transactional
+shutdown immediate
+shutdown abort
+```
+
+<br>
+
+> 테이블 스페이스
+
+테이블스페이스 생성 → 테이블스페이스의 정보를 저장할 데이터파일이 연결되어 있어야 함
+
+테이블스페이스 삭제
+
+- including contents : 테이블 스페이스 정보를 포함하여 삭제
+
+- and datafiles : 삭제할 테이블스페이스와 연결된 데이터파일을 같이 삭제
+
+- cascade constraints 
+
+  삭제할 테이블스페이스의 데이터를 참조하는 다른 테이블스페이스의 데이터를 종속적으로 삭제
+
+```sql
+-- 정보 조회
+SELECT tablespace_name, status, contents, logging, extent_management, allocation_type, segment_space_management
+FROM dba_tablespaces;
+-- 정보 조회
+SELECT ts#, name
+FROM v$tablespace;
+
+-- TS 생성
+CREATE TABLESPACE TS명 DATAFILE
+    '데이터파일 경로/데이터파일명.dbf' SIZE 데이터파일크기
+        AUTOEXTEND ON NEXT 자동확장크기 MAXSIZE 최대확장크기;
+
+-- 기존 TS에 데이터파일 추가
+ALTER TABLESPACE TS명 ADD DATAFILE
+    '데이터파일 경로/데이터파일명.dbf' SIZE 데이터파일크기;
+    
+-- 기존 TS 사이즈 변경
+ALTER DATABASE DATAFILE '데이터파일 경로/데이터파일명.dbf' RESIZE 데이터파일크기;
+-- 기존 TS 자동확장 기능 추가
+ALTER DATABASE DATAFILE '데이터파일 경로/데이터파일명.dbf' AUTOEXTEND ON NEXT 자동확장크기 MAXSIZE 최대확장크기;
+
+-- TS 삭제
+DROP TABLESPACE TS명 INCLUDING CONTENTS [AND DATAFILES] [CASCADE CONSTRAINTS];
+```
+
+<br>
+
+> 데이터베이스 User 관리
+
+0624
+
+<br>
+
+---
+
+<br>
+
+> Redo log file 다중화
+
+- DB를 복구하는데 사용되는 redo data를 저장
+- 그룹 순서대로 기록 (1 → 2 → 3 → 1 → 2 → …)
+- log switch : 기록되는 그룹이 바뀌는 것
+- 하나의 그룹에는 여러 멤버가 있을 수 있으며 그룹의 멤버간에는 동일한 내용으로 동시에 기록
+- 멤버 수 = 다중화 수
+- 권장 값 : 그룹 3개, 그룹당 멤버 2개
+
+```sql
+-- Redo log file 정보 조회 (간략)
+SELECT group#, members
+FROM v$log;
+-- Redo log file 정보 조회 (상세)
+SELECT group#, member
+FROM v$logfile
+ORDER BY group#;
+
+-- Redo log Group 추가
+ALTER DATABASE ADD LOGFILE GROUP 4 ( 
+'경로값/파일명.log', 
+'경로값/파일명.log' )
+SIZE 50M;
+
+-- Redo log Member 추가
+ALTER database ADD LOGFILE MEMBER 
+'경로값/파일명.log' TO GROUP 1, 
+'경로값/파일명.log' TO GROUP 2,
+'경로값/파일명.log' TO GROUP 3,
+'경로값/파일명.log' TO GROUP 4;
+```
+
+<!-- 화면 캡처 2021-07-05 101806.png -->
+
+<br>
+
+> Database loge mode
+
+- Noarchive : Redo log file에 Log switch 발생 시 순환하면서 덮어씀
+- Archive 
+  - Redo log file에 Log switch 발생 시 Offline 복사본 생성
+  - Archived log file 운영
+    - 옵션 파일
+    - Redo log file의 오프라인 복사본
+    - 기록이 끝난 Redo log Group의 내용을 복사해서 옮김
+    - Redo log Group의 Redo data의 저장범위를 늘려 복구할 수 있는 정보를 더 많이 보관 가능
+    - Log switch 신호에 맞춰서 Archived log file이 생성됨
+    - Fast recovery area에 파일이 저장됨
+
+<!-- 화면 캡처 2021-07-05 104523.png -->
+
+```sql
+-- DB log mode 조회
+SELECT log_mode
+FROM v$database;
+
+-- DB log mode 변경
+-- 1. DB 종료
+shut immediate
+-- 2. DB mount → 아카이브 로그 모드는 MOUNT 단계에서 설정 가능
+startup mount
+-- 3. 아카이브 로그 모드 활성화
+ALTER DATABASE ARCHIVELOG;
+-- 3. 아카이브 로그 모드 비활성화
+ALTER DATABASE NOARCHIVELOG;
+-- 4. DB 오픈 모드 
+ALTER DATABASE OPEN;
+-- 5. 설정 확인
+ARCHIVE LOG LIST
+```
+
+<!-- 화면 캡처 2021-07-05 111312.png -->
+
+<!-- 화면 캡처 2021-07-05 111818.png -->
+
+<br>
+
+---
+
+<br>
+
+
+

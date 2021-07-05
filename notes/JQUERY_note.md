@@ -313,8 +313,7 @@ $('#btn').click(function() {
 > XML
 
 ```jsp
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/xml; charset=UTF-8" pageEncoding="UTF-8"%>
 <member>
 <person><id>id1</id><pass>pw1</pass><name>이름1</name></person>
 <person><id>id2</id><pass>pw2</pass><name>이름2</name></person>
@@ -341,5 +340,51 @@ $(document).ready(function() {
 });
 ```
 
+<br>
 
+> JSON
+
+webapp → WEB-INF → lib → **json-simple-1.1.1.jar**
+
+```jsp
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
+[
+{"id":"id1","pass":"pw1","name":"이름1"},
+{"id":"id2","pass":"pw2","name":"이름2"},
+{"id":"id3","pass":"pw3","name":"이름3"}
+]
+
+<!-- ----------------DB------------------- -->
+<%
+// JDBC 연결 과정 생략
+JSONArray mblist = new JSONArray();
+while(rs.next()) {
+	JSONObject mb = new JSONObject();
+
+    // 모두 문자열(getString)으로 받아옴
+	mb.put("id", rs.getString("id"));
+	mb.put("pass", rs.getString("pass"));
+	mb.put("name", rs.getString("name"));
+	mb.put("date", rs.getString("date"));
+	
+	mblist.add(mb);	
+}
+%>
+```
+
+```javascript
+$('#btn').click(function() {
+	$.getJSON('json1.jsp', function(rdata) {
+		$.each(rdata, function(index, item) {
+            nowdate = new Date(item.date); // 문자열 → Date 객체
+            date_str = nowdate.getFullYear() + "." + (nowdate.getMonth()+1) + "." + nowdate.getDate(); // 년.월.일 → 문자열
+            
+			$('table').append('<tr><td>'+item.id+'</td><td>'+item.pass+'</td><td>'+item.name+'</td><td>'+date_str+'</td></tr>');
+		});
+	});
+	$(this).unbind();
+});
+```
+
+<br>
 
