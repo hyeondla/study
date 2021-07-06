@@ -3,7 +3,6 @@ package board;
 import java.sql.Timestamp;
 
 public class BoardBean {
-	
 	private int num;
 	private String name;
 	private String pass;
@@ -11,6 +10,15 @@ public class BoardBean {
 	private String content;
 	private int readcount;
 	private Timestamp date;
+	//file 추가
+	private String file;
+	
+	public String getFile() {
+		return file;
+	}
+	public void setFile(String file) {
+		this.file = file;
+	}
 	
 	public int getNum() {
 		return num;
@@ -54,5 +62,6 @@ public class BoardBean {
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}
+	
 	
 }

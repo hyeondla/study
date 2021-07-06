@@ -1,7 +1,3 @@
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,18 +7,20 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>board/deleteForm.jsp</h1>
 <%
-int num = Integer.parseInt(request.getParameter("num"));
+// deleteForm.jsp?num=
+int num=Integer.parseInt(request.getParameter("num"));
 %>
 <form action="deletePro.jsp" method="get">
-<input type="hidden" name="num" value="<%=num %>">
+<input type="hidden" name="num" value="<%=num%>">
 <table border="1">
-	<tr><td>비밀번호</td><td><input type="password" name="pass"></td></tr>
-	<tr><td colspan="2">
-		<input type="submit" value="글삭제">
-		<input type="button" value="글목록" onClick="location.href='list.jsp'">
-	</td></tr>
+<tr><td>비밀번호</td>
+    <td><input type="password" name="pass"></td></tr>
+<tr><td colspan="2"><input type="submit" value="글삭제"></td></tr>    
 </table>
 </form>
 </body>
 </html>
+
+
