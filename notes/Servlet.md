@@ -136,6 +136,85 @@ protected void doProcess(HttpServletRequest request, HttpServletResponse respons
 
 <br>
 
+> Forward
+
+1. **Redirect** 방식
+
+   포워딩 시 웹브라우저의 **주소(URL)가 변경**되어 새로운 요청을 수행
+
+   새로운 요청에 의해 주소창의 요청 주소가 변경됨
+
+   새로운 요청에 의한 포워딩이므로 request 객체가 새로 생성되어 전달
+
+   → 기존의 **request 객체가 유지되지 않음**
+
+   → request 객체에 저장된 데이터가 포워딩 된 페이지에서 공유되지 않음
+
+2. **Dispatcher** 방식
+
+   포워딩 시 웹브라우저의 **주소(URL)가 변경되지 않음**
+
+   새로운 요청이 발생하더라도 기존 요청 주소가 유지됨
+
+   포워딩 시 request, response 객체를 파라미터로 전달하므로 r**equest 객체가 유지됨**
+
+   → request 객체에 저장된 데이터가 포워딩 된 페이지에서 **공유**됨
+
+```java
+public class ActionForward {
+	
+	private String path;
+	private boolean isRedirect; // 리다이렉트 true, 디스패쳐 false
+	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public boolean isRedirect() {
+		return isRedirect;
+	}
+	public void setRedirect(boolean isRedirect) {
+		this.isRedirect = isRedirect;
+	}
+	
+}
+```
+
+```java
+ActionForward forward = null;
+
+if(forward != null) {
+	if(forward.isRedirect()) { // Redirect
+		response.sendRedirect(forward.getPath());
+	} else { // Dispatcher
+		RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
+		dispatcher.forward(request, response);
+	}		
+}
+```
+
+
+
+<br>
+
+> Action
+
+각 액션 클래스에서 사용할 메서드를 통일할 목적으로 부모 인터페이스를 정의
+
+인터페이스 내 공통 메서드인 execute() 메서드를 추상메서드로 정의
+
+```java
+public interface Action {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
+}
+```
+
+POJO 클래스 → 인스턴스 생성 → execute() 메서드 호출 → request 객체와 response 객체 전달
+
+<br>
+
 ---
 
 <br>
