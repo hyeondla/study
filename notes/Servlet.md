@@ -1,3 +1,19 @@
+> 톰캣 서버 포트 바꾸기
+
+Servers 뷰 → 서버 더블클릭 → Ports → HTTP/1.1 → 포트변경(8088) → 저장
+
+<br>
+
+> Servlet 생성
+
+src/main/java 우클릭 → New → Servlet 
+
+→ Class name : 입력 (HttpServlet 자동 상속) → Next
+
+→ URL mappings: 입력 → Finish
+
+<br>
+
 > Servlet 클래스
 
 javax.servlet.Servlet 인터페이스 구현 필요 
@@ -195,8 +211,6 @@ if(forward != null) {
 }
 ```
 
-
-
 <br>
 
 > Action
@@ -215,22 +229,164 @@ POJO 클래스 → 인스턴스 생성 → execute() 메서드 호출 → reques
 
 <br>
 
----
+> DBCP 커넥션풀
+
+**Resource** 태그를 사용하여 정보 설정
+
+- **name** 속성 : 공유 리소스 이름(DB 작업 수행하는 코드에서 DBCP API 통해 불러올 때 지정)
+
+- **auth** 속성 : 커넥션 풀 인증을 톰갯 등의 컨테이너에서 담당하도록 설정
+- **type** 속성 : Connection 객체를 얻어가기 위한(getConnection() 메서드를 갖는) 객체(클래스) 설정
+- **factory** 속성 : DataSource 객체를 생성하는 역할을 하는 팩토리 클래스 지정
+- **driverClassName** 속성 : 연동할 데이터베이스의 JDBC 드라이버 클래스 위치 및 이름
+- **url** 속성 : 연동할 데이터베이스 접근을 위한 URL(프로토콜://주소:포트번호/DB명)
+- **username** 속성 : 데이터베이스 계정(Properties 객체 사용 시 미설정)
+- **password** 속성 : 데이터베이스 계정 암호(Properties 객체 사용 시 미설정)
+- **maxActive** 속성 : 최대 활성화 가능한 Connection 갯수(DB 동시 접속 가능한 사용자 수)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource
+		name="jdbc/MySQL"
+		auth="Container"
+		type="javax.sql.DataSource"
+		factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/jsp_model2_db3"
+		username="root"
+		password="1234"
+		maxActive="500"
+	/>
+</Context>
+```
+
+main → webapp → META-INF → context.xml
 
 <br>
 
-> 톰캣 서버 포트 바꾸기
+> JDBC
 
-Servers 뷰 → 서버 더블클릭 → Ports → HTTP/1.1 → 포트변경(8088) → 저장
+```java
+// 데이터베이스 연동 및 관리 작업을 수행
+// → DB 연결 및 커넥션 반환, DB 자원 반환, 커밋, 롤백 기능 수행
+// 인스턴스 생성없이 항상 메서드에 접근 가능하도록 모든 메서드를 static 으로 선언
+public class JdbcUtil {
+	// 1. 데이터베이스 연결 및 커넥션 반환을 수행할 getConnection() 메서드 정의
+	public static Connection getConnection() {
+		Connection con = null;
+		try { // DBCP를 통해 생성된 Connection 객체 가져오기
+            
+			// 1) context.xml 파일의 <Context> 태그 부분 가져오기
+			//    → InitialContext 객체 생성하여 Context 타입 변수에 저장 (업캐스팅)
+			Context initCtx = new InitialContext();
+			
+			// 2) <Context> 태그 내의 <Resource> 태그 부분 가져오기
+			//    → InitialContext 객체의 lookup() 메서드 호출
+			//      리턴타입 Object → 다운캐스팅 필요
+			Context envCtx = (Context)initCtx.lookup("java:comp/env");
+			
+			// 3) <Resource> 태그 내의 name 속성 가져오기
+			//    → Context 객체의 lookup() 메서드 호출
+			//      리턴타입 Object → 다운캐스팅 필요
+			DataSource ds = (DataSource)envCtx.lookup("jdbc/MySQL");
+			
+			// 4) DataSource 객체(커넥션풀)로부터 Connection 객체 가져오기
+			//    → getConnection() 메서드 호출
+			//    → context.xml에서 username, password 미설정 시
+			//      Properties 객체로부터 계정명, 패스워드를 가져와서 getConnection() 에 전달 가능
+			//      con = ds.getConnection("root","1234");
+			con = ds.getConnection();
+			
+			// 5) 트랜잭션을 적용하기 위해 데이터베이스(MySQL)의 Auto Commit 기능 해제
+			//    → Connection 객체의 setAutoCommit() 메서드 호출 → false
+			con.setAutoCommit(false);
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return con;
+	}
+	
+	// 2. 자원 반환을 위한 close() 메서드 정의
+	//    객체가 null 이 아닐 경우에만 close() 메서드 호출
+	public static void close(Connection con) {	
+		if(con != null) { try { con.close(); } catch (SQLException e) { e.printStackTrace(); } }
+	}
+	public static void close(PreparedStatement pstmt) {
+		if(pstmt != null) { try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); } }
+	}
+	public static void close(ResultSet rs) { 
+        if(rs != null) { try { rs.close(); } catch (SQLException e) { e.printStackTrace();} }
+	}
+	
+	// 3. 트랜잭션 기능을 수행하는 commit(), rollback() 메서드 정의
+	//    → 작업을 수행할 Connection 객체를 파라미터로 전달
+    //		AutoCommit 해제
+	//      → 데이터베이스 작업 완료 후 Commit / 작업을 되돌리는 Rollback 직접 수행
+	//    → Connection 객체의 commit(), rollback() 메서드 호출
+	public static void commit(Connection con) {
+		try {
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void rollback(Connection con) {
+		try {
+			con.rollback();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+}
+```
 
 <br>
 
-> Servlet 생성
+> DAO
 
-src/main/java 우클릭 → New → Servlet 
+```java
+// 실제 데이터베이스 작업(비즈니스 로직)을 수행
+public class BoardDAO {
+	// ------------ 싱글톤 패턴 구현 ------------
+	// 유일한 인스턴스 하나를 서로 다른 객체에서 공유하는 기법
+	// 외부에서 인스턴스 생성을 직접 하지 못하도록 차단
+	// 자신의 인스턴스를 생성
+	// 생성된 인스턴스를 외부의 요청에 따라 리턴
 
-→ Class name : 입력 (HttpServlet 자동 상속) → Next
+	private static BoardDAO instance;
+	
+	private BoardDAO() {}
 
-→ URL mappings: 입력 → Finish
+	public static BoardDAO getInstance() {
+		// 인스턴스가 생성된 적이 없을 경우 생성 후 리턴
+		if(instance == null) {
+			instance = new BoardDAO();
+		}
+		
+		return instance;
+	}
+	// ----------------------------------------------------------------------------------
+	// 외부의 Service 클래스로부터 Connection 객체를 전달받아 Connection 타입 변수에 저장
+	Connection con; 
+
+	public void setConnection(Connection con) {
+		this.con = con;
+	}
+	
+	// ----------------------------------------------------------------------------------
+	
+}
+```
+
+<br>
+
+> Service
+
+```java
+```
 
 <br>

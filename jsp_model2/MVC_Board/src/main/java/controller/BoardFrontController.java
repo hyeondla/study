@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import action.Action;
+import action.BoardWriteProAction;
 import vo.ActionForward;
 
 @WebServlet("*.bo")
@@ -27,16 +29,27 @@ public class BoardFrontController extends HttpServlet {
 		
 		// 포워딩 정보 관리 객체 변수 선언
 		ActionForward forward = null;
+		// 액션클래스의 슈퍼클래스인 Action 인터페이스 타입 변수 선언
+		Action action = null; 
 		
 		// 서블릿 주소 매핑 -> 포워딩 설정
 		if(command.equals("/BoardWriteForm.bo")) {
 			forward = new ActionForward();
 			forward.setPath("./board/qna_board_write.jsp");
 			forward.setRedirect(false);
+			
 		} else if(command.equals("/BoardWritePro.bo")) {
+			action = new BoardWriteProAction(); //=> 업캐스팅이 일어남
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		} else if(command.equals("/BoardList.bo")) {
+			
 			
 		}
-		
 		
 		
 		// 포워딩 작업
