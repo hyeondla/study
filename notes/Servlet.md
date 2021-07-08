@@ -378,7 +378,76 @@ public class BoardDAO {
 	}
 	
 	// ----------------------------------------------------------------------------------
-	
+	// 비즈니스 로직을 수행하기 위한 메서드 정의
+    public int insertArticle(BoardBean boardBean) {
+		// Service 클래스로부터 Bean객체를 전달받아 DB 작업 수행, 작업 수행 결과(int 타입) 리턴
+		// 1. 작업에 필요한 변수 선언
+		// 1) 작업 수행 결과를 저장할 변수 선언
+		int insertCount = 0;
+		// 2) DB 작업에 필요한 공통 변수 선언 (Connection 제외)
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// 2. DB 작업 수행
+			// ------------------------------------------------------------
+			// 1) AUTO_INCREMENT 속성을 사용하지 않은 경우
+			//    → 기존 게시물의 가장 큰 번호(board_num)를 조회하여 +1 수행
+//			int num = 1; // 새 글에 대한 번호(기본값 1)
+//			// 기존 게시물의 글번호 중 가장 큰 번호를 조회하는 쿼리문 작성
+//			String sql = "SELECT MAX(board_num) FROM board";
+//			// SQL 구문 전달
+//			pstmt = con.prepareStatement(sql);
+//			// SQL 구문 실행 후 결과 리턴받기(ResultSet 타입)
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) {
+//				num = rs.getInt(1) + 1; // rs.getInt("board_num") + 1 과 동일
+//			}
+			
+			// 2) AUTO_INCREMENT 속성을 사용한 경우
+			int num = 1; // 새 글에 대한 번호(기본값 1)
+			// SHOW TABLE STATUS 명령어에 WHERE 절을 사용 → 테이블 정보 조회
+			// → 조회 결과 중 "Auto_increment" 컬럼 정보가 다음에 부여될 새 글 번호
+			String sql = "SHOW TABLE STATUS WHERE name='board'";
+			// SQL 구문 전달
+			pstmt = con.prepareStatement(sql);
+			// SQL 구문 실행 후 결과 리턴받기(ResultSet 타입)
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+                // 컬럼명이 "Auto_increment"인 컬럼 데이터(또는 11번 인덱스) 가져오기
+				num = rs.getInt(11);
+			}
+			// -----------------------------------------------------------------------------
+			// 전달받은 데이터를 사용하여 INSERT 작업 수행
+			sql = "INSERT INTO board VALUES (?,?,?,?,?,?,?,?,?,?,?,now())";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num); // board_num
+			pstmt.setString(2, boardBean.getBoard_name());
+			pstmt.setString(3, boardBean.getBoard_pass());
+			pstmt.setString(4, boardBean.getBoard_subject());
+			pstmt.setString(5, boardBean.getBoard_content());
+			pstmt.setString(6, boardBean.getBoard_file_original());
+			pstmt.setString(7, boardBean.getBoard_file_real());
+			pstmt.setInt(8, num); // board_re_ref
+			pstmt.setInt(9, 0); // board_re_lev
+			pstmt.setInt(10, 0); // board_re_seq
+			pstmt.setInt(11, 0); // board_readcount
+			// 실행 결과를 리턴
+			insertCount = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 구문 오류 발생 - " + e.getMessage());
+		} finally {
+			// 자원 반환
+			// → JdbcUtil 클래스의 close() 메서드 호출 → PreparedStatement, ResultSet 반환
+			// → Connection 객체는 반환하지 않도록 주의
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+		
+		// 3. 결과 리턴
+		return insertCount;
+	}
 }
 ```
 
@@ -387,6 +456,50 @@ public class BoardDAO {
 > Service
 
 ```java
+// 비즈니스 로직 처리를 위해 DAO 클래스에 DB 작업을 요청하는 역할
+public class BoardWriteProService {
+	
+	// 작업 처리 요청을 위한 메서드 정의
+	public boolean registArticle(BoardBean boardBean) {
+		// 1. 요청 처리 결과를 저장할 boolean 타입 변수 선언
+		boolean isWriteSuccess = false;
+		
+		// 2. JdbcUtil 객체로부터 Connection Pool 에 저장된 Connection 객체 가져오기
+		//    → static 메서드인 getConnection() 메서드를 호출 → Connection 객체 리턴받기
+		Connection con = JdbcUtil.getConnection();
+		
+		// 3. DAO 클래스로부터 객체 가져오기 (싱글톤패턴)
+		BoardDAO boardDAO = BoardDAO.getInstance();
+		
+		// 4. DAO 객체의 setConnection() 메서드를 호출 → Connection 객체 전달
+		//    Service 클래스에서 작업 성공/실패 → Commit/Rollback
+		//    해당 트랜잭션 작업이 끝난 뒤 Connection 객체 반환
+		//    전달받은 Connection 객체를 사용하여 연결된 DB를 통해 관련 작업만 수행
+		boardDAO.setConnection(con);
+		
+		// 5. 작업 수행 및 결과 리턴받기
+		int insertCount = boardDAO.insertArticle(boardBean);
+		
+		// 6. 리턴받은 결과에 따라 commit, rollback 결정
+		//    성공 → JdbcUtil 클래스의 commit() 메서드 호출 → commit 작업 수행
+		//        → Action 클래스로 리턴할 boolean 타입 변수를 true로 변경
+		//    실패 → JdbcUtil 클래스의 rollback() 메서드 호출 → rollback 작업 수행
+		if(insertCount > 0) { // 성공
+			JdbcUtil.commit(con);
+			isWriteSuccess = true;
+		} else { // 실패
+			JdbcUtil.rollback(con);
+		}
+		
+		// 7. 작업 수행 후 Connection 객체 반환
+		//    → JdbcUtil 클래스의 close() 메서드 호출 → Connection 객체 전달
+		JdbcUtil.close(con);
+		
+		// 8. 작업 결과 리턴
+		return isWriteSuccess;
+	}
+
+}
 ```
 
 <br>

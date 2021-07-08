@@ -1135,9 +1135,87 @@ DROP TABLESPACE TS명 INCLUDING CONTENTS [AND DATAFILES] [CASCADE CONSTRAINTS];
 
 <br>
 
-> 데이터베이스 User 관리
+> 데이터베이스 사용자 관리
 
-0624
+- 사용자 생성 : create user 권한 소유자가 생성 가능
+
+```sql
+CREATE USER 계정명 IDENTIFIED BY 비밀번호;
+```
+
+- 시스템 권한 : DB를 조작할 수 있는 권한, DBA가 모든 권한을 소유, 권한 부여/회수 가능
+
+  - WITH ADMIN OPTION 
+
+    시스템 권한 부여시 사용되는 옵션 절
+
+    해당 옵션을 포함하여 권한을 부여 받은 경우 해당 권한에 대한 부여/회수 관리 권한을 포함
+
+    B에게 권한을 부여한 A의 권한이 회수당해도 B의 권한은 유지됨
+
+```sql
+-- 시스템 권한 부여
+GRANT create session, create table, create sequence, create view
+TO 사용자 [WITH ADMIN OPTION];
+
+-- 시스템 권한 회수
+REVOKE create table
+FROM 사용자;
+```
+
+- 오브젝트 권한 : 오브젝트를 조작할 수 있는 권한, 오브젝트 소유자/DBA가 권한 부여/회수 가능
+
+  다른 계정 소유의 오브젝트를 조회하는 경우 오브젝트명 앞에 스키마명을 붙여야함
+
+  접속한 계정 소유의 오브젝트의 경우 스키마명 생략 가능
+
+  DBA의 경우 스키마명 생략 불가능
+
+  B에게 권한을 부여한 A의 권한이 회수당하면 B도 같이 회수됨
+
+```sql
+-- 오브젝트 권한 부여
+GRANT select 
+ON 테이블(오브젝트) 
+TO 사용자 [WITH GRANT OPTION];
+
+-- 오브젝트 권한 회수
+REVOKE select
+ON 테이블(오브젝트)
+FROM 사용자;
+```
+
+- 사용자 생성시 저장 공간 할당
+
+```sql
+CREATE USER 계정명
+IDENTIFIED BY 비밀번호
+DEFAULT TABLESPACE 기본테이블스페이스명
+TEMPORARY TABLESPACE 임시테이블스페이스명
+QUOTA 용량1 ON 테이블스페이스명1 -- 공간 할당
+QUOTA 용량2 ON 테이블스페이스명2;
+```
+
+테이블 생성 시 생성할 저장영역을 지정하지않으면 사용자의 기본 테이블 스페이스에 생성됨
+
+저장 공간을 할당 받은 다른 테이블 스페이스에 테이블을 생성하려면 저장영역을 지정
+
+```sql
+CREATE TABLE 테이블명 (...)
+[TABLESPACE 테이블스페이스명];
+```
+
+```sql
+SELECT username, default_tablespace, temporary_tablespace
+FROM dba_users
+WHERE username LIKE '%TEST%';
+
+SELECT owner, table_name, tablespace_name
+FROM dba_tables
+WHERE owner LIKE '%TEST%';
+```
+
+0628
 
 <br>
 
