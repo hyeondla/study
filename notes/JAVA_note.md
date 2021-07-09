@@ -1337,6 +1337,35 @@ System.out.println(new String(chArr)); // 문자열 리턴
 
 <br>
 
+> StringBuilder StringBuffer
+
+문자열 처리
+
+java.util 패키지 (String과 상속 관계 X)
+
+객체 생성 시 반드시 생성자를 통해서만 생성 가능, 리터럴 할당 불가능
+
+버퍼(임시 메모리 공간)에 문자열을 저장
+
+조작이 발생할 경우 해방 버퍼 공간의 문자열 직접 조작
+
+수정 작업이 많을 경우 메모리 낭비가 적음
+
+StringBuffer → 멀티쓰레드 환경에 적절
+
+StringBuilder → 싱글쓰레드 환경에 적절
+
+toString() 메서드 오버라이딩 → 문자열 변환이 쉬움
+
+```java
+StringBuffer sb = new StringBuffer(); // 널 스트링("") 객체 생성
+StringBuffer sb = new StringBuffer("문자열");
+
+sb,append("문자열"); // 기존 문자열 뒤에 추가
+```
+
+<br>
+
 > Wrapper 클래스
 
 java.lang 패키지
