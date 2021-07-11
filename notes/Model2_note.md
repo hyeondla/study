@@ -12,7 +12,7 @@
 - View : 화면 출력 (디자인 부분)
 - Controller : 모델과 뷰를 연결, 초기 진입점
 
-<img src="./img/model2_001.JPG"><br>
+![model2_001](https://user-images.githubusercontent.com/79393928/125189261-27fd6880-e272-11eb-920e-7735959c01e2.jpg) <br>
 
 <br>
 
@@ -52,7 +52,9 @@
 
 2. View 요청 → FrontController → Action 클래스 호출 → 비즈니스 로직 수행 → ...
 
-<img src="./img/model2_002.JPG"><br>
+![model2_002](https://user-images.githubusercontent.com/79393928/125189267-364b8480-e272-11eb-87f2-2f60fd6f6743.jpg) <br>
+
+<br>
 
 > package db
 
