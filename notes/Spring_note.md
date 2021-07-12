@@ -44,23 +44,76 @@ directory : C:\Program Files\Apache Software Foundation\Tomcat 8.0
 
 <br>
 
-MVC 패턴
+>  web.xml 한글처리
 
-객체 생성 → xml
+```xml
+<!-- post request 한글처리 -->
+<filter>
+	<filter-name>encoding</filter-name>
+	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+</filter>
 
-DI 의존관계 주입
+<filter-mapping>
+	<filter-name>encoding</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+```
 
-JDBC 연결
+<br>
 
-마이바티스 → sql 구문을 xml에 모아서 사용
+> Controller
 
-AJAX
+주소 매핑, 처리 호출
 
-AOP 관점지향 프로그램
+```java
+@Controller
+public class MemberController {
+    
+    @RequestMapping(value = "/insert", method = RequestMethod.GET)
+	public String insert() {
+	//  /WEB-INF/views/insertForm.jsp 이동
+		return "insertForm";
+	}
+    
+    @RequestMapping(value = "/insertPro", method = RequestMethod.POST)
+	public String insertPro(MemberBean mb) {
+        // MemberBean을 매개변수로 받았을 때
+        // → 폼의 파라미터 이름과 자바빈의 변수 이름이 일치하면 자동으로 저장됨
+        
+        // 회원가입 처리
+        MemberServiceImpl memberService = new MemberServiceImpl();
+		memberService.insertMember(mb);
+        
+        return "redirect:/login";
+    }
+    
+}
+```
+
+<br>
+
+> Service
 
 
 
 
 
+<br>
+
+> Repository
+
+DB 작업
 
 
+
+<br>
+
+
+
+
+
+<br>
