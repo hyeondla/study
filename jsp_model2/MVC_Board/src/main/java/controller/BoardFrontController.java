@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import action.BoardDetailAction;
+import action.BoardListAction;
 import action.BoardWriteProAction;
 import vo.ActionForward;
 
@@ -47,8 +49,20 @@ public class BoardFrontController extends HttpServlet {
 			}
 			
 		} else if(command.equals("/BoardList.bo")) {
+			action = new BoardListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
-			
+		} else if(command.equals("/BoardDetail.bo")) {
+			action = new BoardDetailAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		

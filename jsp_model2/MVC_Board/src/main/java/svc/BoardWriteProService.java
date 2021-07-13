@@ -14,7 +14,7 @@ public class BoardWriteProService {
 		boolean isWriteSuccess = false;
 		
 		Connection con = JdbcUtil.getConnection();
-		BoardDAO bdao = BoardDAO.getBdao();
+		BoardDAO bdao = BoardDAO.getInstance();
 		bdao.setConnection(con);
 		
 		int insertCount = bdao.insertArticle(bb);

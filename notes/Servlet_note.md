@@ -4,6 +4,56 @@ Servers 뷰 → 서버 더블클릭 → Ports → HTTP/1.1 → 포트변경(8088
 
 <br>
 
+> 이클립스에서 MySQL 사용
+
+Data Source Explorer
+
+→ Database Connections 
+
+→ MySQL 선택, 이름 설정 : MySQL 5.7 → 다음
+
+→ Drivers 선택박스 오른쪽 아이콘 (추가)  클릭
+
+→ 5.1 선택 → JAR List 탭  → Add
+
+→ mysql-connector 5.1.49.jar 실제 파일이 있는 경로 선택 → OK
+
+→ Database : 이름 설정 JSP Model 2
+
+​     URL : jdbc:mysql://localhost:3306/jsp_model2_db3 (사용할 디비명)
+
+​     User name : root
+
+​     Password : 1234 
+
+​     Save password 체크
+
+→ Test Connection → Ping succeeded! 알림창
+
+→ Finish
+
+
+
+→ SQL Scrapbook 아이콘
+
+→ Type : MySql_5.1 선택 → Name : 선택 → Database : 선택 
+
+→ 쿼리 작성 
+
+→ Alt + S (현재 커서 위치) / Ctrl + Alt + X (모두) / Alt + X (선택 블럭) → 실행됨
+
+
+
+→ 저장 → 프로젝트 선택, 이름 설정 → 저장됨 
+
+→ 우클릭 → Open With : SQL File Editor 설정 
+
+→ 확장자를 입력했다면 (.scrapbook / .sql 등 자유 설정) 
+
+​     해당 확장자를 모두 SQL File Editor로 열기 체크박스 생김 
+
+<br>
+
 > Servlet 생성
 
 src/main/java 우클릭 → New → Servlet 
@@ -503,3 +553,4 @@ public class BoardWriteProService {
 ```
 
 <br>
+
