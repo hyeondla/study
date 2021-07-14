@@ -4,5 +4,32 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	
+	<!-- 객체 생성 -->
+	
+	<!-- 1) 생성자 사용 -->
+<!-- 	<bean id="memberController" class="com.itwillbs.myweb.MemberController"> -->
+<!-- 		<constructor-arg name="memberService" ref="memberService"></constructor-arg> -->
+<!-- 	</bean> -->
+	<!-- 2) set 메서드 사용 -->
+	<bean id="memberController" class="com.itwillbs.myweb.MemberController">
+		<property name="memberService" ref="memberService"></property>
+	</bean>
+	
+	<bean id="memberService" class="com.itwillbs.service.MemberServiceImpl">
+		<property name="memberDAO" ref="memberDAO"></property>
+	</bean>
+	
+	<bean id="memberDAO" class="com.itwillbs.dao.MemberDAOImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- DB연결 객체 생성 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/jspdb3"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+	
 </beans>

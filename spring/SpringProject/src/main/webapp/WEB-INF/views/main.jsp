@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<input type="button" value="로그아웃" onclick="location.href='logout.jsp'"><br>
+<%=session.getAttribute("id") %>
+<input type="button" value="로그아웃" onclick="location.href='logout'"><br>
 
 <a href="info">회원정보조회</a><br>
 <a href="update">회원정보수정</a><br>

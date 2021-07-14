@@ -12,9 +12,9 @@
 </head>
 <body>
 <form action="updatePro" method="post">
-아이디 : <input type="text" name="id" value="" readonly><br>
+아이디 : <input type="text" name="id" value="${mb.id }" readonly><br>
 비밀번호 : <input type="password" name="pass"><br>
-이름 : <input type="text" name="name" value=""><br>
+이름 : <input type="text" name="name" value="${mb.name }"><br>
 <input type="submit" value="회원정보수정">
 </form>
 </body>
