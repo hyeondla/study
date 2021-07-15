@@ -49,18 +49,16 @@ BoardBean article = (BoardBean)request.getAttribute("article");
 		<h2>글 상세내용 보기</h2>
 		<section id="basicInfoArea">
 		제목 : <%=article.getBoard_subject() %><br>
-		첨부파일 : <%=article.getBoard_file_original() %><br>
+		첨부파일 : <a href="./boardUpload/<%=article.getBoard_file_real() %>"  download="<%=article.getBoard_file_original() %>"><%=article.getBoard_file_original() %></a><br>
 		</section>
 		<section id="articleContentArea">
+		<%=article.getBoard_content() %>
 		</section>
 	</section>
 	<section id="commandList">
-	<%=article.getBoard_content() %>
-	</section>
-	<section id="commandList">
-		<input type="button" value="답변">
-		<input type="button" value="수정">
-		<input type="button" value="삭제">
+		<input type="button" value="답변" onclick="location.href='BoardReplyForm.bo?board_num=<%=article.getBoard_num()%>&page=<%=nowpage%>'">
+		<input type="button" value="수정" onclick="location.href='BoardModifyForm.bo?board_num=<%=article.getBoard_num()%>&page=<%=nowpage%>'">
+		<input type="button" value="삭제" onclick="location.href='BoardDeleteForm.bo?board_num=<%=article.getBoard_num()%>&page=<%=nowpage%>'">
 		<input type="button" value="목록" onclick="location.href='BoardList.bo?page=<%=nowpage%>'">
 	</section>
 </body>

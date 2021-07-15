@@ -7,19 +7,17 @@ import svc.BoardDetailService;
 import vo.ActionForward;
 import vo.BoardBean;
 
-public class BoardDetailAction implements Action {
+public class BoardModifyFormAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+		System.out.println("BoardModifyFormAction");
 		ActionForward forward = null;
 		
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		String page = request.getParameter("page");
-		
-//		System.out.println(board_num);
-//		System.out.println(page);
+		System.out.println("글번호 : " + board_num);
 		
 		BoardDetailService boardDetailService = new BoardDetailService();
 		BoardBean article = boardDetailService.getArticle(board_num);
@@ -28,16 +26,14 @@ public class BoardDetailAction implements Action {
 			boardDetailService.increaseReadcount(board_num);
 		}
 		
-		// request 객체에 전달할 파라미터 저장
 		request.setAttribute("page", page);
 		request.setAttribute("article", article);
 		
 		forward = new ActionForward();
+		forward.setPath("./board/qna_board_modify.jsp");
 		forward.setRedirect(false);
-		forward.setPath("./board/qna_board_view.jsp");
-		
 		
 		return forward;
 	}
-
+	
 }

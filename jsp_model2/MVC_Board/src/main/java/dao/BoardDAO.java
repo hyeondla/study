@@ -216,12 +216,53 @@ public class BoardDAO {
 	}
 
 	public int updateReadCount(int board_num) {
-		int readCount = 0;
+		int updateCount = 0;
+		System.out.println("updateReadCount");
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "UPDATE board SET board_readcount=board_readcount+1 WHERE board_num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			updateCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생 - " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
 		
 		
+		return updateCount;
+	}
+
+	public Boolean isArticleWriter(int board_num, String board_pass) {
+		boolean isRightUser = false;
 		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
-		return readCount;
+		try {
+			String sql = "SELECT board_pass FROM board WHERE board_num=?";
+//		String sql = "SELECT board_pass FROM board WHERE board_num=? AND board_pass=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+//		pstmt.setString(2, board_pass);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("board_pass").equals(board_pass)) {
+					isRightUser = true;
+				}
+			}
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생 - " + e.getMessage());
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return isRightUser;
 	}
 	
 }

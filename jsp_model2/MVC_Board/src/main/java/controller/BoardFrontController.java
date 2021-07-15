@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import action.Action;
 import action.BoardDetailAction;
 import action.BoardListAction;
+import action.BoardModifyFormAction;
+import action.BoardModifyProAction;
 import action.BoardWriteProAction;
 import vo.ActionForward;
 
@@ -58,6 +60,20 @@ public class BoardFrontController extends HttpServlet {
 			
 		} else if(command.equals("/BoardDetail.bo")) {
 			action = new BoardDetailAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/BoardModifyForm.bo")) {
+			action = new BoardModifyFormAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/BoardModifyPro.bo")) {
+			action = new BoardModifyProAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
