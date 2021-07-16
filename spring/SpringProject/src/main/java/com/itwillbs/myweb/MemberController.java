@@ -1,5 +1,7 @@
 package com.itwillbs.myweb;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -163,7 +165,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list() {
+	public String list(Model model) {
+		
+		List<MemberBean> mbList = memberService.getMemberList();
+		model.addAttribute("mbList", mbList);
+		
 		return "list";
 	}
 	

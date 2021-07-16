@@ -137,3 +137,80 @@ DB 작업
 
 
 <br>
+
+---
+
+<br>
+
+New Spring Legacy Project
+
+Templates : Spring MVC Project
+
+com.itwillbs.myweb2
+
+생성
+
+<br>
+
+프로젝트 오른쪽클릭 → Properties → Java Compiler → 1.8 변경
+
+Properties → Project Facets → Java → 1.8 변경
+
+<br>
+
+pom.xml  → java-version 변경 → spring-version 변경
+
+```xml
+<properties>
+	<java-version>1.8</java-version>
+	<org.springframework-version>4.1.7.RELEASE</org.springframework-version>
+	<org.aspectj-version>1.6.10</org.aspectj-version>
+	<org.slf4j-version>1.6.6</org.slf4j-version>
+</properties>
+```
+
+<br>
+
+pom.xml 프로그램 설치
+
+→ jdbc
+
+→ spring jdbc
+
+→ mybatis, mybatis-spring
+
+<br>
+
+web.xml → 처리담당자 지정
+
+```xml
+<!-- post request 한글처리 -->
+<filter>
+	<filter-name>encoding</filter-name>
+	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+</filter>
+	
+<filter-mapping>
+	<filter-name>encoding</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+
+<br>
+
+servlet-context.xml → java 폴더에 패키지 생성
+
+```xml
+<context:component-scan base-package="com.itwillbs.controller" />
+<context:component-scan base-package="com.itwillbs.service" />
+<context:component-scan base-package="com.itwillbs.dao" />
+```
+
+<br>
+
+
+

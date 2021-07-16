@@ -1,5 +1,7 @@
 package com.itwillbs.service;
 
+import java.util.List;
+
 import com.itwillbs.domain.MemberBean;
 
 public interface MemberService {
@@ -13,4 +15,6 @@ public interface MemberService {
 	public void updateMember(MemberBean mb);
 
 	public void deleteMember(MemberBean mb);
+	
+	public List<MemberBean> getMemberList();
 }

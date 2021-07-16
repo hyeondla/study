@@ -1,5 +1,8 @@
 package com.itwillbs.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -64,6 +67,13 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void deleteMember(MemberBean mb) {
 		template.update(deleteMember, mb.getId());
+	}
+	
+	String getMemberList = "select * from member";
+	@Override
+	public List<MemberBean> getMemberList() {
+		RowMapper<MemberBean> mapper = new BeanPropertyRowMapper<MemberBean>(MemberBean.class);
+		return template.query(getMemberList, mapper);
 	}
 
 }
