@@ -116,28 +116,6 @@ public class MemberController {
 
 <br>
 
-> Service
-
-
-
-
-
-<br>
-
-> Repository
-
-DB 작업
-
-
-
-<br>
-
-
-
-
-
-<br>
-
 ---
 
 <br>
