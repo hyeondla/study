@@ -12,14 +12,13 @@
 	<c:redirect url="login"></c:redirect>
 </c:if>
 ${sessionScope.id }님
-<input type="button" value="로그아웃" onclick="location.href='logout'"><br>
-
-<a href="info">회원정보조회</a><br>
-<a href="update">회원정보수정</a><br>
-<a href="delete">회원정보삭제</a><br>
+<input type="button" value="로그아웃" onclick="location.href='<c:url value="/member/logout" />'"><br>
+<a href='<c:url value="/member/info" />'>회원정보조회</a><br>
+<a href='<c:url value="/member/update" />'>회원정보수정</a><br>
+<a href='<c:url value="/member/delete" />'>회원정보삭제</a><br>
 <c:if test="${ ! empty sessionScope }">
 	<c:if test="${ sessionScope.id eq 'admin' }">
-		<a href="list">회원정보목록</a><br>
+		<a href='<c:url value="/member/list" />'>회원정보목록</a><br>
 	</c:if>
 </c:if>
 </body>

@@ -9,5 +9,8 @@ public interface MemberDAO {
 
 	public void insertMember(MemberBean mb);
 	
+	public MemberBean userCheck(MemberBean mb);
+	
+	public MemberBean getMember(String id);
 	
 }
