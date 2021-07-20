@@ -315,14 +315,47 @@ public class BoardDAO {
 		int insertCount = 0;
 		
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		
 		int board_re_ref = article.getBoard_re_ref();
 		int board_re_lev = article.getBoard_re_lev();
 		int board_re_seq = article.getBoard_re_seq();
 		
-		String sql = "UPDATE board SET board_re_seq=board_re_seq+1 "
-				+ "WHERE board_re_ref=? AND board_re_seq>? ";
+		try {
+			String sql = "UPDATE board SET board_re_seq=board_re_seq+1 "
+					+ "WHERE board_re_ref=? AND board_re_seq>? ";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_re_ref);
+			pstmt.setInt(2, board_re_seq);
+			pstmt.executeUpdate();
+			
+			board_re_lev++;
+			board_re_seq++;
+			
+			pstmt.close(); // 재사용시 필요
+			// 또는 새로운 변수 사용
+
+			sql = "INSERT INTO board VALUES(null,?,?,?,?,?,?,?,?,?,?,now())";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, article.getBoard_name());
+			pstmt.setString(2, article.getBoard_pass());
+			pstmt.setString(3, article.getBoard_subject());
+			pstmt.setString(4, article.getBoard_content());
+			pstmt.setString(5, "");
+			pstmt.setString(6, "");
+			pstmt.setInt(7, board_re_ref);  // 원본글 참조글번호
+			pstmt.setInt(8, board_re_lev);  // 원본글 들여쓰기 레벨 +1
+			pstmt.setInt(9, board_re_seq);  // 원본글 순서번호 +1
+			pstmt.setInt(10, 0); // 조회수
+			
+			insertCount = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생 - " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
 		
 		return insertCount;
 	}

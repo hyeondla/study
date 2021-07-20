@@ -5,8 +5,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	h1 {
+		text-align: center;
+	}
+	h3 {
+		text-align: center;
+	}
+</style>
 </head>
 <body>
+<div align="right">
+	<h3><a href="MemberLoginForm.me">로그인</a></h3>
+</div>
 <h1>MVC 게시판</h1>
 <h3><a href="BoardWriteForm.bo">글쓰기</a></h3>
 <h3><a href="BoardList.bo">글목록</a></h3>

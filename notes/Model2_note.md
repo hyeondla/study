@@ -327,6 +327,8 @@ public class PageInfo {
 
 → 모든 클라이언트(웹) 요청을 받아서 제어
 
+서블릿으로 생성
+
 ```java
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;

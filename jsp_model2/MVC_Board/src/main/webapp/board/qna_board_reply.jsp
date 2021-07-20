@@ -4,7 +4,7 @@
 
 <%
 	BoardBean article = (BoardBean)request.getAttribute("article");
-	String nowPage = (String)request.getAttribute("page");
+	String nowPage = request.getParameter("page");
 %>    
 
 <!DOCTYPE html>

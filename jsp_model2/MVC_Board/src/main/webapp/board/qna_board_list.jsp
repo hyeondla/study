@@ -87,12 +87,11 @@
 					<td align="center"><%=article.getBoard_num() %></td>
 					<td>
 					<%if(article.getBoard_re_lev() != 0) { %>
-							<%for(int j = 0; j <= article.getBoard_re_lev() * 2; j++) { %>
+							<%for(int j = 0; j <= article.getBoard_re_lev(); j++) { %>
 									&nbsp;
 							<%} %>
 							▶
 					<%} %>
-						&nbsp;&nbsp;
 						<a href="BoardDetail.bo?board_num=<%=article.getBoard_num() %>&page=<%=currentPage %>">
 						<%=article.getBoard_subject() %>
 						</a>
