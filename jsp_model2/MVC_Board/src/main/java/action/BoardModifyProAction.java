@@ -24,7 +24,7 @@ public class BoardModifyProAction implements Action {
 		BoardModifyProService boardModifyProService = new BoardModifyProService();
 		
 		String board_pass = request.getParameter("board_pass");
-		Boolean isRightUser = boardModifyProService.isArticleWrite(board_num, board_pass);
+		boolean isRightUser = boardModifyProService.isArticleWrite(board_num, board_pass);
 		
 		if(!isRightUser) { // 비밀번호를 틀린 경우
 			response.setContentType("text/html; charset=UTF-8");
@@ -53,7 +53,7 @@ public class BoardModifyProAction implements Action {
 			} else { // 글 수정 성공
 				forward = new ActionForward();
 				forward.setRedirect(true);
-				forward.setPath("BoardDetail.bo");
+				forward.setPath("BoardDetail.bo?board_num=" + board_num + "&page=" + page);
 			}
 			
 		}

@@ -1,5 +1,7 @@
 package com.itwillbs.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -31,6 +33,24 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberBean getMember(String id) {
 		System.out.println("MemberDAOImpl - getMember");
 		return sqlSession.selectOne(namespace + ".getMember", id);
+	}
+
+	@Override
+	public void updateMember(MemberBean mb) {
+		System.out.println("MemberDAOImpl - updateMember");
+		sqlSession.update(namespace + ".updateMember", mb);
+	}
+
+	@Override
+	public void deleteMember(MemberBean mb) {
+		System.out.println("MemberDAOImpl - deleteMember");
+		sqlSession.delete(namespace + ".deleteMember", mb);
+	}
+
+	@Override
+	public List<MemberBean> getMemberList() {
+		System.out.println("MemberDAOImpl - getMemberList");
+		return sqlSession.selectList(namespace + ".getMemberList");
 	}
 
 }

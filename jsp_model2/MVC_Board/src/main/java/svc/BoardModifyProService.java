@@ -9,9 +9,9 @@ import static db.JdbcUtil.*;
 
 public class BoardModifyProService {
 
-	public Boolean isArticleWrite(int board_num, String board_pass) {
+	public boolean isArticleWrite(int board_num, String board_pass) {
 		System.out.println("BoardModifyProService - isArticleWrite");
-		Boolean isRightUser = false;
+		boolean isRightUser = false;
 		
 		Connection con = getConnection();
 		BoardDAO boardDAO = BoardDAO.getInstance();
@@ -26,9 +26,22 @@ public class BoardModifyProService {
 	}
 
 	public boolean modifyArticle(BoardBean article) {
-		Boolean isModifySuccess = false;
+		boolean isModifySuccess = false;
 		
+		Connection con = getConnection();
+		BoardDAO boardDAO = BoardDAO.getInstance();
+		boardDAO.setConnection(con);
 		
+		int updateCount = boardDAO.updateArticle(article);
+		
+		if(updateCount > 0) {
+			commit(con);
+			isModifySuccess = true;
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
 		
 		return isModifySuccess;
 	}

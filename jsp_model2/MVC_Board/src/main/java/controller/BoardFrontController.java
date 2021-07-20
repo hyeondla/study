@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
+import action.BoardDeleteProAction;
 import action.BoardDetailAction;
 import action.BoardListAction;
 import action.BoardModifyFormAction;
 import action.BoardModifyProAction;
+import action.BoardReplyProAction;
 import action.BoardWriteProAction;
 import vo.ActionForward;
 
@@ -23,8 +25,6 @@ public class BoardFrontController extends HttpServlet {
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		System.out.println("BoardFrontController");
-		
 		request.setCharacterEncoding("UTF-8");
 		
 		// 서블릿 주소 추출
@@ -74,6 +74,31 @@ public class BoardFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/BoardModifyPro.bo")) {
 			action = new BoardModifyProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/BoardDeleteForm.bo")) {
+			forward = new ActionForward();
+			forward.setPath("./board/qna_board_delete.jsp");
+			forward.setRedirect(false);
+		} else if(command.equals("/BoardDeletePro.bo")) {
+			action = new BoardDeleteProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/BoardReplyForm.bo")) {
+			action = new BoardReplyFormAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/BoardReplyPro.bo")) {
+			action = new BoardReplyProAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

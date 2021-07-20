@@ -190,5 +190,267 @@ servlet-context.xml → java 폴더에 패키지 생성
 
 <br>
 
+---
 
+<br>
 
+> BoardController.java
+
+```java
+package com.itwillbs.controller;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.itwillbs.domain.BoardBean;
+import com.itwillbs.service.BoardService;
+
+@Controller
+public class BoardController {
+	
+	@Inject
+	private BoardService boardService;
+	
+	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
+	public String insert() {
+		
+		return "/board/writeForm";
+	}
+	
+	@RequestMapping(value = "/board/writePro", method = RequestMethod.POST)
+	public String insertPro(BoardBean bb) {
+		
+		boardService.insertBoard(bb);
+		
+		return "redirect:/board/list";
+	}
+	
+}
+```
+
+<br>
+
+> BoardBean.java
+
+```java
+package com.itwillbs.domain;
+
+import java.sql.Timestamp;
+
+public class BoardBean {
+	private int num;
+	private String name;
+	private String pass;
+	private String subject;
+	private String content;
+	private int readcount;
+	private Timestamp date;
+	//file 추가
+	private String file;
+	
+	public String getFile() {
+		return file;
+	}
+	public void setFile(String file) {
+		this.file = file;
+	}
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public int getReadcount() {
+		return readcount;
+	}
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
+	public Timestamp getDate() {
+		return date;
+	}
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
+	
+	
+}
+```
+
+<br>
+
+> BoardService.java
+
+```java
+package com.itwillbs.service;
+
+import com.itwillbs.domain.BoardBean;
+
+public interface BoardService {
+
+	public void insertBoard(BoardBean bb);
+
+}
+```
+
+> BoardServiceImpl.java
+
+```java
+package com.itwillbs.service;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.itwillbs.dao.BoardDAO;
+import com.itwillbs.domain.BoardBean;
+
+@Service
+public class BoardServiceImpl implements BoardService {
+
+	@Inject
+	private BoardDAO boardDAO;
+	
+	@Override
+	public void insertBoard(BoardBean bb) {
+		boardDAO.insertBoard(bb);
+	}
+
+}
+```
+
+<br>
+
+> boardMapper.xml
+
+src/main/resources → mappers 패키지 생성 → xml 파일 생성
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.mapper.BoardMapper">
+
+	<insert id="insertBoard">
+		insert into board(num,name,pass,subject,content,readcount,date) 
+		values(#{num},#{name},#{pass},#{subject},#{content},#{readcount},#{date})
+	</insert>
+
+</mapper>
+```
+
+<br>
+
+> BoardDAO.java
+
+```java
+package com.itwillbs.dao;
+
+import com.itwillbs.domain.BoardBean;
+
+public interface BoardDAO {
+
+	public void insertBoard(BoardBean bb);
+	
+}
+```
+
+> BoardDAOImpl.java
+
+```java
+package com.itwillbs.dao;
+
+import java.sql.Timestamp;
+
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import com.itwillbs.domain.BoardBean;
+
+@Repository
+public class BoardDAOImpl implements BoardDAO {
+
+	@Inject
+	private SqlSession sqlSession;
+	
+	private static final String namespace="com.itwillbs.mapper.BoardMapper";
+	
+	@Override
+	public void insertBoard(BoardBean bb) {
+		System.out.println("BoardDAOImpl - insertBoard");
+		
+//		sqlSession.insert(namespace + ".insertBoard", bb);
+	}
+
+}
+```
+
+<br>
+
+> writeForm.jsp
+
+webapp > WEB-INF > views > board 폴더
+
+이미지는 webapp > resources > img 폴더 안에 넣기
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>board/writeForm.jsp</h1>
+<form action='<c:url value="/board/writePro" />' method="post">
+<table border="1">
+<tr><td>글쓴이</td>
+    <td><input type="text" name="name"></td></tr>
+<tr><td>비밀번호</td>
+    <td><input type="password" name="pass"></td></tr>
+<tr><td>제목</td>
+    <td><input type="text" name="subject"></td></tr>
+<tr><td>내용</td>
+    <td><textarea rows="10" cols="20" name="content"></textarea></td></tr>
+<tr><td colspan="2"><input type="submit" value="글쓰기"></td></tr>    
+</table>
+</form>
+</body>
+</html>
+```
+
+<br>

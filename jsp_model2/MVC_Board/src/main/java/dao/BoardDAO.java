@@ -264,5 +264,67 @@ public class BoardDAO {
 		
 		return isRightUser;
 	}
+
+	public int updateArticle(BoardBean article) {
+		
+		int updateCount = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "UPDATE board SET board_name=?, board_subject=?, board_content=? WHERE board_num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, article.getBoard_name());
+			pstmt.setString(2, article.getBoard_subject());
+			pstmt.setString(3, article.getBoard_content());
+			pstmt.setInt(4, article.getBoard_num());
+			updateCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생 - " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return updateCount;
+	}
+
+	public int deleteArticle(int board_num) {
+		
+		int deleteCount = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "DELETE FROM board WHERE board_num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			deleteCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생 - " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return deleteCount;
+	}
+
+	public int insertReplyArticle(BoardBean article) {
+		
+		int insertCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int board_re_ref = article.getBoard_re_ref();
+		int board_re_lev = article.getBoard_re_lev();
+		int board_re_seq = article.getBoard_re_seq();
+		
+		String sql = "UPDATE board SET board_re_seq=board_re_seq+1 "
+				+ "WHERE board_re_ref=? AND board_re_seq>? ";
+		
+		return insertCount;
+	}
 	
 }

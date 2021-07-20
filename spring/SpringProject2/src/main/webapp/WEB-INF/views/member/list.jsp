@@ -12,11 +12,11 @@
 <body>
 <c:choose>
 	<c:when test="${ empty sessionScope }">
-		<c:redirect url="login"></c:redirect>
+		<c:redirect url="/member/login"></c:redirect>
 	</c:when>
 	<c:otherwise>
 		<c:if test="${ sessionScope.id ne 'admin' }">
-			<c:redirect url="main"></c:redirect>
+			<c:redirect url="/member/main"></c:redirect>
 		</c:if> 
 	</c:otherwise>
 </c:choose>
@@ -26,16 +26,19 @@
 	<tr><td>${mb.id }</td><td>${mb.pass }</td><td>${mb.name }</td><td>${mb.date }</td></tr>
 	</c:forEach>
 </table>
-
 <br>
-<fmt:formatNumber value="50000" type="currency"/><br>
-<fmt:formatNumber value="0.15" type="percent"/><br>
-<fmt:formatNumber value="123456789" pattern="###,###,###"/><br>
+
+<img src='<c:url value="/resources/img/1.jpg" />'>
+
+
+<%-- <fmt:formatNumber value="50000" type="currency"/><br> --%>
+<%-- <fmt:formatNumber value="0.15" type="percent"/><br> --%>
+<%-- <fmt:formatNumber value="123456789" pattern="###,###,###"/><br> --%>
 <!-- 객체생성 액션태그 -->
-<jsp:useBean id="date" class="java.util.Date"/><br>
-<fmt:formatDate value="${date }" type="date"/><br>
-<fmt:formatDate value="${date }" type="time"/><br>
-<fmt:formatDate value="${date }" type="both"/><br>
+<%-- <jsp:useBean id="date" class="java.util.Date"/><br> --%>
+<%-- <fmt:formatDate value="${date }" type="date"/><br> --%>
+<%-- <fmt:formatDate value="${date }" type="time"/><br> --%>
+<%-- <fmt:formatDate value="${date }" type="both"/><br> --%>
 
 </body>
 </html>
