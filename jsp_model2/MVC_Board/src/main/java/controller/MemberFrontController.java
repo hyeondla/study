@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
 import action.MemberLoginProAction;
+import action.MemberLogoutAction;
 import vo.ActionForward;
 
 @WebServlet("*.me")
@@ -30,6 +31,24 @@ public class MemberFrontController extends HttpServlet {
 			forward.setRedirect(false);
 		} else if(command.equals("/MemberLoginPro.me")) {
 			action = new MemberLoginProAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/MemberLogout.me")) {
+			action = new MemberLogoutAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/MemberJoinForm.me")) {
+			forward = new ActionForward();
+			forward.setPath("./member/member_join.jsp");
+			forward.setRedirect(false);
+		} else if(command.equals("/MemberJoinPro.me")) {
+			action = new MemberJoinProAcion();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 public class JdbcUtil {
 	// 인스턴스 생성 없이 메서드 접근 -> static 
 	public static Connection getConnection() {
-		
 		Connection con = null;
 		
 		try {
