@@ -8,5 +8,21 @@
 		insert into board(num,name,pass,subject,content,readcount,date) 
 		values(#{num},#{name},#{pass},#{subject},#{content},#{readcount},#{date})
 	</insert>
-
+	
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		select max(num) from board
+	</select>
+	
+	<select id="getBoardList" resultType="com.itwillbs.domain.BoardBean">
+		select * from board order by num desc limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="getBoardCount" resultType="java.lang.Integer">
+		select count(*) from board
+	</select>
+	
+	<select id="getBoard" resultType="com.itwillbs.domain.BoardBean">
+		select * from board where num=#{num}
+	</select>
+	
 </mapper>

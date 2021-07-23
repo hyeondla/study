@@ -60,10 +60,6 @@ directory : C:\Program Files\Apache Software Foundation\Tomcat 8.0
 
 <br>
 
----
-
-<br>
-
 >  web.xml 한글처리
 
 ```xml
@@ -186,6 +182,40 @@ servlet-context.xml → java 폴더에 패키지 생성
 <context:component-scan base-package="com.itwillbs.controller" />
 <context:component-scan base-package="com.itwillbs.service" />
 <context:component-scan base-package="com.itwillbs.dao" />
+```
+
+<br>
+
+root-context.xml → webapp > WEB-INF > spring 폴더 안에 있음
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/jspdb3"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+
+	<!-- 마이바티스 객체생성 https://blog.mybatis.org/ 
+	                     https://mybatis.org/mybatis-3/ -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+</beans>
+
 ```
 
 <br>
@@ -454,3 +484,81 @@ webapp > WEB-INF > views > board 폴더
 ```
 
 <br>
+
+---
+
+<br>
+
+> 컨트롤러에서 파라미터 가져오기
+
+```java
+@RequestMapping(value = "/board/list", method = RequestMethod.POST)
+public String list(Model model, HttpServletRequest request) {	
+	String pageNum = request.getParameter("pageNum");
+	//...
+	return "/board/list";
+}
+```
+
+<br>
+
+> 파일 업로드 
+
+pom.xml
+
+```xml
+<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+<dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.2.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.4</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
+<dependency>
+    <groupId>javax.annotation</groupId>
+    <artifactId>javax.annotation-api</artifactId>
+    <version>1.3.1</version>
+</dependency>
+```
+
+<br>
+
+webapp > resources > upload 폴더 생성
+
+<br>
+
+servlet-context.xml
+
+```xml
+<!-- 파일 업로드 -->
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<beans:property name="maxUploadSize" value="10485760"></beans:property>
+</beans:bean>
+<!-- 업로드 폴더 위치 -->
+<beans:bean id="uploadPath" class="java.lang.String">
+    <!-- value에 본인이 upload 폴더 생성한 경로 입력 -->
+	<beans:constructor-arg value="D:\\workspace_sts3\\SpringProject2\\src\\main\\webapp\\resources\\upload"></beans:constructor-arg>
+</beans:bean>
+```
+
+<br>
+
+fwriteForm.jsp
+
+```jsp
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- ... -->
+<form action='<c:url value="/board/fwritePro"/>' method="post" enctype="multipart/form-data">
+```
+
+<br>
+
+controller

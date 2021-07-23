@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action='<c:url value="/member/insertPro" />' method="post">
+<form action='<c:url value="member/insertPro" />' method="post">
 아이디 : <input type="text" name="id"><br>
 비밀번호 : <input type="password" name="pass"><br>
 이름 : <input type="text" name="name"><br>
