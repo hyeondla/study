@@ -17,4 +17,14 @@ public interface BoardDAO {
 	
 	public BoardBean getBoard(int num);
 	
+	public void finsertBoard(BoardBean bb);
+	
+	public Integer fgetMaxNum();
+	
+	public List<BoardBean> fgetBoardList(PageBean pb);
+
+	public Integer fgetBoardCount();
+	
+	public BoardBean fgetBoard(int num);
+	
 }

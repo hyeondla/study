@@ -25,4 +25,25 @@
 		select * from board where num=#{num}
 	</select>
 	
+	<insert id="finsertBoard">
+		insert into fboard(num,name,pass,subject,content,readcount,date,file) 
+		values(#{num},#{name},#{pass},#{subject},#{content},#{readcount},#{date},#{file})
+	</insert>
+	
+	<select id="fgetMaxNum" resultType="java.lang.Integer">
+		select max(num) from fboard
+	</select>
+	
+	<select id="fgetBoardList" resultType="com.itwillbs.domain.BoardBean">
+		select * from fboard order by num desc limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="fgetBoardCount" resultType="java.lang.Integer">
+		select count(*) from fboard
+	</select>
+	
+	<select id="fgetBoard" resultType="com.itwillbs.domain.BoardBean">
+		select * from fboard where num=#{num}
+	</select>
+	
 </mapper>

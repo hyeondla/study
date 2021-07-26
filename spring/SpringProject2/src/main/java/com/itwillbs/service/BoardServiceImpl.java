@@ -52,4 +52,37 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBoard(num);
 	}
 
+	@Override
+	public void finsertBoard(BoardBean bb) {
+		
+		if(boardDAO.fgetMaxNum() == null) {
+			bb.setNum(1);
+		} else {
+			bb.setNum(boardDAO.fgetMaxNum()+1);
+		}
+		
+		bb.setReadcount(0);
+		bb.setDate(new Timestamp(System.currentTimeMillis()));
+		
+		boardDAO.finsertBoard(bb);
+	}
+
+	@Override
+	public List<BoardBean> fgetBoardList(PageBean pb) {
+		pb.setCurrentPage(Integer.parseInt(pb.getPageNum()));
+		pb.setStartRow((pb.getCurrentPage()-1)*pb.getPageSize()+1-1);
+		
+		return boardDAO.fgetBoardList(pb);
+	}
+
+	@Override
+	public Integer fgetBoardCount() {
+		return boardDAO.fgetBoardCount();
+	}
+	
+	@Override
+	public BoardBean fgetBoard(int num) {
+		return boardDAO.fgetBoard(num);
+	}
+	
 }

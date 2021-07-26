@@ -46,4 +46,28 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectOne(namespace + ".getBoard", num);
 	}
 
+	@Override
+	public void finsertBoard(BoardBean bb) {
+		sqlSession.insert(namespace + ".finsertBoard", bb);
+	}
+
+	@Override
+	public Integer fgetMaxNum() {
+		return sqlSession.selectOne(namespace+".fgetMaxNum");
+	}
+	
+	@Override
+	public List<BoardBean> fgetBoardList(PageBean pb) {
+		return sqlSession.selectList(namespace+".fgetBoardList", pb);
+	}
+
+	@Override
+	public Integer fgetBoardCount() {
+		return sqlSession.selectOne(namespace+".fgetBoardCount");
+	}
+	
+	@Override
+	public BoardBean fgetBoard(int num) {
+		return sqlSession.selectOne(namespace+".fgetBoard", num);
+	}
 }

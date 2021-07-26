@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>board/flist.jsp</h1>
+<h1>board/list.jsp</h1>
 <table border="1">
 <tr>
 <td>글번호</td><td>글제목</td><td>글쓴이</td>
@@ -24,13 +24,13 @@
 </c:forEach>
 </table>
 <c:if test="${pb.startPage > pb.pageBlock }">
-<a href="<c:url value='/board/flist?pageNum=${pb.startPage - pb.pageBlock }'/>">이전</a>
+<a href="<c:url value='/board/list?pageNum=${pb.startPage - pb.pageBlock }'/>">이전</a>
 </c:if>
 <c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }" step="1">
-	<a href="<c:url value='/board/flist?pageNum=${i }'/>">${i }</a>
+	<a href="<c:url value='/board/list?pageNum=${i }'/>">${i }</a>
 </c:forEach>
 <c:if test="${pb.endPage < pb.pageCount }">
-<a href="<c:url value='/board/flist?pageNum=${pb.startPage + pb.pageBlock }'/>">다음</a>
+<a href="<c:url value='/board/list?pageNum=${pb.startPage + pb.pageBlock }'/>">다음</a>
 </c:if>
 </body>
 </html>

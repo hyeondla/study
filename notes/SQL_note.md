@@ -548,13 +548,91 @@ SELECT절에서 출력할 컬럼을 지정할 때 **테이블명.컬럼명** 명
 
 <img src="./img/sql060.PNG"><br><br>
 
->  SELF - JOIN
+> INNER JOIN
 
-하나의 같은 테이블을 연결
+조건에 맞는 결과만 출력
 
-Column Alias 반드시 명시
+JOIN조건으로 연결 될 값이 있는 경우에만 결과로 출력
 
-<img src="./img/sql061.PNG"><br>
+- 카테시안 곱 : 두 테이블의 모든 행을 서로 곱한 결과 출력
+
+  <!-- 화면 캡처 2021-07-26 104749.png -->
+
+- CROSS JOIN : 카테시안 곱의 표준 SQL 문법
+
+  <!-- 화면 캡처 2021-07-26 105307.png -->
+
+- 카테시안 곱 + where절 : 일반적인 JOIN 구문
+
+  <!-- 화면 캡처 2021-07-26 105648.png -->
+
+- ON절 사용 
+
+  <!-- 화면 캡처 2021-07-26 105801.png -->
+
+- SELF - JOIN : 하나의 같은 테이블을 연결, Column Alias 반드시 명시
+
+  <img src="./img/sql061.PNG"><br>
+
+- 자연 조인 
+
+  : 조인 할 테이블들이 동일한 컬럼명, 데이터 타입을 가지고 있는 경우
+
+  이를 조인의 조건으로 자동 설정해서 연결한 결과를 출력
+
+  <!-- 화면 캡처 2021-07-26 122417.png -->
+
+<br>
+
+> OUTER JOIN
+
+JOIN조건에 의해 연결될 값이 없는 행들을 출력
+
+NULL값과 연결되어 출력됨
+
+- ON절의 오른쪽 조건에 대해서 생략된 행 출력 : RIGHT OUTER JOIN
+
+```sql
+SELECT employee_id, last_name, d.department_id, department_name
+FROM employees e RIGHT OUTER JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+<!-- 화면 캡처 2021-07-26 121121.png -->
+
+- ON절의 왼쪽 조건에 대해서 생략된 행 출력 : LEFT OUTER JOIN
+
+```
+SELECT employee_id, last_name, d.department_id, department_name
+FROM employees e LEFT OUTER JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+<!-- 화면 캡처 2021-07-26 121413.png -->
+
+- 양쪽 테이블에서 출력되지 않았던 값 출력 : FULL OUTER JOIN
+
+```
+SELECT employee_id, last_name, d.department_id, department_name
+FROM employees e FULL OUTER JOIN departments d
+ON e.department_id = d.department_id;
+```
+
+- WHERE절을 사용한 JOIN의 경우 (+)를 사용해서 OUTER JOIN 사용 가능
+
+```sql
+SELECT employee_id, last_name, d.department_id, department_name
+FROM employees e, departments d
+WHERE e.department_id(+) = d.department_id;
+```
+
+<br>
+
+> Non-equi JOIN
+
+똑같은 값을 연결하는 JOIN의 조건을 사용하지 않는 JOIN
+
+<!-- 화면 캡처 2021-07-26 122300.png -->
 
 <br>
 
@@ -575,6 +653,8 @@ IN 연산자는 여러개의 값을 목록으로 받을 수 있기 때문에 리
 서브쿼리를 활용하여 뷰의 역할을 대신함
 
 <img src="./img/sql065.PNG"><br><br>
+
+<br>
 
 ---
 

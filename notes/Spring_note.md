@@ -561,4 +561,77 @@ fwriteForm.jsp
 
 <br>
 
-controller
+---
+
+<br>
+
+> AJAX
+
+pom.xml
+
+```xml
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+	<version>2.5.4</version>
+</dependency>
+```
+
+resources > script > jquery-3.6.0js 추가
+
+```jsp
+<script src='<c:url value="/resources/script/jquery-3.6.0.js" />'></script>
+```
+
+컨트롤러
+
+```java
+@RestController
+public class AjaxController {
+	
+	@Inject
+	private MemberService memberService;
+	
+	@Inject
+	private BoardService boardService;
+	
+	@RequestMapping(value = "/member/idcheck", method = RequestMethod.GET)
+	public ResponseEntity<String> idcheck(HttpServletRequest request) {
+		String result = "";
+		ResponseEntity<String> entity = null;
+		try {
+			String id = request.getParameter("id");
+			MemberBean mb = memberService.getMember(id);
+			if(mb != null) { // 아이디 중복
+				result = "iddup";
+			} else { // 사용가능
+				result = "idok";
+			}
+			entity = new ResponseEntity<String>(result,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@RequestMapping(value = "/board/ajaxlist", method = RequestMethod.GET)
+	public ResponseEntity<List<BoardBean>> ajaxlist() {
+		ResponseEntity<List<BoardBean>> entity = null;
+		try {
+			PageBean pb = new PageBean();
+			pb.setPageNum("1");
+			pb.setPageSize(5);
+			List<BoardBean> bbList = boardService.getBoardList(pb);
+			entity = new ResponseEntity<List<BoardBean>>(bbList,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<List<BoardBean>>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+    
+}
+```
+
