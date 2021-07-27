@@ -1,6 +1,5 @@
 package com.itwillbs.dao;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -69,5 +68,20 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public BoardBean fgetBoard(int num) {
 		return sqlSession.selectOne(namespace+".fgetBoard", num);
+	}
+
+	@Override
+	public BoardBean numCheck(BoardBean bb) {
+		return sqlSession.selectOne(namespace + ".numCheck", bb);
+	}
+
+	@Override
+	public void updaeteBoard(BoardBean bb) {
+		sqlSession.update(namespace + ".updateBoard", bb);
+	}
+
+	@Override
+	public void deleteBoard(BoardBean bb) {
+		sqlSession.delete(namespace + ".deleteBoard", bb);
 	}
 }

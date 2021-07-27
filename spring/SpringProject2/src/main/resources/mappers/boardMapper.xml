@@ -25,6 +25,21 @@
 		select * from board where num=#{num}
 	</select>
 	
+	<select id="numCheck" resultType="com.itwillbs.domain.BoardBean">
+		select * from board where num=#{num} and pass=#{pass}
+	</select>
+	
+	<update id="updateBoard">
+		update board set subject=#{subject}, content=#{content} where num=#{num}
+	</update>
+	
+	<delete id="deleteBoard">
+		delete from board where num=#{num}
+	</delete>
+
+
+
+
 	<insert id="finsertBoard">
 		insert into fboard(num,name,pass,subject,content,readcount,date,file) 
 		values(#{num},#{name},#{pass},#{subject},#{content},#{readcount},#{date},#{file})
@@ -45,5 +60,6 @@
 	<select id="fgetBoard" resultType="com.itwillbs.domain.BoardBean">
 		select * from fboard where num=#{num}
 	</select>
+	
 	
 </mapper>

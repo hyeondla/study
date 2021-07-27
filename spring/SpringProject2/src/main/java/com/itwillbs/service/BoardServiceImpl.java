@@ -84,5 +84,20 @@ public class BoardServiceImpl implements BoardService {
 	public BoardBean fgetBoard(int num) {
 		return boardDAO.fgetBoard(num);
 	}
+
+	@Override
+	public BoardBean numCheck(BoardBean bb) {
+		return boardDAO.numCheck(bb);
+	}
+
+	@Override
+	public void updaeteBoard(BoardBean bb) {
+		boardDAO.updaeteBoard(bb);
+	}
+
+	@Override
+	public void deleteBoard(BoardBean bb) {
+		boardDAO.deleteBoard(bb);
+	}
 	
 }

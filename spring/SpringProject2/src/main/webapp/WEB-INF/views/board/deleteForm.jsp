@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +9,8 @@
 </head>
 <body>
 <h1>board/deleteForm.jsp</h1>
-<%
-// deleteForm.jsp?num=
-int num=Integer.parseInt(request.getParameter("num"));
-%>
-<form action="deletePro.jsp" method="get">
-<input type="hidden" name="num" value="<%=num%>">
+<form action="<c:url value='/board/deletePro'/>" method="post">
+<input type="hidden" name="num" value="${num }">
 <table border="1">
 <tr><td>비밀번호</td>
     <td><input type="password" name="pass"></td></tr>

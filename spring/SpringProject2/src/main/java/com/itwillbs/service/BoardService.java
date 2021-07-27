@@ -23,4 +23,10 @@ public interface BoardService {
 
 	public BoardBean fgetBoard(int num);
 
+	public BoardBean numCheck(BoardBean bb);
+
+	public void updaeteBoard(BoardBean bb);
+
+	public void deleteBoard(BoardBean bb);
+
 }

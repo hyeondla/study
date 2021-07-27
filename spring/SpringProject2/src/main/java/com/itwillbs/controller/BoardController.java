@@ -73,7 +73,51 @@ public class BoardController {
 		return "/board/content";
 	}
 	
-	//====================================================================================
+	@RequestMapping(value = "/board/update", method = RequestMethod.GET)
+	public String update(Model model, HttpServletRequest request) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		BoardBean bb = boardService.getBoard(num);
+		model.addAttribute("bb", bb);
+		return "/board/updateForm";
+	}
+	
+	@RequestMapping(value = "/board/updatePro", method = RequestMethod.POST)
+	public String updatePro(BoardBean bb, Model model) {
+		
+		BoardBean bb2 = boardService.numCheck(bb);
+		if(bb2!=null) { // num pass 일치
+			boardService.updaeteBoard(bb); // 수정
+			return "redirect:/board/list";
+		} else { // 불일치
+			model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
+			return "/board/msg";
+		}
+		
+	}
+	
+	@RequestMapping(value = "/board/delete", method = RequestMethod.GET)
+	public String delete(Model model, HttpServletRequest request) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		model.addAttribute("num", num);
+		
+		return "/board/deleteForm";
+	}
+	
+	@RequestMapping(value = "/board/deletePro", method = RequestMethod.POST)
+	public String deletePro(BoardBean bb, Model model) {
+		
+		BoardBean bb2 = boardService.numCheck(bb);
+		if(bb2!=null) { // num pass 일치
+			boardService.deleteBoard(bb); // 삭제
+			return "redirect:/board/list";
+		} else { // 불일치
+			model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
+			return "/board/msg";
+		}
+		
+	}
+	
+	//============================= 파일 ==========================================
 	
 	@RequestMapping(value = "/board/fwrite", method = RequestMethod.GET)
 	public String fwrite() {
@@ -82,12 +126,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/board/fwritePro", method = RequestMethod.POST)
-	public String fwritePro(HttpServletRequest request, MultipartFile file) throws IOException {
+	public String fwritePro(HttpServletRequest request, MultipartFile file) throws Exception {
 		
 		UUID uid = UUID.randomUUID();
 		// 랜덤문자열_파일이름
 		String saveName = uid.toString() + "_" + file.getOriginalFilename();
-		System.out.println(saveName);
+//		System.out.println(saveName);
 		
 		// upload 폴더로 복사
 		File target = new File(uploadPath, saveName);

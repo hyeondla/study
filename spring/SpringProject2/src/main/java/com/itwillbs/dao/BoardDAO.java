@@ -27,4 +27,10 @@ public interface BoardDAO {
 	
 	public BoardBean fgetBoard(int num);
 	
+	public BoardBean numCheck(BoardBean bb);
+
+	public void updaeteBoard(BoardBean bb);
+	
+	public void deleteBoard(BoardBean bb);
+	
 }
