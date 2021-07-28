@@ -25,4 +25,14 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne(namespace + ".userCheck", mb);
 	}
 
+	@Override
+	public MemberBean getMember(String id) {
+		return sqlSession.selectOne(namespace + ".getMember", id);
+	}
+
+	@Override
+	public void updateMember(MemberBean mb) {
+		sqlSession.update(namespace + ".updateMember", mb);
+	}
+
 }

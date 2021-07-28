@@ -26,4 +26,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.userCheck(mb);
 	}
 
+	@Override
+	public MemberBean getMember(String id) {
+		return memberDAO.getMember(id);
+	}
+
+	@Override
+	public void updateMember(MemberBean mb) {
+		memberDAO.updateMember(mb);
+	}
+
 }

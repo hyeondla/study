@@ -51,5 +51,30 @@ public class MemberController {
 		return "/main/main";
 	}
 	
+	@RequestMapping(value = "/member/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate(); // 세션값 초기화
+		return "redirect:/main/main";
+	}
+	
+	@RequestMapping(value = "/member/update", method = RequestMethod.GET)
+	public String update(HttpSession session, Model model) {
+		String id = (String)session.getAttribute("id");
+		MemberBean mb = memberService.getMember(id);
+		model.addAttribute("mb", mb);
+		return "/member/update";
+	}
+	
+	@RequestMapping(value = "/member/updatePro", method = RequestMethod.POST)
+	public String updatePro(MemberBean mb, Model model) {
+		MemberBean mb2 = memberService.userCheck(mb);
+		if(mb2!=null) {
+			memberService.updateMember(mb);
+			return "redirect:/main/main";
+		} else {
+			model.addAttribute("msg", "입력하신 정보가 틀립니다");
+			return "/member/msg";
+		}
+	}
 	
 }

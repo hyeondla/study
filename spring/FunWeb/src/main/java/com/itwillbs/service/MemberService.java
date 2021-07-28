@@ -7,5 +7,9 @@ public interface MemberService {
 	public void insertMember(MemberBean mb);
 
 	public MemberBean userCheck(MemberBean mb);
+
+	public MemberBean getMember(String id);
+
+	public void updateMember(MemberBean mb);
 	
 }

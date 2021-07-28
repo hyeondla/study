@@ -35,10 +35,16 @@ $(document).ready(function() {
 		}
 	});
 	
+	// 아이디 중복 체크
 	$('#btn').click(function() {
-		$.ajax('idCheck.jsp',{
+		$.ajax('<c:url value="/member/idcheck"/>',{
 			data:{id:$('#id').val()},
 			success:function(rdata){
+				if(rdata=='iddup'){
+					rdata="아이디 중복";
+				} else {
+					rdata="아이디 사용가능";
+				}
 				$('#dup').html(rdata);
 			}
 		});

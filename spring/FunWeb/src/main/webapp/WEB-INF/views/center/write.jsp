@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="../css/default.css" rel="stylesheet" type="text/css">
-<link href="../css/subpage.css" rel="stylesheet" type="text/css">
+<link href="<c:url value='/resources/css/default.css'/>" rel="stylesheet" type="text/css">
+<link href="<c:url value='/resources/css/subpage.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="wrap">
@@ -19,25 +20,23 @@
 	<!-- 왼쪽 메뉴 -->
 	<nav id="sub_menu">
 			<ul>
-				<li><a href="../center/notice.jsp">Notice</a></li>
+				<li><a href='<c:url value="/board/list"/>'>Notice</a></li>
 				<li><a href="#">Public News</a></li>
-				<li><a href="../fcenter/fnotice.jsp">Driver Download</a></li>
+				<li><a href='<c:url value="/board/flist"/>'>Driver Download</a></li>
 				<li><a href="#">Service Policy</a></li>
-				<li><a href="../center/mail.jsp">Q&amp;A</a></li>
+				<li><a href='<c:url value="/center/mail"/>'>Q&amp;A</a></li>
 			</ul>
 	</nav>
 	<!-- 본문 내용 -->
-	<%
-	String id = (String)session.getAttribute("id");
-	if(id == null) {
-		response.sendRedirect("../member/login.jsp");
-	}
-	%>
+	<c:if test="${(empty sessionScope.id) }">
+		<c:redirect url="/member/login" />
+	</c:if>
+	
 	<article>
 		<h1>Notice Write</h1>
-		<form action="writePro.jsp" method="post">
+		<form action='<c:url value="/board/writePro"/>' method="post">
 		<table id="notice">
-			<tr><td class="twrite">글쓴이</td><td><input type="text" name="name" value="<%=id %>" readonly></td></tr>
+			<tr><td class="twrite">글쓴이</td><td><input type="text" name="name" value="${sessionScope.id }" readonly></td></tr>
 			<tr><td class="twrite">비밀번호</td><td><input type="password" name="pass"></td></tr>
 			<tr><td class="twrite">제목</td><td><input type="text" name="subject"></td></tr>
 			<tr><td class="twrite">내용</td><td><textarea rows="10" cols="20" name="content"></textarea></td></tr>
