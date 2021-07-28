@@ -2439,3 +2439,53 @@ public xxx xxx() throws LoginFailedException {
 }
 ```
 
+<br>
+
+---
+
+<br>
+
+> I/O 입출력
+
+java.io 패키지 : 각종 입출력 기능을 다루는 클래스 모음
+
+스트림 Stream : 데이터를 2진수 형태로 직렬 전송, 입력스트림 / 출력스트림
+
+노드 Node : 데이터를 처리하는 단말기 끝단, 키보드  / 모니터 / 파일 / 데이터베이스 / 네트워크 등
+
+표준 입력, 표준 출력 : 컴퓨터의 표준 장치를 사용하여 입출력 수행
+
+표준 입력 : 키보드를 사용한 입력 System.in
+
+표준 출력 : 모니터를 사용한 출력 System.out
+
+<br>
+
+InputStream 객체 사용 → 1byte 단위로 데이터 처리
+
+입력되는 데이터는 스트림 형태(2진수)로 처리됨
+
+InputStream 객체의 read() 메서드를 통해 1byte만큼 가져옴
+
+```java
+InputStream is = null;
+
+is = System.in; // 키보드로 입력하는 데이터가 저장됨
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
