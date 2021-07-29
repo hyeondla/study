@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <!-- padding : 자신의 내부 컨텐츠 간격 설정 -->
+    <!-- margin : 자신과 다른 위젯 사이의 간격 설정 -->
+
+    <!-- 텍스트 출력 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이름을 입력하세요"
+        android:background="#CBEAA7"
+        android:padding="10dp"/>
+
+    <!-- 텍스트 입력 -->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="이름"
+        android:layout_margin="30dp"/>
+
+    <!-- 버튼 -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:backgroundTint="#4CAF50" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000" />
+
+    <!-- visibility : 위젯 표시 여부 결정 -->
+    <!-- visible : 위젯 표시 (기본값) -->
+    <!-- invisible : 보이지 않음, 위치 유지 -->
+    <!-- gone : 보이지 않음, 위치도 사라짐-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="버튼1" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="버튼2"
+        android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="버튼3"
+        android:id="@+id/btn3"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="버튼4"
+        android:visibility="gone"/>
+
+    <!-- enabled : 동작 여부 -->
+    <!-- clickable : 클릭 가능 여부 -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="버튼5"
+        android:enabled="false"
+        android:id="@+id/btn5"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="버튼6"
+        android:clickable="false"
+        android:id="@+id/btn6"/>
+
+
+</LinearLayout>

@@ -1,0 +1,2 @@
+rootProject.name = "And0729_Basic_Attribute"
+include ':app'
