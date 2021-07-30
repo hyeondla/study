@@ -1,5 +1,6 @@
 package com.itwillbs.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,6 +43,41 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Integer getBoardCountSearch(PageBean pb) {
 		return boardDAO.getBoardCountSearch(pb);
+	}
+
+	@Override
+	public void insertBoard(BoardBean bb) {
+		
+		if(boardDAO.getMaxNum()==null) {
+			bb.setNum(1);
+		} else {
+			bb.setNum(boardDAO.getMaxNum()+1);
+		}
+		
+		bb.setReadcount(0);
+		bb.setDate(new Timestamp(System.currentTimeMillis()));
+		
+		boardDAO.insertBoard(bb);
+	}
+
+	@Override
+	public BoardBean getBoard(int num) {
+		return boardDAO.getBoard(num);
+	}
+
+	@Override
+	public void updateBoard(BoardBean bb) {
+		boardDAO.updateBoard(bb);
+	}
+
+	@Override
+	public void updateReadCount(int num) {
+		boardDAO.updateReadCount(num);
+	}
+
+	@Override
+	public void deleteBoard(BoardBean bb) {
+		boardDAO.deleteBoard(bb);
 	}
 
 }

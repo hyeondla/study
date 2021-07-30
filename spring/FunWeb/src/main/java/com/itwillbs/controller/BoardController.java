@@ -74,10 +74,44 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/board/writePro", method = RequestMethod.POST)
-	public String writePro() {
+	public String writePro(BoardBean bb) {
 		
 		boardService.insertBoard(bb);
 		
+		return "redirect:/board/list";
+	}
+	
+	@RequestMapping(value = "/board/content", method = RequestMethod.GET)
+	public String content(HttpServletRequest request, Model model) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		boardService.updateReadCount(num); // 조회수 증가
+		BoardBean bb = boardService.getBoard(num);
+		model.addAttribute("bb", bb);
+		return "/center/content";
+	}
+	
+	@RequestMapping(value = "/board/update", method = RequestMethod.GET)
+	public String update(HttpServletRequest request, Model model) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		BoardBean bb = boardService.getBoard(num);
+		model.addAttribute("bb", bb);
+		return "/center/update";
+	}
+	@RequestMapping(value = "/board/updatePro", method = RequestMethod.POST)
+	public String updatePro(BoardBean bb) {
+		boardService.updateBoard(bb);
+		return "redirect:/board/list";
+	}
+	
+	@RequestMapping(value = "/board/delete", method = RequestMethod.GET)
+	public String delete(HttpServletRequest request, Model model) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		model.addAttribute("num", num);
+		return "/center/delete";
+	}
+	@RequestMapping(value = "/board/deletePro", method = RequestMethod.POST)
+	public String deletePro(BoardBean bb) {
+		boardService.deleteBoard(bb);
 		return "redirect:/board/list";
 	}
 	

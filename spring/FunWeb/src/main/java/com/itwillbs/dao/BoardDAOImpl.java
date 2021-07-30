@@ -1,5 +1,6 @@
 package com.itwillbs.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,6 +37,36 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public Integer getBoardCountSearch(PageBean pb) {
 		return sqlSession.selectOne(namespace + ".getBoardCountSearch", pb);
+	}
+
+	@Override
+	public void insertBoard(BoardBean bb) {
+		sqlSession.insert(namespace + ".insertBoard", bb);
+	}
+
+	@Override
+	public Integer getMaxNum() {
+		return sqlSession.selectOne(namespace + ".getMaxNum");
+	}
+
+	@Override
+	public BoardBean getBoard(int num) {
+		return sqlSession.selectOne(namespace + ".getBoard", num);
+	}
+
+	@Override
+	public void updateBoard(BoardBean bb) {
+		sqlSession.update(namespace + ".updateBoard", bb);
+	}
+
+	@Override
+	public void updateReadCount(int num) {
+		sqlSession.update(namespace + ".updateReadCount", num);
+	}
+
+	@Override
+	public void deleteBoard(BoardBean bb) {
+		sqlSession.delete(namespace + ".deleteBoard", bb);
 	}
 
 }

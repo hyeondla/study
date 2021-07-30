@@ -21,6 +21,15 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 파일 업로드 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="52428800"></beans:property>
+	</beans:bean>
+	<!-- upload 폴더 위치 설정 -->
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="D:\\workspace_sts3\\FunWeb\\src\\main\\webapp\\resources\\upload"></beans:constructor-arg>
+	</beans:bean>
+	
 	<context:component-scan base-package="com.itwillbs.FunWeb" />
 	<context:component-scan base-package="com.itwillbs.controller" />
 	<context:component-scan base-package="com.itwillbs.service" />

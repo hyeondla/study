@@ -15,4 +15,16 @@ public interface BoardDAO {
 
 	public Integer getBoardCountSearch(PageBean pb);
 	
+	public void insertBoard(BoardBean bb);
+	
+	public Integer getMaxNum();
+	
+	public BoardBean getBoard(int num);
+	
+	public void updateBoard(BoardBean bb);
+	
+	public void updateReadCount(int num);
+	
+	public void deleteBoard(BoardBean bb);
+	
 }

@@ -14,13 +14,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.brown').click(function() {
-		$.getJSON('json.jsp', function(rdata) {
+		$.getJSON('<c:url value="/board/ajaxlist" />', function(rdata) {
 			$.each(rdata, function(index,item) {
 				// 문자열 => Date 날짜객체
 				nowdate = new Date(item.date);
 				// 날짜 년, 월, 일 => 문자열
 				date_str = nowdate.getFullYear() + "." + (nowdate.getMonth()+1) + "." + nowdate.getDate();
-				$('table').append('<tr><td class="contxt"><a href="../center/content.jsp?num='+item.num+'">'+item.subject+'</a></<td><td>'+date_str+'</td></tr>');
+				$('table').append('<tr><td class="contxt"><a href="${pageContext.request.contextPath}/board/content?num='+item.num+'">'+item.subject+'</a></<td><td>'+date_str+'</td></tr>');
 			});
 		});
 		$(this).unbind();
