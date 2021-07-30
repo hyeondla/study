@@ -11,95 +11,80 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText edit1, edit2;
+    TextView textResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText edit1 = findViewById(R.id.edit1);
-        EditText edit2 = findViewById(R.id.edit2);
+        edit1 = findViewById(R.id.edit1);
+        edit2 = findViewById(R.id.edit2);
+        textResult = findViewById(R.id.textResult);
 
         Button btnAdd = findViewById(R.id.btnAdd);
         Button btnSub = findViewById(R.id.btnSub);
         Button btnMul = findViewById(R.id.btnMul);
         Button btnDiv = findViewById(R.id.btnDiv);
 
-        TextView textResult = findViewById(R.id.textResult);
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer num1 = Integer.parseInt(edit1.getText().toString());
-                Integer num2 = Integer.parseInt(edit2.getText().toString());
-
-                Integer result = num1 + num2;
-
-                textResult.setText("계산 결과 : " + result);
-                // 정수 타입 입력 시 오류 -> 아이디 값으로 인식 -> 예외 발생생
-
-               edit1.setText("");
-                edit2.setText("");
-            }
-        });
-        btnSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer num1 = Integer.parseInt(edit1.getText().toString());
-                Integer num2 = Integer.parseInt(edit2.getText().toString());
-
-                Integer result = num1 - num2;
-
-                textResult.setText("계산 결과 : " + result);
-
-                edit1.setText("");
-                edit2.setText("");
-            }
-        });
-        btnMul.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer num1 = Integer.parseInt(edit1.getText().toString());
-                Integer num2 = Integer.parseInt(edit2.getText().toString());
-
-                Integer result = num1 * num2;
-
-                textResult.setText("계산 결과 : " + result);
-
-                edit1.setText("");
-                edit2.setText("");
-            }
-        });
-        btnDiv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer num1 = Integer.parseInt(edit1.getText().toString());
-                Integer num2 = Integer.parseInt(edit2.getText().toString());
-
-                // if문으로 예외 처리
-//                if(num2 == 0) {
-//                    Toast.makeText(MainActivity.this, "0으로 나눌 수 없습니다", Toast.LENGTH_SHORT).show();
-//                    edit2.setText("");
-//                    edit2.requestFocus();
-//                    return; // 메서드 종료
-//                }
-//                Integer result = num1 / num2;
-//                textResult.setText("계산 결과 : " + result);
-
-                // try ~ catch문으로 예외처리
-                try {
-                    Integer result = num1 / num2;
-                    textResult.setText("계산 결과 : " + result);
-                } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "0으로 나눌 수 없습니다", Toast.LENGTH_SHORT).show();
-                    textResult.setText("계산 결과 : 오류 발생");
-                    edit2.requestFocus();
+                switch (v.getId()){
+                    case R.id.btnAdd : // 더하기 버튼일 경우
+                        calc('+');
+                        break;
+                    case R.id.btnSub : // 더하기 버튼일 경우
+                        calc('-');
+                        break;
+                    case R.id.btnMul : // 더하기 버튼일 경우
+                        calc('*');
+                        break;
+                    case R.id.btnDiv : // 더하기 버튼일 경우
+                        calc('/');
+                        break;
                 }
-
-                edit1.setText("");
-                edit2.setText("");
             }
-        });
+        };
         
+        btnAdd.setOnClickListener(onClickListener);
+        btnSub.setOnClickListener(onClickListener);
+        btnMul.setOnClickListener(onClickListener);
+        btnDiv.setOnClickListener(onClickListener);
 
     }
+    private void calc(char op) {
+        Integer num1 = Integer.parseInt(edit1.getText().toString());
+        Integer num2 = Integer.parseInt(edit2.getText().toString());
+
+        Integer result = 0;
+        
+        if(op == '+') {
+            result = num1 + num2;
+        } else if(op == '-') {
+            result = num1 - num2;
+        } else if(op == '*') {
+            result = num1 * num2;
+        } else if(op == '/') {
+            if(num2 == 0) {
+                Toast.makeText(this, "0으로 나눌 수 없음", Toast.LENGTH_SHORT).show();
+                edit2.setText("");
+                edit2.requestFocus();
+                textResult.setText("계산 결과 : 입력 오류");
+                return;
+            }
+            result = num1 / num2;
+        }
+
+
+        textResult.setText("계산 결과 : " + result);
+
+
+
+
+    }
+
+
 }
