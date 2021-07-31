@@ -2453,7 +2453,7 @@ java.io 패키지 : 각종 입출력 기능을 다루는 클래스 모음
 
 노드 Node : 데이터를 처리하는 단말기 끝단, 키보드  / 모니터 / 파일 / 데이터베이스 / 네트워크 등
 
-표준 입력, 표준 출력 : 컴퓨터의 표준 장치를 사용하여 입출력 수행
+표준 입출력 : 컴퓨터의 표준 장치를 사용하여 입출력 수행
 
 표준 입력 : 키보드를 사용한 입력 System.in
 
@@ -2461,31 +2461,120 @@ java.io 패키지 : 각종 입출력 기능을 다루는 클래스 모음
 
 <br>
 
-InputStream 객체 사용 → 1byte 단위로 데이터 처리
+> InputStream 
+
+1byte 단위로 데이터 처리
 
 입력되는 데이터는 스트림 형태(2진수)로 처리됨
 
-InputStream 객체의 read() 메서드를 통해 1byte만큼 가져옴
+InputStream 객체의 read() 메서드 
+
+: 1byte만큼 가져옴, 영문/숫자/특수문자 입력 가능, 한글/한자/유니코드 처리 불가
+
+  리턴타입 int → 문자 데이터는 형변환 필요
 
 ```java
 InputStream is = null;
-
-is = System.in; // 키보드로 입력하는 데이터가 저장됨
+try {
+	is = System.in; // 키보드로 입력하는 데이터가 저장됨
+    int read = is.read(); // 입력데이터 1byte 읽어와서 저장
+    while(read != -1) { // 입력데이터가 없을 경우 -1 리턴됨
+        System.out.println(read + " → " + (char)read);
+        read = is.read(); // 다음 1byte 읽어오기
+    }
+} catch(IOException e) {
+    e.printStackTrace();
+} finally { 
+    try {
+        is.close(); // 자원 반환
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 ```
 
+byte[] 타입 → 여러 byte를 묶음으로 처리
 
+read() 메서드 → 배열 크기만큼 데이터 읽기 가능, 그보다 큰 데이터/단위 처리 불가
 
+```java
+try (InputStream is = System.in) {
+    byte[] b = new byte[10]; // 10byte 단위 입력데이터 저장 공간 생성
+    int read = is.read(b); // 파라미터로 배열 전달
+	System.out.println(read); // 입력데이터의 크기(byte)가 리턴
+    
+    for(byte data : b) {
+        System.out.println(data + " → " (char)data);
+    }
+	// String 객체 생성 시 byte[] 타입 데이터 전달 → 배열 내의 데이터를 문자열로 변환
+    String str = new String(b);
+    System.out.println(str);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
 
+<br>
 
+> InputStreamReader
 
+InputStream 객체를 모아서 2byte 단위로 처리 → 한글/한자 처리 가능
 
+char 단위에 한정되므로 더 많은 데이터나 더 큰 단위는 처리 불가 → 1글자 입력 가능
 
+리턴타입 int → 문자 데이터는 형변환 필요
 
+```java
+InputStream is = System.in;
+InputStreamReader reader = new InputStreamReader(is);
+InputStreamReader reader = new InputStreamReader(System.in);
+// try ~ resources : 자원 반환
+try (InputStreamReader reader = new InputStreamReader(System.in)) {
+    int data = reader.read();
+    System.out.println(data + " → " + (char)data);
+} catch (IOException e) {
+	e.printStackTrace();
+}
+```
 
+<br>
 
+> BufferReader
 
+보조 스트림 계열 객체
 
+readLine() 메서드 사용 → String 단위(라인)로 데이터 처리 가능
 
+영문 또는 숫자, 한글, 한자 등 모든 문자 처리 가능
 
+형변환 불필요
 
+**스트림 체이닝**(Stream Chaining) 형식으로 객체를 생성하여 사용
 
+InputStream → InputStreamReader → BufferedReader 순으로 객체를 생성하여 차례대로 연결하는 기법  
+
+주 스트림인 InputStream 등을 꾸며주는 BufferedReader 객체를 통해 
+
+각 스트림을 연결하는 것을 **데코레이션 패턴**(Decoration Pattern)이라고 함
+
+```java
+InputStream is = System.in; // 입력스트림 객체 생성
+InputStreamReader reader = new InputStreamReader(is); // 연결
+BufferedReader buffer = new BufferedReader(reader); // 연결
+BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
+
+try (BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in))) {
+	String str = buffer.readLine();   
+    // 반복문 사용시 여러 줄 입력 처리 가능
+	// 종료 조건을 반복문에 설정해야함
+    while(str != null) { // 반복조건 → Ctrl+Z(null 리턴) 누르면 종료 
+        System.out.println(str);
+        str = buffer.readLine(); // 다음 줄 읽어오기
+    }
+} catch (IOException e) {
+	e.printStackTrace();
+}
+```
+
+<br>

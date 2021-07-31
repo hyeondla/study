@@ -1285,3 +1285,108 @@ body{
 
 <br>
 
+> 회원가입 입력값 검증
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+   // submit 버튼 동작을 위한 전역변수 선언
+   var checkIdResult = false; 
+   var checkPasswordResult = false; 
+   var checkPasswordConfirmResult = false;
+    
+   function checkId(id) { // 아이디 입력값 검증
+      // 1) RegExp 객체 생성자 사용 → '', // 기호 사이에 패턴 작성
+      var regex = new RegExp(/^[A-Za-z0-9]{4,12}$/); // 4~12자리 영문자+숫자
+      // 2) 리터럴 직접 지정 → // 기호 사이에 패턴 작성
+//      var regex = /^[A-Za-z0-9]{4,12}$/;
+      
+      // 판별여부를 표시할 span태그 id값으로 해당 요소 가져오기
+      var element = document.getElementById('checkIdResult');
+      
+      // 입력받은 아이디 값에 대한 정규표현식 패턴 검사
+      // 생성된 RegExp 객체의 exec() 메서드 호출 → 아이디값을 파라미터로 전달
+      if(regex.exec(id)) {
+         element.innerHTML = '사용 가능';
+         checkIdResult = true; 
+      } else {
+         element.innerHTML = '사용 불가능';
+         checkIdResult = false; 
+      }  
+   }
+   
+   function checkPassword(password) { // 패스워드 입력값 검증
+      var lengthRegex = /^[A-Za-z0-9!@#$%]{8,16}$/; // 8~16자리 영문자+숫자+특수문자(!@#$%)
+      var engUpperCaseRegex = /[A-Z]/;
+      var engLowerCaseRegex = /[a-z]/;
+      var digitRegex = /[0-9]/;
+      var specRegex = /[!@#$%]/;
+      
+      var element = document.getElementById('checkPasswordResult');
+      
+      if(lengthRegex.exec(password)) {
+         var safetyCount = 0;
+         
+         if(engUpperCaseRegex.exec(password)) safetyCount++;
+         if(engLowerCaseRegex.exec(password)) safetyCount++;
+         if(digitRegex.exec(password)) safetyCount++;
+         if(specRegex.exec(password)) safetyCount++;
+         
+         switch (safetyCount) {
+            case 4: 
+               element.innerHTML = '안전';
+               element.style.color = 'green';
+               checkPasswordResult = true;
+               break;
+            case 3: 
+               element.innerHTML = '보통';
+               checkPasswordResult = true;
+               break;
+            case 2: 
+               element.innerHTML = '위험';
+               checkPasswordResult = true;
+               break;
+            case 1: 
+               element.innerHTML = '사용불가';
+               element.style.color = 'red';
+               checkPasswordResult = false;
+               break;
+         }
+      } else {
+         element.innerHTML = '8~16자리의 영문자,숫자,특수문자를 포함해야합니다';
+         checkPasswordResult = false;
+      }
+   }
+
+   function checkPasswordConfirm(password) { // 패스워드 일치 확인
+      var element = document.getElementById('passwordConfirmResult');
+      if(password == document.joinForm.password.value) { 
+         element.innerHTML = '패스워드 일치';
+         checkPasswordConfirmResult = true;
+      } else {
+         element.innerHTML = '패스워드 불일치';
+         checkPasswordConfirmResult = false;
+      }  
+   }
+   
+    function checkForm() {
+      // 아이디,패스워드 유효성 검사, 패스워드 일치 확인했을 경우에만 가입 전송
+      // 검사 결과를 전역변수로 저장
+      if(checkIdResult && checkPasswordResult && checkPasswordConfirmResult) {
+         return true;
+      } else {
+         alert('입력 항목을 확인하세요');
+         return false;
+      }
+   }
+</script>
+</head>
+<!-- form 태그에 onsubmit="return checkForm()" 추가-->
+```
+
