@@ -23,7 +23,7 @@
 			<ul>
 				<li><a href='<c:url value="/board/list"/>'>Notice</a></li>
 				<li><a href="#">Public News</a></li>
-				<li><a href='<c:url value="/board/flist"/>'>Driver Download</a></li>
+				<li><a href='<c:url value="/fboard/flist"/>'>Driver Download</a></li>
 				<li><a href="#">Service Policy</a></li>
 				<li><a href='<c:url value="/center/mail"/>'>Q&amp;A</a></li>
 			</ul>

@@ -8,11 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- https://paffem.me/perfume_teller.html?ptype=alpha4&a1i=2&a2i=1&a3i=3 -->
-<form action='<c:url value="/test4"/>'  method="get">
-
-<input type="submit" value="선택">
-</form>
-
+첫번째 선택 : ${sessionScope.q1 }<br>
+두번째 선택 : ${sessionScope.q2 }<br>
+세번째 선택 : ${sessionScope.q3 }<br>
 </body>
 </html>

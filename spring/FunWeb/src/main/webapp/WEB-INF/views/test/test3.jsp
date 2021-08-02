@@ -8,17 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- https://paffem.me/perfume_teller.html?ptype=alpha4&a1i=2&a2i=1&a3i=3 -->
-<form action='<c:url value="/test4"/>'  method="get">
-<input type="hidden" name="q1" value="${q1 }">
-<input type="hidden" name="q2" value="${q2 }">
-<input type="radio" name="q3" value="1"> 따뜻
-<input type="radio" name="q3" value="2"> 포근
-<input type="radio" name="q3" value="3"> 달달
-<input type="radio" name="q3" value="4"> 상큼
-<input type="radio" name="q3" value="5"> 머스크
-<input type="submit" value="선택">
-</form>
-
+첫번째 선택 : ${sessionScope.q1 }<br>
+두번째 선택 : ${sessionScope.q2 }<br>
+세번째 선택<br>
+<a href='<c:url value="/test4?q3=1"/>'><img src='<c:url value="/resources/perfume/15.jpg"/>'></a>
+<a href='<c:url value="/test4?q3=2"/>'><img src='<c:url value="/resources/perfume/16.JPG"/>'></a>
+<a href='<c:url value="/test4?q3=3"/>'><img src='<c:url value="/resources/perfume/18.JPG"/>'></a>
+<a href='<c:url value="/test4?q3=4"/>'><img src='<c:url value="/resources/perfume/19.JPG"/>'></a>
 </body>
 </html>

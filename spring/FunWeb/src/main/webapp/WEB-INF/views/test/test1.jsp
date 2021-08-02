@@ -8,13 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- https://paffem.me/perfume_teller.html?ptype=alpha4&a1i=2&a2i=1&a3i=3 -->
-<form action='<c:url value="/test2"/>'  method="get">
-<input type="radio" name="q1" value="1"> 여
-<input type="radio" name="q1" value="2"> 남
-<input type="radio" name="q1" value="3"> 성별무관
-<input type="submit" value="선택">
-</form>
+<!-- 가상주소 뒤에 '?파라미터변수=값' 붙임 -->
+<a href='<c:url value="/test2?q1=1"/>'><img src='<c:url value="/resources/perfume/10.jpg"/>' onmouseover="this.src='<c:url value="/resources/perfume/10_1.jpg"/>'" onmouseout="this.src='<c:url value="/resources/perfume/10.jpg"/>'"></a>
+<a href='<c:url value="/test2?q1=2"/>'><img src='<c:url value="/resources/perfume/11.jpg"/>'></a>
+<a href='<c:url value="/test2?q1=3"/>'><img src='<c:url value="/resources/perfume/12.JPG"/>'></a>
 
 </body>
 </html>

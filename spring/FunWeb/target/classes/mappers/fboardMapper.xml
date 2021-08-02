@@ -13,4 +13,24 @@
 		select max(num) from fboard
 	</select>
 	
+	<select id="getBoardList" resultType="com.itwillbs.domain.BoardBean">
+		select * from fboard order by num desc limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="getBoardCount" resultType="java.lang.Integer">
+		select count(*) from fboard
+	</select>
+	
+	<select id="getBoard" resultType="com.itwillbs.domain.BoardBean">
+		select * from fboard where num=#{num}
+	</select>
+	
+	<update id="updateReadCount">
+		update fboard set readcount=readcount+1 where num=#{num}
+	</update>
+	
+	<update id="updateBoard">
+		update fboard set subject=#{subject}, content=#{content}, file=#{file} where num=#{num}
+	</update>
+	
 </mapper>

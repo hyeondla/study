@@ -8,15 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- https://paffem.me/perfume_teller.html?ptype=alpha4&a1i=2&a2i=1&a3i=3 -->
-<form action='<c:url value="/test3"/>'  method="get">
-<input type="hidden" name="q1" value="${q1 }">
-<input type="radio" name="q2" value="1"> 봄
-<input type="radio" name="q2" value="2"> 여름
-<input type="radio" name="q2" value="3"> 가을
-<input type="radio" name="q2" value="4"> 겨울
-<input type="submit" value="선택">
-</form>
+첫번째 선택 : ${sessionScope.q1 }<br>
+두번째 선택 <br>
+<a href='<c:url value="/test3?q2=1"/>'><img src='<c:url value="/resources/perfume/13.JPG"/>'></a>
+<a href='<c:url value="/test3?q2=2"/>'><img src='<c:url value="/resources/perfume/14.jpg"/>'></a>
 
 </body>
 </html>

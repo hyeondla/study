@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.FBoardDAO;
 import com.itwillbs.domain.BoardBean;
+import com.itwillbs.domain.PageBean;
 
 @Service
 public class FBoardServiceImpl implements FBoardService {
@@ -28,6 +30,26 @@ public class FBoardServiceImpl implements FBoardService {
 		bb.setDate(new Timestamp(System.currentTimeMillis()));
 		
 		fBoardDAO.insertBoard(bb);
+	}
+
+	@Override
+	public List<BoardBean> getBoardList(PageBean pb) {
+		return fBoardDAO.getBoardList(pb);
+	}
+
+	@Override
+	public Integer getBoardCount() {
+		return fBoardDAO.getBoardCount();
+	}
+
+	@Override
+	public BoardBean getBoard(int num) {
+		return fBoardDAO.getBoard(num);
+	}
+
+	@Override
+	public void updateBoard(BoardBean bb) {
+		fBoardDAO.updateBoard(bb);
 	}
 
 }

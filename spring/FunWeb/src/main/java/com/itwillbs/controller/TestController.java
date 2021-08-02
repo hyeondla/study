@@ -1,6 +1,7 @@
 package com.itwillbs.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,33 +15,22 @@ public class TestController {
 		return "/test/test1";
 	}
 	@RequestMapping(value = "/test2", method = RequestMethod.GET)
-	public String test2(HttpServletRequest request, Model model) {
-		String q1 = request.getParameter("q1");
-//		System.out.println(request.getParameter("q1"));
-		model.addAttribute("q1", q1);
+	public String test2(HttpServletRequest request, HttpSession session) {
+		// /test2?q1=(값) 가져옴 
+		String q1 = request.getParameter("q1"); // 가져온 값을 저장
+		session.setAttribute("q1", q1); // -> 세션에 저장 
 		return "/test/test2";
 	}
 	@RequestMapping(value = "/test3", method = RequestMethod.GET)
-	public String test3(HttpServletRequest request, Model model) {
-		String q1 = request.getParameter("q1");
+	public String test3(HttpServletRequest request, HttpSession session) {
 		String q2 = request.getParameter("q2");
-//		System.out.println(request.getParameter("q1"));
-//		System.out.println(request.getParameter("q2"));
-		model.addAttribute("q1", q1);
-		model.addAttribute("q2", q2);
+		session.setAttribute("q2", q2);
 		return "/test/test3";
 	}
 	@RequestMapping(value = "/test4", method = RequestMethod.GET)
-	public String test4(HttpServletRequest request, Model model) {
-		String q1 = request.getParameter("q1");
-		String q2 = request.getParameter("q2");
+	public String test4(HttpServletRequest request, HttpSession session) {
 		String q3 = request.getParameter("q3");
-//		System.out.println(request.getParameter("q1"));
-//		System.out.println(request.getParameter("q2"));
-//		System.out.println(request.getParameter("q3"));
-		model.addAttribute("q1", q1);
-		model.addAttribute("q2", q2);
-		model.addAttribute("q3", q3);
+		session.setAttribute("q3", q3);
 		return "/test/test4";
 	}
 }
