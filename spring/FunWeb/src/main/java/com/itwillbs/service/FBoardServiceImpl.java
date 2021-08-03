@@ -52,4 +52,24 @@ public class FBoardServiceImpl implements FBoardService {
 		fBoardDAO.updateBoard(bb);
 	}
 
+	@Override
+	public void deleteBoard(BoardBean bb) {
+		fBoardDAO.deleteBoard(bb);
+	}
+
+	@Override
+	public List<BoardBean> getBoardListSearch(PageBean pb) {
+		return fBoardDAO.getBoardListSearch(pb);
+	}
+
+	@Override
+	public Integer getBoardCountSearch(PageBean pb) {
+		return fBoardDAO.getBoardCountSearch(pb);
+	}
+
+	@Override
+	public void updateReadCount(int num) {
+		fBoardDAO.updateReadCount(num);
+	}
+
 }

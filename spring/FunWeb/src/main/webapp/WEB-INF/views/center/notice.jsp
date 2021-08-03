@@ -39,7 +39,12 @@
 			    <th class="tread">Read</th></tr>
 			<c:forEach var="bb" items="${bbList }">
 			<tr onclick="location.href='<c:url value="/board/content?num=${bb.num }"/>'"><td>${bb.num}</td>
-				<td class="left">${bb.subject}</td>
+				<td class="left">
+				<c:if test="${bb.re_lev > 0 }">
+					<img src='<c:url value="/resources/images/center/level.gif" />' width="${bb.re_lev * 10 }">
+					<img src='<c:url value="/resources/images/center/re.gif" />'>
+				</c:if>
+				${bb.subject}</td>
 				<td>${bb.name}</td>
 				<td><fmt:formatDate value="${bb.date }" type="both" pattern="yyyy.MM.dd"/></td>
 				<td>${bb.readcount}</td></tr>

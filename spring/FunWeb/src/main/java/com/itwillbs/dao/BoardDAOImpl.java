@@ -69,4 +69,14 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.delete(namespace + ".deleteBoard", bb);
 	}
 
+	@Override
+	public void reInsertBoard(BoardBean bb) {
+		sqlSession.insert(namespace + ".insertBoard", bb);
+	}
+
+	@Override
+	public void updateReseq(BoardBean bb) {
+		sqlSession.update(namespace + ".updateReseq", bb);
+	}
+
 }

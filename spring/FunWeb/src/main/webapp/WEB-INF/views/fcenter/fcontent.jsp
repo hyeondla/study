@@ -43,7 +43,7 @@
 		<c:if test="${!empty sessionScope.id }">
 			<c:if test="${bb.name eq sessionScope.id }">
 				<input type="button" value="글수정" onClick="location.href='<c:url value="/fboard/fupdate?num=${bb.num }"/>'" class="btn">
-				<input type="button" value="글삭제" onClick="location.href='<c:url value="/fboard/fdekete?num=${bb.num }"/>'" class="btn">
+				<input type="button" value="글삭제" onClick="location.href='<c:url value="/fboard/fdelete?num=${bb.num }"/>'" class="btn">
 			</c:if>
 		</c:if>
 			<input type="button" value="글목록" onClick="location.href='<c:url value="/fboard/flist"/>'" class="btn">

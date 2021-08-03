@@ -56,11 +56,11 @@
 			</form>
 		</div>
 		
-		<c:if test="${!empty sessionScope.id }">
-			<div id="table_search">
-				<input type="button" value="글쓰기" class="btn" onclick="location.href=<c:url value="/fboard/fwrite"/>'">
-			</div>
-		</c:if>
+			<c:if test="${!(empty sessionScope.id) }">
+				<div id="table_search">
+					<input type="button" value="글쓰기" class="btn" onclick="location.href='<c:url value="/fboard/fwrite"/>'">
+				</div>
+			</c:if>
 		
 		<div class="clear"></div>
 		<div id="page_control">

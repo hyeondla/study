@@ -71,11 +71,37 @@ public class FBoardController {
 		return "/fcenter/fnotice";
 	}
 	
+	@RequestMapping(value = "/fboard/flistSearch", method = RequestMethod.POST)
+	public String flistSearch(HttpServletRequest request, Model model) {
+		PageBean pb = new PageBean();
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null) {
+			pb.setPageNum("1");
+		} else {
+			pb.setPageNum(pageNum);
+		}
+		int pageSize = 15;
+		pb.setPageSize(pageSize);
+		
+		// 검색 
+		String search = request.getParameter("search");
+		pb.setSearch(search);
+		List<BoardBean> bbList = fBoardService.getBoardListSearch(pb);
+		
+		// 전체 글 개수
+		pb.setCount(fBoardService.getBoardCountSearch(pb));
+		
+		model.addAttribute("bbList", bbList);
+		model.addAttribute("pb", pb);
+		
+		return "/fcenter/fnoticeSearch";
+	}
+	
 	@RequestMapping(value = "/fboard/fcontent", method = RequestMethod.GET)
 	public String fcontent(HttpServletRequest request, Model model) {
 		int num = Integer.parseInt(request.getParameter("num"));
+		fBoardService.updateReadCount(num);
 		BoardBean bb = fBoardService.getBoard(num);
-		
 		model.addAttribute("bb",bb);
 		
 		return "/fcenter/fcontent";
@@ -108,6 +134,18 @@ public class FBoardController {
 		bb.setContent(request.getParameter("content"));
 		bb.setFile(saveName);
 		fBoardService.updateBoard(bb);
+		return "redirect:/fboard/flist";
+	}
+	
+	@RequestMapping(value = "/fboard/fdelete", method = RequestMethod.GET)
+	public String delete(HttpServletRequest request, Model model) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		model.addAttribute("num",num);
+		return "/fcenter/fdelete";
+	}
+	@RequestMapping(value = "/fboard/fdeletePro", method = RequestMethod.POST)
+	public String deletePro(BoardBean bb) {
+		fBoardService.deleteBoard(bb);
 		return "redirect:/fboard/flist";
 	}
 	

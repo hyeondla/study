@@ -26,5 +26,9 @@ public interface BoardDAO {
 	public void updateReadCount(int num);
 	
 	public void deleteBoard(BoardBean bb);
+
+	public void reInsertBoard(BoardBean bb);
+
+	public void updateReseq(BoardBean bb);
 	
 }

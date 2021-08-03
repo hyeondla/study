@@ -25,4 +25,6 @@ public interface BoardService {
 
 	public void deleteBoard(BoardBean bb);
 
+	public void reInsertBoard(BoardBean bb);
+
 }

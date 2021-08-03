@@ -48,6 +48,25 @@ public class FBoardDAOImpl implements FBoardDAO {
 		sqlSession.update(namespace + ".updateBoard", bb);
 	}
 
+	@Override
+	public void deleteBoard(BoardBean bb) {
+		sqlSession.delete(namespace + ".deleteBoard", bb);
+	}
 
+	@Override
+	public List<BoardBean> getBoardListSearch(PageBean pb) {
+		return sqlSession.selectList(namespace + ".getBoardListSearch", pb);
+	}
+
+	@Override
+	public Integer getBoardCountSearch(PageBean pb) {
+		return sqlSession.selectOne(namespace + ".getBoardCountSearch", pb);
+	}
+
+	@Override
+	public void updateReadCount(int num) {
+		sqlSession.update(namespace + ".updateReadCount", num);
+	}
+	
 
 }

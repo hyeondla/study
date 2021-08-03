@@ -28,26 +28,20 @@
 			</ul>
 	</nav>
 	<!-- 본문 내용 -->
+	<c:if test="${empty sessionScope.id }">
+		<c:redirect url="/member/login"></c:redirect>
+	</c:if>
 	<article>
-		<h1>Notice Content</h1>
+		<h1>Notice Deletes</h1>
+		<form action='<c:url value="/fboard/fdeletePro"/>' method="post">
+		<input type="hidden" name="num" value="${num }">
 		<table id="notice">
-			<tr><td>글번호</td><td>${bb.num }</td>
-				<td>글쓴이</td><td>${bb.name }</td></tr>
-			<tr><td>작성날짜</td><td>${bb.date }</td>
-				<td>조회수</td><td>${bb.readcount }</td></tr>
-			<tr><td>제목</td><td colspan="3">${bb.subject }</td></tr>
-			<tr><td>내용</td><td colspan="3">${bb.content }</td></tr>
 		</table>
 		<div id="table_search">
-			<c:if test="${!(empty sessionScope.id) }">
-				<input type="button" value="답글쓰기" onClick="location.href='<c:url value="/board/reWrite?num=${bb.num }&re_ref=${bb.re_ref }&re_lev=${bb.re_lev }&re_seq=${bb.re_seq}"/>'" class="btn">
-				<c:if test="${sessionScope.id eq bb.name }">
-					<input type="button" value="글수정" onClick="location.href='<c:url value="/board/update?num=${bb.num }"/>'" class="btn">
-					<input type="button" value="글삭제" onClick="location.href='<c:url value="/board/delete?num=${bb.num }"/>'" class="btn">
-				</c:if>
-			</c:if>
-			<input type="button" value="글목록" onClick="location.href='<c:url value="/board/list"/>'" class="btn">
+			<input type="submit" value="글삭제" class="btn">
+			<input type="button" value="글목록" onClick="location.href='<c:url value="/fboard/flist"/>'" class="btn">
 		</div>
+		</form>
 		<div class="clear"></div>
 	</article>
 	<div class="clear"></div>

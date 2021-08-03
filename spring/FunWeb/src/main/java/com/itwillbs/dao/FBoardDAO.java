@@ -19,4 +19,12 @@ public interface FBoardDAO {
 	
 	public void updateBoard(BoardBean bb);
 	
+	public void deleteBoard(BoardBean bb);
+	
+	public List<BoardBean> getBoardListSearch(PageBean pb);
+
+	public Integer getBoardCountSearch(PageBean pb);
+	
+	public void updateReadCount(int num);
+	
 }

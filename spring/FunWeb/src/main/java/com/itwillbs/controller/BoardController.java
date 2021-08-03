@@ -115,4 +115,15 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	@RequestMapping(value = "/board/reWrite", method = RequestMethod.GET)
+	public String reWrite(BoardBean bb, Model model) {
+		model.addAttribute("bb", bb);
+		return "/center/reWrite";
+	}
+	@RequestMapping(value = "/board/reWritePro", method = RequestMethod.POST)
+	public String reWritePro(BoardBean bb) {
+		boardService.reInsertBoard(bb);
+		return "redirect:/board/list";
+	}
+	
 }

@@ -25,6 +25,14 @@
 		select * from fboard where num=#{num}
 	</select>
 	
+	<select id="getBoardListSearch" resultType="com.itwillbs.domain.BoardBean">
+		select * from fboard where subject like concat("%",#{search},"%") order by num desc limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="getBoardCountSearch" resultType="java.lang.Integer">
+		select count(*) from fboard where subject like concat("%",#{search},"%")
+	</select>
+	
 	<update id="updateReadCount">
 		update fboard set readcount=readcount+1 where num=#{num}
 	</update>
@@ -32,5 +40,9 @@
 	<update id="updateBoard">
 		update fboard set subject=#{subject}, content=#{content}, file=#{file} where num=#{num}
 	</update>
+	
+	<delete id="deleteBoard">
+		delete from fboard where num=#{num}
+	</delete>
 	
 </mapper>
