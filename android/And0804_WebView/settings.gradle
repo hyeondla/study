@@ -1,0 +1,2 @@
+rootProject.name = "And0804_WebView"
+include ':app'

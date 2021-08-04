@@ -14,6 +14,8 @@ android:orientation="**vertical**"  → 수직 배치
 
 android:orientation="**horizontal**" → 수평 배치 
 
+android:gravity="left|top" → 자신의 내부 컨텐츠 위치 지정 (기본값)
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,6 +25,7 @@ android:orientation="**horizontal**" → 수평 배치
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
+    android:gravity="right|bottom"
     >
 	
     <TextView 
@@ -240,3 +243,4 @@ cbAll.setOnCheckedChangeListener(onCheckedChangeListener);
 
 ```
 
+<br>

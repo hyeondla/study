@@ -1,0 +1,2 @@
+rootProject.name = "And0803_ScrollView_Basic"
+include ':app'

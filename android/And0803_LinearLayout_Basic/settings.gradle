@@ -1,0 +1,2 @@
+rootProject.name = "And0803_LinearLayout_Basic"
+include ':app'

@@ -53,11 +53,26 @@
     </RadioGroup>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="선택 완료"
         android:id="@+id/btn"
         android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="초기화"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv"
+        android:visibility="invisible"
+
         />
 
 </LinearLayout>
