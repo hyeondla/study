@@ -1,0 +1,2 @@
+rootProject.name = "And0805_Two_way_Activity"
+include ':app'
