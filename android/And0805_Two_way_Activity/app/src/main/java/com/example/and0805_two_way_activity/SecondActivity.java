@@ -44,6 +44,8 @@ public class SecondActivity extends AppCompatActivity {
 
         // 현재 액티비티 종료 후 돌아가기
         finish();
+        // => 자동으로 원래 액티비티의 onActivityResult() 메서드 자동 호출됨
+        //     메서드 호출이 종료될 때 자동으로 호출되는 메서드 = 콜백 메서드
 
     }
 

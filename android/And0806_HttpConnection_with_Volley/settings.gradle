@@ -1,0 +1,2 @@
+rootProject.name = "And0806_HttpConnection_with_Volley"
+include ':app'

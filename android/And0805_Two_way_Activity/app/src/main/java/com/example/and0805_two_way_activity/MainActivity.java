@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText etNum1, etNum2;
@@ -43,5 +44,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // SecondActivity로부터 전달받은 Intent 객체 가져오기
+        // -> onActivityResult() 메서드 파라미터로 전달받은 Intent 객체 사용
+
+        // 여러개의 액티비티를 전환하는 경우
+        // requestCode 값에 따라 응답 액티비티 구분
+        if(resultCode == RESULT_OK) { // 정상 응답
+            // 전달받은 Intent 객체(data)에 저장된 데이터 가져오기
+            int result = data.getIntExtra("result", 0);
+            Toast.makeText(this, "계산결과 : " + result, Toast.LENGTH_SHORT).show();
+        } else { // 비정상 응답
+            Toast.makeText(this, "응답 오류 발생", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 }
